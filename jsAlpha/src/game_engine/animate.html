@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="easeljs-0.8.2.combined.js"></script>
+    <script src="preloadjs-0.6.2.combined.js"></script>
+
+    <script type="text/javascript">
+      var stage, w, h, loader;
+      var character;
+      var KEYCODE_LEFT = 37;
+      var KEYCODE_RIGHT = 39;
+      var xVel = 4;
+      var moveLeft = false;
+      var moveRight = false;
+      var characterWidth = 23;
+      var characterHeight = 38;
+
+      function init() {
+        stage = new createjs.Stage(canvas);
+
+        w = stage.canvas.width;
+        h = stage.canvas.height;
+
+        loader = new createjs.LoadQueue(false);
+        loader.addEventListener("complete", handleComplete);
+        loader.loadFile({id:"character", src:"spritegridside.png"});
+
+      }
+
+      function handleComplete() {
+        var spriteSheet = new createjs.SpriteSheet({
+          framerate: 10,
+          "images": [loader.getResult("character")],
+          "frames": {"height": 38, "width": 23, "count": 20, "regX": 0, "regY": 2, "spacing": 1},
+          "animations": {
+            "wkRight": [11,19],
+            "stand": [10],
+            "wkLeft": [0,8]
+          }
+        });
+        character = new createjs.Sprite(spriteSheet,"wkRight");
+        character.y = 0;
+        character.x = 0;
+
+        stage.addChild(character);
+
+        createjs.Ticker.timingMode = createjs.Ticker.RAF;
+        createjs.Ticker.addEventListener("tick", tick);
+        document.onkeydown = handleKeyDown;
+        document.onkeyup = handleKeyUp;
+      }
+
+      function handleKeyDown(e) {
+          switch(e.keyCode) {
+              case KEYCODE_LEFT:
+              case 65:
+                  moveLeft = true;
+                  character.gotoAndPlay("wkRight");
+                  break;
+              case KEYCODE_RIGHT:
+              case 68:
+                  moveRight = true;
+                  character.gotoAndPlay("wkLeft");
+                  break;
+          }
+      }
+
+      function handleKeyUp(e) {
+          switch(e.keyCode) {
+              case KEYCODE_LEFT:
+              case 65:
+                  moveLeft = false;
+                  character.gotoAndStop("stand");
+                  break;
+              case KEYCODE_RIGHT:
+              case 68:
+                  moveRight = false;
+                  character.gotoAndStop("stand");
+                  break;
+          }
+      }
+
+      function tick(event) {
+        if(moveLeft) {
+            character.x -= xVel;
+            if(character.scaleX > 0) {
+                character.scaleX *= -1;
+                character.x += characterWidth;
+            }
+        } else if(moveRight) {
+            character.x += xVel;
+            if(character.scaleX > 0) {
+                character.scaleX *= -1;
+                character.x -= characterWidth;
+            }
+        }
+        stage.update();
+      }
+    </script>
+  </head>
+  <body onload="init();">
+    <canvas id="canvas" width="400" height="40"></canvas>
+  </body>
+</html>
