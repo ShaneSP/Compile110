@@ -29,7 +29,7 @@
 
       function handleComplete() {
         var spriteSheet = new createjs.SpriteSheet({
-          framerate: 10,
+          framerate: 3,
           "images": [loader.getResult("character")],
           "frames": {"height": 38, "width": 23, "count": 20, "regX": 0, "regY": 2, "spacing": 1},
           "animations": {
@@ -38,9 +38,7 @@
             "wkLeft": [0,8]
           }
         });
-        character = new createjs.Sprite(spriteSheet,"wkRight");
-        character.y = 0;
-        character.x = 0;
+        character = new createjs.Sprite(spriteSheet, "stand");
 
         stage.addChild(character);
 
@@ -55,12 +53,19 @@
               case KEYCODE_LEFT:
               case 65:
                   moveLeft = true;
-                  character.gotoAndPlay("wkRight");
+                  character.spriteSheet.getAnimation("wkRight").frequency = 3;
+                  if (character.currentAnimation != "wkRight" ) {
+                      character.gotoAndPlay("wkRight");
+                  }
                   break;
               case KEYCODE_RIGHT:
               case 68:
                   moveRight = true;
-                  character.gotoAndPlay("wkLeft");
+                  character.spriteSheet.getAnimation("wkLeft").frequency = 3;
+
+                  if (character.currentAnimation != "wkLeft" ) {
+                      character.gotoAndPlay("wkLeft");
+                  }
                   break;
           }
       }
@@ -70,12 +75,16 @@
               case KEYCODE_LEFT:
               case 65:
                   moveLeft = false;
-                  character.gotoAndStop("stand");
+                  if (character.currentAnimation != "stand" ) {
+                      character.gotoAndStop("stand");
+                  }
                   break;
               case KEYCODE_RIGHT:
               case 68:
                   moveRight = false;
-                  character.gotoAndStop("stand");
+                  if (character.currentAnimation != "stand" ) {
+                      character.gotoAndStop("stand");
+                  }
                   break;
           }
       }
