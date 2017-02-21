@@ -25,7 +25,7 @@
         loader = new createjs.LoadQueue(false);
         loader.addEventListener("complete", handleComplete);
         loader.loadFile({id:"character", src:"spritegridside.png"});
-        loader.loadFile({id:"bit", src:"bitSpriteIdleSmooth.png"});
+        loader.loadFile({id:"bit", src:"bitSpriteIdle.png"});
 
       }
 
@@ -44,15 +44,15 @@
           framerate: 1,
           "images": [loader.getResult("bit")],
           "frames": {"height":28, "width": 28, "count": 6, "regX":14, "regY":14, "spacing": 0},
-          "animations": {"idle":[0,5]}
+          "animations": {"idle":[0,3,2,1]}
         });
         bit = new createjs.Sprite(spriteSheetBit,"idle");
         bit.x = 30;
         bit.y = 30;
         character = new createjs.Sprite(spriteSheet, "stand");
 
-        stage.addChild(bit);
         stage.addChild(character);
+        stage.addChild(bit);
 
         createjs.Ticker.timingMode = createjs.Ticker.RAF;
         createjs.Ticker.addEventListener("tick", tick);
