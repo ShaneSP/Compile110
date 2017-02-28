@@ -13,6 +13,7 @@ var moveUp = false;
 var moveDown = false;
 var characterWidth = 23;
 var characterHeight = 38;
+var background;
 
 function init() {
   stage = new createjs.Stage(canvas);
@@ -22,6 +23,7 @@ function init() {
   loader.loadFile({id:"character", src:"assets/spritesheet-42px.png"});
   loader.loadFile({id:"bit", src:"assets/bitSpriteIdle.png"});
   loader.loadFile({id:"byte", src:"assets/byteSpriteIdle.png"});
+  loader.loadFile({id:"floor", src:"assets/grasstile1.png"});
 
 }
 
@@ -52,6 +54,13 @@ function handleComplete() {
       "idle": [0,3]
     }
   });
+
+  var gfx = new createjs.Graphics().beginBitmapFill(loader.getResult("floor")).drawRect(0,0,stage.canvas.width, stage.canvas.height).endFill();
+
+  background = new createjs.Shape(gfx);
+  background.x =0;
+  stage.addChild(background);
+
   byte = new createjs.Sprite(spriteSheetByte, "idle");
   byte.x = 60;
   byte.y = 30;
