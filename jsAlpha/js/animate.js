@@ -1,4 +1,4 @@
-var stage, loader;
+var stage, loader, canvas;
 var character;
 var bit, byte;
 var KEYCODE_LEFT = 37;
@@ -13,9 +13,9 @@ var moveUp = false;
 var moveDown = false;
 var characterWidth = 23;
 var characterHeight = 38;
-var background;
 
 function init() {
+  canvas = document.getElementById("canvas");
   stage = new createjs.Stage(canvas);
 
   loader = new createjs.LoadQueue(false);
@@ -55,18 +55,12 @@ function handleComplete() {
     }
   });
 
-  var gfx = new createjs.Graphics().beginBitmapFill(loader.getResult("floor")).drawRect(0,0,stage.canvas.width, stage.canvas.height).endFill();
-
-  background = new createjs.Shape(gfx);
-  background.x =0;
-  stage.addChild(background);
-
   byte = new createjs.Sprite(spriteSheetByte, "idle");
   byte.x = 60;
-  byte.y = 30;
+  byte.y = 200;
   bit = new createjs.Sprite(spriteSheetBit,"idle");
   bit.x = 30;
-  bit.y = 30;
+  bit.y = 200;
   character = new createjs.Sprite(spriteSheet, 0);
 
 
