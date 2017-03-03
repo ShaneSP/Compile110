@@ -8,4 +8,6 @@ function generateBit() {
   var bit = new createjs.Sprite(spriteSheetBit,"idle");
   bit.x = 30;
   bit.y = 200;
+
+  this.stage.addChild(bit);
 }
