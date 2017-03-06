@@ -35,13 +35,13 @@ function init() {
   createjs.Ticker.addEventListener("tick", handleTick);
 
   tileSheet = new createjs.SpriteSheet({
-    "images": ["assets/tiles2.png"],
+    "images": ["assets/floortiles40px.png"],
     "frames": {
       "height": 40,
       "width": 40,
       "regX": 0,
       "regY": 0,
-      "count": 2
+      "count": 14
     }
   });
 

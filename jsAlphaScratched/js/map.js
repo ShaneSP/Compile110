@@ -30,7 +30,13 @@ var map = function(maplayout, stage, tileSheet) {
     for(col = 0; col < this.mapWidth; col++) {
       tileClone = tiles.clone();
       tileClone.name = "t_" + row + "_" + col;
-      tileClone.gotoAndStop(maplayout[row][col]);
+      if (maplayout[col][row] == 0) {
+        tileClone.gotoAndStop(Math.floor(Math.random()*(6)));
+      } else {
+        tileClone.gotoAndStop(Math.floor(Math.random()*(13-7)+7));
+
+      }
+
       // gotoAndStop/gotoAndPlay changes which tile it is; remember this for animations
       tileClone.x = col * tileSheet._frameWidth;
       tileClone.y = row * tileSheet._frameWidth;

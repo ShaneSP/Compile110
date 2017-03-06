@@ -23,32 +23,42 @@ var playerclass = function (cr, map, stage, characterSheet) {
 
   // Movement
   this.changePosition = function(pos) {
-    this.position = pos;
-    this.character.gotoAndStop(pos);
+    if(this.position != pos) {
+      this.character.gotoAndPlay(pos);
+      var temp = Math.floor((pos - this.position)/5);
+      //Need to implement code for ticking to update XY; maybe do translations
+      this.changePosition(pos);
+    } else {
+      this.character.gotoAndPlay(pos); //how to store facing direction?
+    }
+    //this.position = pos;
+    this.stage.update();
+
+
   }
   this.moveRight = function() {
     if (this.map.tileOccupied([this.col+1, this.row]) == false && this.map.tileWalkable([this.col+1, this.row])) {
       this.setCR([this.col+1, this.row]);
     }
-    this.changePosition("fcRight");
+    this.changePosition("wkRight");
   }
   this.moveLeft = function() {
     if (this.map.tileOccupied([this.col-1, this.row]) == false && this.map.tileWalkable([this.col-1, this.row])) {
       this.setCR([this.col-1, this.row]);
     }
-    this.changePosition("fcLeft");
+    this.changePosition("wkLeft");
   }
   this.moveUp = function() {
     if (this.map.tileOccupied([this.col, this.row-1]) == false && this.map.tileWalkable([this.col, this.row-1])) {
       this.setCR([this.col, this.row-1]);
     }
-    this.changePosition("fcBackward");
+    this.changePosition("wkBackward");
   }
   this.moveDown = function() {
     if (this.map.tileOccupied([this.col, this.row+1]) == false && this.map.tileWalkable([this.col, this.row+1])) {
       this.setCR([this.col, this.row+1]);
     }
-    this.changePosition("fcForward");
+    this.changePosition("wkForward");
   }
 
   this.setXY();
