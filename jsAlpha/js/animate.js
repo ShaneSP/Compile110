@@ -24,6 +24,7 @@ function init() {
   loader.loadFile({id:"bit", src:"assets/bitSpriteIdle.png"});
   loader.loadFile({id:"byte", src:"assets/byteSpriteIdle.png"});
   loader.loadFile({id:"floor", src:"assets/grasstile1.png"});
+  loader.loadFile({id:"kris", src:"assets/krisspritesheet-50px.png"});
 
 }
 
@@ -55,6 +56,19 @@ function handleComplete() {
     }
   });
 
+  var spriteSheetKris = new createjs.SpriteSheet({
+    framerate: 1,
+    "images": [loader.getResult("kris")],
+    "frames": {"height": 50, "width": 50, "count": 78, "regX": 25, "regY": 25, "spacing": 0, "margin": 0},
+    "animations": {
+      "idle": [0,7],
+      "talk": [12, 21]
+    }
+  });
+
+  kris = new createjs.Sprite(spriteSheetKris, "talk");
+  kris.x = 90;
+  kris.y = 200;
   byte = new createjs.Sprite(spriteSheetByte, "idle");
   byte.x = 60;
   byte.y = 200;
@@ -63,7 +77,7 @@ function handleComplete() {
   bit.y = 200;
   character = new createjs.Sprite(spriteSheet, 0);
 
-
+  stage.addChild(kris);
   stage.addChild(character);
   stage.addChild(byte);
   stage.addChild(bit);

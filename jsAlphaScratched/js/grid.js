@@ -1,6 +1,16 @@
 var canvas, stage;
 var maplayout, game, tileSheet, tiles;
 var player;
+var KEYCODE_LEFT = 37;
+var KEYCODE_RIGHT = 39;
+var KEYCODE_UP = 38;
+var KEYCODE_DOWN = 40;
+var xVel = 4;
+var yVel = 4;
+var moveLeft = false;
+var moveRight = false;
+var moveUp = false;
+var moveDown = false;
 
 maplayout = [
   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -53,6 +63,7 @@ function init() {
   levelmap = new map(maplayout, stage, tileSheet);
   var cr = [1, 4];
   player = new playerclass(cr, levelmap, stage, characterSheet);
+
 }
 
 init();
