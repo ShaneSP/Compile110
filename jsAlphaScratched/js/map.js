@@ -31,7 +31,7 @@ var map = function(maplayout, stage, tileSheet) {
       tileClone = tiles.clone();
       tileClone.name = "t_" + row + "_" + col;
       var tilevalue = Math.floor(Math.random()*6);
-      if (maplayout[col][row] == 0) {
+      if (maplayout[row][col] == 0) {
         if ((col-1 < 0) && !(row-1 < 0)) {
           if (tilevalue == this.mapTiles["t_" + (row-1) + "_" + (col)].tilevalue) {
             tileClone.gotoAndStop((tilevalue+1)%7);

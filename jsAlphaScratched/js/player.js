@@ -28,19 +28,21 @@ var playerclass = function (cr, map, stage, characterSheet) {
   // Updating
   this.tick = function() {
     if (this.finalx - this.character.x > 0) {
-      this.character.x = this.character.x + 1;
+      this.character.x = this.character.x + 3;
     }
     else if (this.finalx - this.character.x < 0) {
-      this.character.x = this.character.x - 1;
+      this.character.x = this.character.x - 3;
     }
     if (this.finaly - this.character.y > 0) {
-      this.character.y = this.character.y + 1;
+      this.character.y = this.character.y + 3;
     }
     else if (this.finaly - this.character.y < 0) {
-      this.character.y = this.character.y - 1;
+      this.character.y = this.character.y - 3;
     }
     if (player.position[0] == "w") {
-      if (this.finaly == this.character.y && this.finalx == this.character.x) {
+      if (Math.abs(this.finaly - this.character.y) < 3 && Math.abs(this.finalx - this.character.x) < 3) {
+        this.character.y = this.finaly;
+        this.character.x = this.finalx;
         player.changePosition("fc" + player.position.substring(2, 10));
       }
     }
