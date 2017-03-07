@@ -40,10 +40,16 @@ var playerclass = function (cr, map, stage, characterSheet) {
       this.character.y = this.character.y - 3;
     }
     if (player.position[0] == "w") {
-      if (Math.abs(this.finaly - this.character.y) < 3 && Math.abs(this.finalx - this.character.x) < 3) {
+      if (Math.abs(this.finaly - this.character.y) < 4 && Math.abs(this.finalx - this.character.x) < 4) {
         this.character.y = this.finaly;
         this.character.x = this.finalx;
         player.changePosition("fc" + player.position.substring(2, 10));
+      }
+      else if (Math.abs(this.finaly - this.character.y) < 4) {
+        this.character.y = this.finaly;
+      }
+      else if (Math.abs(this.finalx - this.character.x) < 4) {
+        this.character.x = this.finalx;
       }
     }
   }
