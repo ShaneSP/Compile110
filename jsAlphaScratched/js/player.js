@@ -27,16 +27,16 @@ var playerclass = function (cr, map, stage, characterSheet) {
 
   // Updating
   this.tick = function() {
-    if (this.finalx - this.character.x > 0) {
+    if (this.finalx - this.character.x > 3) {
       this.character.x = this.character.x + 3;
     }
-    else if (this.finalx - this.character.x < 0) {
+    else if (this.finalx - this.character.x < -3) {
       this.character.x = this.character.x - 3;
     }
-    if (this.finaly - this.character.y > 0) {
+    if (this.finaly - this.character.y > 3) {
       this.character.y = this.character.y + 3;
     }
-    else if (this.finaly - this.character.y < 0) {
+    else if (this.finaly - this.character.y < -3) {
       this.character.y = this.character.y - 3;
     }
     if (player.position[0] == "w") {
