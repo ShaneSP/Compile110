@@ -26,6 +26,7 @@ maplayout = [
 ];
 
 function handleTick() {
+  player.tick();
   stage.update();
 }
 
