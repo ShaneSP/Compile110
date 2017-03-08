@@ -1,6 +1,7 @@
 var canvas, stage;
 var maplayout, game, tileSheet, tiles;
 var player;
+var bit;
 var KEYCODE_LEFT = 37;
 var KEYCODE_RIGHT = 39;
 var KEYCODE_UP = 38;
@@ -27,6 +28,7 @@ maplayout = [
 
 function handleTick() {
   player.tick();
+  bit.tick();
   stage.update();
 }
 
@@ -34,6 +36,8 @@ function init() {
   canvas = document.getElementById("canvas");
   stage = new createjs.Stage(canvas);
   createjs.Ticker.addEventListener("tick", handleTick);
+  createjs.Ticker.setInterval(20);
+  createjs.Ticker.setFPS(15);
 
   tileSheet = new createjs.SpriteSheet({
     "images": ["assets/floortiles40px.png"],
@@ -61,9 +65,21 @@ function init() {
     }
   });
 
+  var bitSheet = new createjs.SpriteSheet({
+    "images": ["assets/bitSprite36px.png"],
+    "frames": {"height": 36, "width": 36, "count": 13, "regX": 18, "regY": 18},
+    "animations": {
+      "idle": [0,3,"idle"],
+      "agro": [5,8, "charge"],
+      "charge": [10, 13, "idle"]
+    }
+  });
+
   levelmap = new map(maplayout, stage, tileSheet);
   var cr = [1, 4];
+  var bcr = [8,4];
   player = new playerclass(cr, levelmap, stage, characterSheet);
+  bit = new monsterclass(bcr, levelmap, stage, bitSheet, player);
 
 }
 
