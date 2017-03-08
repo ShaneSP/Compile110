@@ -10,6 +10,7 @@
     <script src="js/player.js"></script>
     <script src="js/monster.js"></script>
     <script src="js/grid.js"></script>
+    <script src="js/setHalfVolume.js"></script>
     <br/>
     <div style="max-width:400px;">
       <center>
@@ -21,5 +22,9 @@
         <input type="button" value="Move Down" onclick="player.moveDown();"/>
       </center>
     </div>
+    <audio id="bgm" autoplay loop onloadeddata="setVolume()">
+        <source src="21.mp3">>
+    </audio>
+      
   </body>
 </html>
