@@ -37,8 +37,8 @@ function init() {
   canvas = document.getElementById("canvas");
   stage = new createjs.Stage(canvas);
   createjs.Ticker.addEventListener("tick", handleTick);
-  createjs.Ticker.setInterval(20);
-  createjs.Ticker.setFPS(10);
+  createjs.Ticker.setInterval(15);
+  createjs.Ticker.setFPS(15);
 
   tileSheet = new createjs.SpriteSheet({
     "images": ["assets/floortiles40px.png"],
