@@ -12,6 +12,7 @@ var moveLeft = false;
 var moveRight = false;
 var moveUp = false;
 var moveDown = false;
+var bitticker = 0;
 
 maplayout = [
   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -37,7 +38,7 @@ function init() {
   stage = new createjs.Stage(canvas);
   createjs.Ticker.addEventListener("tick", handleTick);
   createjs.Ticker.setInterval(20);
-  createjs.Ticker.setFPS(15);
+  createjs.Ticker.setFPS(10);
 
   tileSheet = new createjs.SpriteSheet({
     "images": ["assets/floortiles40px.png"],
@@ -67,11 +68,11 @@ function init() {
 
   var bitSheet = new createjs.SpriteSheet({
     "images": ["assets/bitSprite36px.png"],
-    "frames": {"height": 36, "width": 36, "count": 13, "regX": 18, "regY": 18},
+    "frames": {"height": 36, "width": 36, "count": 15, "regX": 18, "regY": 18},
     "animations": {
-      "idle": [0,3,"idle"],
-      "agro": [5,8, "charge"],
-      "charge": [10, 13, "idle"]
+      "idle": [0, 3],
+      "agro": [5, 8],
+      "charge": [10, 14]
     }
   });
 
