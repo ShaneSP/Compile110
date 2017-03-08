@@ -31,13 +31,6 @@ this.tick = function() {
   || (player.col == this.col && player.row == this.row + 1)
   || (player.col == this.col && player.row == this.row - 1)
   || (player.col == this.col - 1 && player.row == this.row)) {
-  //   if (this.position != "agro") {
-  //     this.changePosition("agro");
-  //   }
-  // }
-  //   else if (this.position != "idle") {
-  //       this.changePosition("idle");
-  // }
     if (this.position == "idle") {
       this.agrocount = this.agrocount + 1;
       if (this.agrocount > 3) {

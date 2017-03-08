@@ -56,14 +56,6 @@ var playerclass = function (cr, map, stage, characterSheet) {
 
   // Movement
   this.changePosition = function(pos) {
-    // if(this.position != pos) {
-    //   this.character.gotoAndPlay(pos);
-    //   var temp = Math.floor((pos - this.position)/5);
-    //   //Need to implement code for ticking to update XY; maybe do translations
-    //   this.changePosition(pos);
-    // } else {
-    //   this.character.gotoAndPlay(pos); //how to store facing direction?
-    // }
     this.position = pos;
     this.character.gotoAndPlay(pos);
   }
