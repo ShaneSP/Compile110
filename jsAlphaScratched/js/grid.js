@@ -52,8 +52,8 @@ function init() {
   });
 
   var characterSheet = new createjs.SpriteSheet({
-    "images": ["assets/spritesheet-42px.png"],
-    "frames": {"height": 42, "width": 42, "count": 36, "regX": 0, "regY": 1, "spacing": 1, "margin": 1},
+    "images": ["assets/spritesheet_2.png"],
+    "frames": {"height": 42, "width": 42, "count": 74, "regX": 0, "regY": 1, "spacing": 1, "margin": 1},
     "animations": {
       "wkForward": [0, 6,],
       "wkRight": [9, 17,],
@@ -62,8 +62,12 @@ function init() {
       "fcForward": [0],
       "fcRight": [9],
       "fcLeft": [26],
-      "fcBackward": [27]
-    }
+      "fcBackward": [27],
+      "shieldR": [36,42],
+      "shieldL": [45,51],
+      "shieldF": [54,60],
+      "shieldB": [63,69]
+        }
   });
 
   var bitSheet = new createjs.SpriteSheet({
