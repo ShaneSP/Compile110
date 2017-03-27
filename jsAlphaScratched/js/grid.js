@@ -61,7 +61,7 @@ function init() {
       "wkBackward": [27, 33],
       "fcForward": [0],
       "fcRight": [9],
-      "fcLeft": [26],
+      "fcLeft": [18],
       "fcBackward": [27],
       "shieldR": [36,42],
       "shieldL": [45,51],
@@ -86,6 +86,11 @@ function init() {
   player = new playerclass(cr, levelmap, stage, characterSheet);
   bit = new monsterclass(bcr, levelmap, stage, bitSheet, player);
 
+}
+
+function runCode() {
+  var code = editor.getValue();
+  eval(code);
 }
 
 init();

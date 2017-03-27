@@ -11,6 +11,8 @@ var playerclass = function (cr, map, stage, characterSheet) {
   this.character.x = this.col*40 - 1;
   this.character.y = this.row*40 - 5;
   this.stage.addChild(this.character);
+  this.eventqueue = [];
+  this.currentevent = "";
 
   // Setting up locations
   this.setCR = function(cr) {
@@ -27,6 +29,7 @@ var playerclass = function (cr, map, stage, characterSheet) {
 
   // Updating
   this.tick = function() {
+    this.event();
     if (this.finalx - this.character.x > 3) {
       this.character.x = this.character.x + 3;
     }
@@ -44,6 +47,7 @@ var playerclass = function (cr, map, stage, characterSheet) {
         this.character.y = this.finaly;
         this.character.x = this.finalx;
         player.changePosition("fc" + player.position.substring(2, 10));
+        this.emptyCurrent();
       }
       else if (Math.abs(this.finaly - this.character.y) < 4) {
         this.character.y = this.finaly;
@@ -54,47 +58,96 @@ var playerclass = function (cr, map, stage, characterSheet) {
     }
   }
 
+  this.event = function() {
+    if (this.currentevent == "" && this.eventqueue.length <= 0) {
+      return "noEvent";
+    }
+    if(this.currentevent == "") {
+      this.currentevent = this.eventqueue.shift();
+      switch(this.currentevent) {
+        case "moveRight":
+          this.beginRight();
+          break;
+        case "moveLeft":
+          this.beginLeft();
+          break;
+        case "moveUp":
+          this.beginUp();
+          break;
+        case "moveDown":
+          this.beginDown();
+          break;
+      }
+    }
+  }
+
+  this.emptyCurrent = function() {
+    this.currentevent = "";
+  }
+
   // Movement
   this.changePosition = function(pos) {
     this.position = pos;
     this.character.gotoAndPlay(pos);
   }
-  this.moveRight = function() {
+  this.beginRight = function() {
     if (this.map.tileOccupied([this.col+1, this.row]) == false && this.map.tileWalkable([this.col+1, this.row])) {
       this.setCR([this.col+1, this.row]);
       this.changePosition("wkRight");
     }
     else {
       this.changePosition("fcRight");
+      this.emptyCurrent();
     }
   }
-  this.moveLeft = function() {
+  this.beginLeft = function() {
     if (this.map.tileOccupied([this.col-1, this.row]) == false && this.map.tileWalkable([this.col-1, this.row])) {
       this.setCR([this.col-1, this.row]);
       this.changePosition("wkLeft");
     }
     else {
       this.changePosition("fcLeft");
+      this.emptyCurrent();
     }
   }
-  this.moveUp = function() {
+  this.beginUp = function() {
     if (this.map.tileOccupied([this.col, this.row-1]) == false && this.map.tileWalkable([this.col, this.row-1])) {
       this.setCR([this.col, this.row-1]);
       this.changePosition("wkBackward");
     }
     else {
       this.changePosition("fcBackward");
+      this.emptyCurrent();
     }
   }
-  this.moveDown = function() {
+  this.beginDown = function() {
     if (this.map.tileOccupied([this.col, this.row+1]) == false && this.map.tileWalkable([this.col, this.row+1])) {
       this.setCR([this.col, this.row+1]);
       this.changePosition("wkForward");
     }
     else {
       this.changePosition("fcForward");
+      this.emptyCurrent();
     }
   }
+  this.moveRight = function() {
+    this.eventqueue.push("moveRight");
+  }
+  this.moveLeft = function() {
+    this.eventqueue.push("moveLeft");
+  }
+  this.moveUp = function() {
+    this.eventqueue.push("moveUp");
+  }
+  this.moveDown = function() {
+    this.eventqueue.push("moveDown");
+  }
+
+  // this.finishAnimation = function() {
+  //   while(player.position[0] != "f") {
+  //
+  //   }
+  // }
 
   this.setXY();
 
