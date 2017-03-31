@@ -21,7 +21,7 @@ function GameLoop(gameEntities, inputQueue, canvasId) {
 
     this.canvas = document.getElementById("canvasId");
     this.context = this.canvas.getContext('2d');
-
+    
     this.ups = -1;
     this.fps = -1;
     this.lastUpsCount = 0;

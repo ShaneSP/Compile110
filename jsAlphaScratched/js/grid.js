@@ -83,7 +83,7 @@ function init() {
   levelmap = new map(maplayout, stage, tileSheet);
   var cr = [1, 4];
   var bcr = [8,4];
-  player = new playerclass(cr, levelmap, stage, characterSheet);
+  player = new playerclass(cr, levelmap, stage, characterSheet, 30);
   bit = new monsterclass(bcr, levelmap, stage, bitSheet, player);
 
 }

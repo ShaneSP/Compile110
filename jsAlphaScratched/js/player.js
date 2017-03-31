@@ -14,13 +14,13 @@ var playerclass = function (cr, map, stage, characterSheet, fps) {
   this.eventqueue = new Queue(6);
   this.currentevent = "";
   this.fps = fps;
-  this.frameIdkIncrem = Math.floor(FIXED_UPDATES_IN_A_SECOND/this.fps);
+  //this.frameIdkIncrem = Math.floor(FIXED_UPDATES_IN_A_SECOND/this.fps);
 
   this.gameStateUpdateCount = -1;
 
   this.start = function() {
       this.gameStateUpdateCount = 0;
-  };
+  }
 
   this.isOver = function() {
     if (!this.currentevent == "" && !this.eventqueue.isEmpty()) {
@@ -33,7 +33,7 @@ var playerclass = function (cr, map, stage, characterSheet, fps) {
       if(this.gameStateUpdateCount>=0) {
           this.gameStateUpdateCount++;
       }
-  };
+  }
 
   this.onGraphicsUpdate = function(context, x, y) {
       if(this.gameStateUpdateCount>=0) {
