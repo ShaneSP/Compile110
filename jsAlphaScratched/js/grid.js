@@ -67,7 +67,7 @@ function init() {
       "shieldL": [45,51],
       "shieldF": [54,60],
       "shieldB": [63,69]
-        }
+      }
   });
 
   var bitSheet = new createjs.SpriteSheet({
