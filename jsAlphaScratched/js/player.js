@@ -1,4 +1,4 @@
-var playerclass = function (cr, map, stage, characterSheet, fps) {
+var playerclass = function (cr, map, stage, characterSheet) {
   this.col = cr[0];
   this.row = cr[1];
   this.map = map;
@@ -13,33 +13,6 @@ var playerclass = function (cr, map, stage, characterSheet, fps) {
   this.stage.addChild(this.character);
   this.eventqueue = new Queue(6);
   this.currentevent = "";
-  this.fps = fps;
-  //this.frameIdkIncrem = Math.floor(FIXED_UPDATES_IN_A_SECOND/this.fps);
-
-  this.gameStateUpdateCount = -1;
-
-  this.start = function() {
-      this.gameStateUpdateCount = 0;
-  }
-
-  this.isOver = function() {
-    if (!this.currentevent == "" && !this.eventqueue.isEmpty()) {
-        //this is wrong, need to know that we've played through the whole animation
-        return this.gameStateUpdateCount > this.character.currentAnimationFrame();
-    }
-  }
-
-  this.onGameStateUpdate = function() {
-      if(this.gameStateUpdateCount>=0) {
-          this.gameStateUpdateCount++;
-      }
-  }
-
-  this.onGraphicsUpdate = function(context, x, y) {
-      if(this.gameStateUpdateCount>=0) {
-          this.tick();
-      }
-  }
 
   // Setting up locations
   this.setCR = function(cr) {

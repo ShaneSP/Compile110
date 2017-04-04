@@ -9,7 +9,7 @@ function GameLoop(gameEntities, inputQueue, canvasId) {
     window.requestAnimationFrame =
         window.requestAnimationFrame ||        //Chrome
         window.mozRequestAnimationFrame ||     //Firefox
-        window.webkitRequestAnimation Frame || //Safari
+        window.webkitRequestAnimationFrame || //Safari
         window.msRequestAnimationFrame;        //IE
 
     if(!window.requestAnimationFrame) {
@@ -19,9 +19,10 @@ function GameLoop(gameEntities, inputQueue, canvasId) {
     this.gameEntities = gameEntities;
     this.inputQueue = inputQueue;
 
-    this.canvas = document.getElementById("canvasId");
+    this.canvas = document.getElementById(canvasId);
+    this.stage = new new createjs.Stage(this.canvas);
     this.context = this.canvas.getContext('2d');
-    
+
     this.ups = -1;
     this.fps = -1;
     this.lastUpsCount = 0;
@@ -34,12 +35,15 @@ function GameLoop(gameEntities, inputQueue, canvasId) {
     /*
     * @public
     */
-    this.start function() {
+    this.start = function() {
         this.canvas.width = CANVAS_WIDTH;
         this.canvas.height = CANVAS_HEIGHT;
+        createjs.Ticker.addEventListener("tick", update);
         this.lastLoopCallTime = this.getCurrentTimeMs();
 
         this.update();
+
+        this.stage.update();
     };
 
     this.update = function() {
@@ -48,7 +52,7 @@ function GameLoop(gameEntities, inputQueue, canvasId) {
       var actualLoopDurationMs = self.getCurrentTimeMs()-self.lastLoopCallTime;
       self.lastLoopCallTime = self.getCurrentTimeMs();
       self.accumulatedTimeMs += actualLoopDurationMs;
-      while(self.accumulatedTimeMs>=FIXED_STEP_IDEAL_DURATION_MS) {
+      while(self.accumulatedTimeMs>= FIXED_STEP_IDEAL_DURATION_MS) {
           self.updateState();
           self.accumulatedTimeMs -= FIXED_STEP_IDEAL_DURATION_MS;
       }
@@ -83,7 +87,16 @@ function GameLoop(gameEntities, inputQueue, canvasId) {
         this.lastFpsCount++;
     };
 
-    this.getCurrentTimeMs = function() {
-        return new Date().getTime();
-    }
+    this.updateGraphics = function() {
+    //		this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    //		this.context.fillStyle="#C8C8C8";//light grey
+    //		this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
+
+    		for(var i=0; i<this.gameEntities.length; i++) {
+    			var gameEntity = this.gameEntities[i];
+    			gameEntity.updateGraphics(this.context);
+    		}
+
+    		this.lastFpsCount++;
+    	};
 }

@@ -2,28 +2,30 @@
 * @constructor
 */
 
-function GameEntity(startX, startY, width, height) {
-
-    this.startX = startX;
-    this.startY = startY;
+function GameEntity(cr, map, width, height, unit) {
+    this.col = cr[0];
+    this.row = cr[1];
+    this.map = map;
+    this.map.occupy([this.col, this.row], this);
+    this.startX = this.col*40-1;
+    this.startY = this.row*40-5;
     this.width = width;
     this.height = height;
-
-    this.name = name;
+    this.unit = unit;
 
     this.accumulatedTimeMs = 0;
     this.currentAnimationImageIdx = 0;
 
     this.currentAnimation = null;
 
-    this.finiteStateMachine = new FiniteStateMachine(this);
+	  this.finiteStateMachine = new FiniteStateMachine(this);
 
     /*
     * @public
     */
 
-    this.processInput = function(consoleInputEvent) {
-        this.finiteStateMachine.onUnitProcessInput(consoleInputEvent);
+    this.processInput = function(e) {
+        this.finiteStateMachine.onUnitProcessInput(e);
     };
 
     /*
@@ -32,16 +34,11 @@ function GameEntity(startX, startY, width, height) {
 
     this.updateState = function() {
         this.finiteStateMachine.onUnitUpdateState();
-        this.currentAnimation.onGameStateUpdate();
+		    this.currentAnimation.onGameStateUpdate();
     };
 
-    /**
-	 * @public
-	 * @param{Context} canvas
-	 */
-   
     this.updateGraphics = function(context) {
-        this.currentAnimation.onGraphicsUpdate(context, this.startX, this.startY);
-    };
+		    this.currentAnimation.onGraphicsUpdate(context, this.startX, this.startY);
+	  };
 
 };

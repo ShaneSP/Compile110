@@ -2,17 +2,6 @@ var canvas, stage;
 var maplayout, game, tileSheet, tiles;
 var player;
 var bit;
-var KEYCODE_LEFT = 37;
-var KEYCODE_RIGHT = 39;
-var KEYCODE_UP = 38;
-var KEYCODE_DOWN = 40;
-var xVel = 4;
-var yVel = 4;
-var moveLeft = false;
-var moveRight = false;
-var moveUp = false;
-var moveDown = false;
-var bitticker = 0;
 
 maplayout = [
   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -55,8 +44,8 @@ function init() {
     "images": ["assets/spritesheet_2.png"],
     "frames": {"height": 42, "width": 42, "count": 74, "regX": 0, "regY": 1, "spacing": 1, "margin": 1},
     "animations": {
-      "wkForward": [0, 6,],
-      "wkRight": [9, 17,],
+      "wkForward": [0, 6],
+      "wkRight": [9, 17],
       "wkLeft": [18, 26],
       "wkBackward": [27, 33],
       "fcForward": [0],
@@ -83,7 +72,7 @@ function init() {
   levelmap = new map(maplayout, stage, tileSheet);
   var cr = [1, 4];
   var bcr = [8,4];
-  player = new playerclass(cr, levelmap, stage, characterSheet, 30);
+  player = new playerclass(cr, levelmap, stage, characterSheet);
   bit = new monsterclass(bcr, levelmap, stage, bitSheet, player);
 
 }
