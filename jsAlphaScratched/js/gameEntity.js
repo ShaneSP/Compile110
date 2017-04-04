@@ -3,42 +3,42 @@
 */
 
 function GameEntity(cr, map, width, height, unit) {
-    this.col = cr[0];
-    this.row = cr[1];
-    this.map = map;
-    this.map.occupy([this.col, this.row], this);
-    this.startX = this.col*40-1;
-    this.startY = this.row*40-5;
-    this.width = width;
-    this.height = height;
-    this.unit = unit;
+  this.col = cr[0];
+  this.row = cr[1];
+  this.map = map;
+  this.map.occupy([this.col, this.row], this);
+  this.startX = this.col*40-1;
+  this.startY = this.row*40-5;
+  this.width = width;
+  this.height = height;
+  this.unit = unit;
 
-    this.accumulatedTimeMs = 0;
-    this.currentAnimationImageIdx = 0;
+  this.accumulatedTimeMs = 0;
+  this.currentAnimationImageIdx = 0;
 
-    this.currentAnimation = null;
+  this.currentAnimation = null;
 
-	  this.finiteStateMachine = new FiniteStateMachine(this);
+  this.finiteStateMachine = new FiniteStateMachine(this);
 
-    /*
-    * @public
-    */
+  /*
+  * @public
+  */
 
-    this.processInput = function(e) {
-        this.finiteStateMachine.onUnitProcessInput(e);
-    };
+  this.processInput = function(e) {
+    this.finiteStateMachine.onUnitProcessInput(e);
+  };
 
-    /*
-    * @public
-    */
+  /*
+  * @public
+  */
 
-    this.updateState = function() {
-        this.finiteStateMachine.onUnitUpdateState();
-		    this.currentAnimation.onGameStateUpdate();
-    };
+  this.updateState = function() {
+    this.finiteStateMachine.onUnitUpdateState();
+    this.currentAnimation.onGameStateUpdate();
+  };
 
-    this.updateGraphics = function(context) {
-		    this.currentAnimation.onGraphicsUpdate(context, this.startX, this.startY);
-	  };
+  this.updateGraphics = function(context) {
+    this.currentAnimation.onGraphicsUpdate(context, this.startX, this.startY);
+  };
 
 };
