@@ -1,5 +1,5 @@
 function main() {
-    createInputQueueGame();
+  createInputQueueGame();
 }
 
 function createInputQueueGame() {
