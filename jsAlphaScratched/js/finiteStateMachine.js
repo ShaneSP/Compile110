@@ -211,7 +211,16 @@ var FiniteStateMachine = function(unit) {
   	 $.extend(this,new BaseWalkState(unit, -1, INPUT_EVENT_TYPE.left));
   }
 
-
+  function WalkUpState(unit) {}
+  function WalkDownState(unit){}
+  function ShieldUpState(unit) {}
+  function ShieldDownState(unit) {}
+  function ShieldRightState(unit) {}
+  function ShieldLeftState(unit) {}
+  function FaceUpState(unit) {}
+  function FaceDownState(unit) {}
+  function FaceRightState(unit) {}
+  function FaceLeftState(unit) {}
 
 
 }
