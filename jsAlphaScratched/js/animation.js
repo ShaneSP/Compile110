@@ -21,7 +21,7 @@ var Animation = function(name, fps, unit) {
 
   this.onGraphicsUpdate = function(context, x, y, object) {
 		if(this.gameStateUpdatesCount>=0 && object!=null) {
-      object.moveRight();
+      object.createWalkAnimation();
     }
 	};
 }

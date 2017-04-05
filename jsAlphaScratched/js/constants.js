@@ -6,6 +6,10 @@ var WALK_SPEED_PIXELS_PER_SECOND = 70;
 var WALK_SPEED_PIXELS_PER_UPDATE = WALK_SPEED_PIXELS_PER_SECOND/FIXED_UPDATES_IN_A_SECOND;
 var STATES_HISTORY_CAPACITY = 10;
 var USER_INPUT_BUFFER_CAPACITY = 10;
+
+var CANVAS = document.getElementById("canvas");
+var STAGE = new createjs.Stage(canvas);
+
 var PLAYER_SHEET = new createjs.SpriteSheet({
 	"images": ["assets/spritesheet_2.png"],
 	"frames": {"height": 42, "width": 42, "count": 74, "regX": 0, "regY": 1, "spacing": 1, "margin": 1},
@@ -46,7 +50,7 @@ var TILE_SHEET = new createjs.SpriteSheet({
 	}
 });
 
-var MAP_LAYOUT = = [
+var MAP_LAYOUT = [
 	[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 	[0, 1, 1, 1, 1, 1, 1, 1, 1, 0],
 	[0, 1, 1, 1, 1, 1, 1, 1, 1, 0],
@@ -59,7 +63,7 @@ var MAP_LAYOUT = = [
 	[0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 ];
 
-var LEVEL_MAP = new map(MAP_LAYOUT, stage, TILE_SHEET);
+var LEVEL_MAP = new map(MAP_LAYOUT, STAGE, TILE_SHEET);
 
 var ANIMATION_MANAGER = new AnimationManager();
 
