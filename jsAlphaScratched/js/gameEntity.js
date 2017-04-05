@@ -2,7 +2,7 @@
 * @constructor
 */
 
-function GameEntity(cr, map, width, height, unit) {
+function GameEntity(cr, map, width, height) {
   this.col = cr[0];
   this.row = cr[1];
   this.map = map;
@@ -38,7 +38,13 @@ function GameEntity(cr, map, width, height, unit) {
   };
 
   this.updateGraphics = function(context) {
-    this.currentAnimation.onGraphicsUpdate(context, this.startX, this.startY);
+    this.currentAnimation.onGraphicsUpdate(context, this.startX, this.startY, this.unit);
   };
+
+  function PlayerEntity(player) {
+    $.extend(this, new GameEntity(cr, this.map, this.width, this.height));
+
+    
+  }
 
 };

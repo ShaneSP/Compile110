@@ -19,9 +19,9 @@ var Animation = function(name, fps, unit) {
 		}
 	};
 
-  this.onGraphicsUpdate = function(context, x, y) {
-		if(this.gameStateUpdatesCount>=0) {
-      unit.gotoAndPlay(this.name);
+  this.onGraphicsUpdate = function(context, x, y, object) {
+		if(this.gameStateUpdatesCount>=0 && object!=null) {
+      object.moveRight();
     }
 	};
 }

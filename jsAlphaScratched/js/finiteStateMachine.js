@@ -31,10 +31,9 @@ var FiniteStateMachine = function(unit) {
   this.states[this.statesEnum.FACE_D] = new FaceDownState(this.unit);
 
   this.actionsHistory = [];
-	//states history. For combos:
 	this.statesHistory = [];
 
-  this.currentState = this.states[this.statesEnum.FACE_R];
+  this.currentState = this.states[this.statesEnum.WALK_RIGHT];
 	this.currentState.baseState_init();
 
   this.onUnitProcessInput = function(inputEvent) {
@@ -72,14 +71,14 @@ var FiniteStateMachine = function(unit) {
 			nextState.baseState_init();
 		}
 		this.currentState = nextState;
-  };
+  }
 
   function BaseState(unit) {
   	this.unit = unit;
 
   	this.baseState_init = function() {
   		this.init();
-  	};
+  	}
 
   	this.init = function() {};
 
