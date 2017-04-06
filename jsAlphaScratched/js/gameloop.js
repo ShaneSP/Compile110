@@ -35,7 +35,6 @@ function GameLoop(gameEntities, inputQueue, stage) {
   * @public
   */
   this.start = function() {
-    alert("start");
     this.lastLoopCallTime = this.getCurrentTimeMs();
 
     this.update();
@@ -44,7 +43,6 @@ function GameLoop(gameEntities, inputQueue, stage) {
   };
 
   this.update = function() {
-    alert("update");
     var self = this;
 
     var actualLoopDurationMs = self.getCurrentTimeMs()-self.lastLoopCallTime;
@@ -65,7 +63,6 @@ function GameLoop(gameEntities, inputQueue, stage) {
   };
 
   this.processInput = function() {
-    alert("processInput");
     while(!inputQueue.isEmpty()) {
       var inputEvent = inputQueue.pop();
       for(var i=0; i<this.gameEntities.length; i++) {
@@ -76,7 +73,6 @@ function GameLoop(gameEntities, inputQueue, stage) {
   };
 
   this.updateState = function() {
-    alert("updateState");
     this.processInput();
 
     for(var i=0; i<this.gameEntities.length; i++) {
@@ -98,7 +94,6 @@ function GameLoop(gameEntities, inputQueue, stage) {
   //		this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
   //		this.context.fillStyle="#C8C8C8";//light grey
   //		this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
-    alert("updateGraphics");
 		for(var i=0; i<this.gameEntities.length; i++) {
 			var gameEntity = this.gameEntities[i];
 			gameEntity.updateGraphics(this.context);

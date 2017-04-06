@@ -5,7 +5,8 @@
 function GameEntity(cr, map, width, height) {
   this.col = cr[0];
   this.row = cr[1];
-  LEVEL_MAP.occupy([this.col, this.row], new PlayerEntity());
+  this.player = new PlayerEntity();
+  LEVEL_MAP.occupy([this.col, this.row], this.player);
   this.startX = this.col*40-1;
   this.startY = this.row*40-5;
   this.width = width;
@@ -48,19 +49,22 @@ function GameEntity(cr, map, width, height) {
     STAGE.addChild(this.player);
 
     this.setCR = function(cr) {
-      this.map.unoccupy([this.col, this.row]);
+      LEVEL_MAP.unoccupy([this.col, this.row]);
       this.col = cr[0];
       this.row = cr[1];
-      this.map.occupy(cr, this);
+      LEVEL_MAP.occupy(cr, this);
       this.setXY();
     }
 
-    this.setXY = function() {
-      this.finalx = this.col*40 - 1;
-      this.finaly = this.row*40 - 5;
+    this.setXY = function(){
+      this.player.x = this.col*40-1;
+      this.player.y = this.row*40-5;
     }
 
-    this.setXY();
+    this.getX = function() {
+      return this.player.x;
+    }
+
   };
 
 };

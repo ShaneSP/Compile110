@@ -1,3 +1,6 @@
+var eventListener;
+var gameEntity;
+
 function main() {
   createInputQueueGame();
 }
@@ -7,16 +10,19 @@ function createInputQueueGame() {
   var bcr = [8,4];
   //player = new playerclass(cr, levelmap, stage, PLAYER_SHEET);
   //bit = new monsterclass(bcr, levelmap, stage, BIT_SHEET, player);
-
-  var gameEntity = new GameEntity(cr, LEVEL_MAP, 42, 42);
-
+  gameEntity = new GameEntity(cr, LEVEL_MAP, 42, 42);
   var gameEntities = new Array();
   gameEntities[0] = gameEntity;
 
   var inputQueue = new Queue(USER_INPUT_BUFFER_CAPACITY);
   var gameLoop = new GameLoop(gameEntities, inputQueue, STAGE);
+  eventListener = new EventListener(inputQueue);
 
   gameLoop.start();
+}
+
+function moveRight() {
+  eventListener.moveRight();
 }
 
 function runCode() {

@@ -72,6 +72,7 @@ var INPUT_EVENT_STATE = {
 	"end":0
 };
 
+//implement method calls for these types
 var INPUT_EVENT_TYPE = {
 	"shieldR":10,
   "shieldL":12,
