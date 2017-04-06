@@ -21,6 +21,8 @@ function createInputQueueGame() {
   gameLoop.start();
 }
 
+//need to implement an exception catch
+
 function moveRight() {
   eventListener.moveRight();
 }
