@@ -5,7 +5,7 @@
 function GameEntity(cr, map, width, height) {
   this.col = cr[0];
   this.row = cr[1];
-  this.player = new PlayerEntity();
+  PLAYER = new PlayerEntity(this.col, this.row, new Animation("wkRight", 9));
   LEVEL_MAP.occupy([this.col, this.row], this.player);
   this.startX = this.col*40-1;
   this.startY = this.row*40-5;
@@ -37,22 +37,27 @@ function GameEntity(cr, map, width, height) {
     this.currentAnimation.onGameStateUpdate();
   };
 
-  this.updateGraphics = function(context) {
-    this.currentAnimation.onGraphicsUpdate(context, this.startX, this.startY);
+  this.baseUpdateGraphics = function(context) {
+    //need to make PlayerEntity extend GameEntity
+    PLAYER.updateGraphics();
   };
 
-  function PlayerEntity() {
-    this.player = new createjs.Sprite(PLAYER_SHEET);
-    this.currentAnimation = new Animation("fcRight",1,this.player);
-    this.player.x = this.col*40-1;
-    this.player.y = this.row*40-5;
+  function PlayerEntity(col, row, current) {
+    this.col = col;
+    this.row = row;
+    this.current = current;
+    this.player = new createjs.Sprite(PLAYER_SHEET, "fcLeft");
     STAGE.addChild(this.player);
+    this.player.x = col*40-1;
+    this.player.y = row*40-5;
+    this.startX = this.player.x;
+    this.startY = this.player.y;
 
     this.setCR = function(cr) {
       LEVEL_MAP.unoccupy([this.col, this.row]);
-      this.col = cr[0];
-      this.row = cr[1];
-      LEVEL_MAP.occupy(cr, this);
+      col = cr[0];
+      row = cr[1];
+      LEVEL_MAP.occupy(cr, this.player);
       this.setXY();
     }
 
@@ -65,6 +70,14 @@ function GameEntity(cr, map, width, height) {
       return this.player.x;
     }
 
+    this.getPlayer = function() {
+      return this.player;
+    }
+
+    this.updateGraphics = function(context) {
+      this.current.onGraphicsUpdate(context, this.startX, this.startY);
+    }
+    this.setXY();
   };
 
 };

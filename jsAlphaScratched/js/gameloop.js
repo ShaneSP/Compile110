@@ -77,7 +77,7 @@ function GameLoop(gameEntities, inputQueue, stage) {
 
     for(var i=0; i<this.gameEntities.length; i++) {
       var gameEntity = this.gameEntities[i];
-      gameEntity.updateGraphics(this.context);
+      gameEntity.baseUpdateGraphics(this.context);
     }
 
     this.lastFpsCount++;
@@ -91,12 +91,9 @@ function GameLoop(gameEntities, inputQueue, stage) {
 	};
 
   this.updateGraphics = function() {
-  //		this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
-  //		this.context.fillStyle="#C8C8C8";//light grey
-  //		this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
 		for(var i=0; i<this.gameEntities.length; i++) {
 			var gameEntity = this.gameEntities[i];
-			gameEntity.updateGraphics(this.context);
+			gameEntity.baseUpdateGraphics(this.context);
 		}
 
 		this.lastFpsCount++;

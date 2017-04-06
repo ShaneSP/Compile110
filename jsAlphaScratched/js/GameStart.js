@@ -27,6 +27,10 @@ function moveRight() {
   eventListener.moveRight();
 }
 
+function faceRight() {
+  eventListener.faceRight();
+}
+
 function runCode() {
   var code = editor.getValue();
   eval(code);

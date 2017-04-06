@@ -15,6 +15,10 @@ function EventListener(inputQueue) {
     this.moveRight = function() {
         this.event("right");
     }
+
+    this.faceRight = function() {
+        this.event("faceR");
+    }
 }
 
 function InputEvent(inputEventType, inputEventState, timeStamp) {

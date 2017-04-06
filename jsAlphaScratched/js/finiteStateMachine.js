@@ -178,8 +178,32 @@ var FiniteStateMachine = function(unit) {
   			this.nextState = this.getShieldUpState();
       } else if(inputEvent.type == INPUT_EVENT_TYPE.shieldD) {
   			this.nextState = this.getShieldDownState();
+      } else if(inputEvent.type == INPUT_EVENT_TYPE.faceR) {
+  			this.nextState = this.getFaceRightState();
+      } else if(inputEvent.type == INPUT_EVENT_TYPE.faceL) {
+  			this.nextState = this.getFaceLeftState();
+      } else if(inputEvent.type == INPUT_EVENT_TYPE.faceU) {
+  			this.nextState = this.getFaceUpState();
+      } else if(inputEvent.type == INPUT_EVENT_TYPE.faceD) {
+  			this.nextState = this.getFaceDownState();
       }
   	};
+  }
+
+  function BaseStaticState(unit, inputEventType) {
+    if(inputEventType == "faceR") {
+      $.extend(this,new BaseMoveState(unit, ANIMATION_MANAGER.createFaceRAnimation(), inputEventType));
+    }
+
+    this.onUnitUpdateState = function() {
+      if(this.nextState != null) {
+        var tmp = this.nextState;
+        this.nextState = null;
+        return tmp;
+      } else {
+        return this;
+      }
+    }
   }
 
   function BaseWalkState(unit, direction, inputEventType) {
@@ -218,6 +242,8 @@ var FiniteStateMachine = function(unit) {
   function ShieldLeftState(unit) {}
   function FaceUpState(unit) {}
   function FaceDownState(unit) {}
-  function FaceRightState(unit) {}
+  function FaceRightState(unit) {
+    $.extend(this, new BaseStaticState(unit, INPUT_EVENT_TYPE.faceR));
+  }
   function FaceLeftState(unit) {}
 }

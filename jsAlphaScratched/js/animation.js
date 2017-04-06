@@ -1,5 +1,4 @@
-var Animation = function(name, fps, unit) {
-  this.unit = unit;
+var Animation = function(name, fps) {
   this.name = name;
   this.fps = fps;
   this.frameIdxIncrem = Math.floor(FIXED_UPDATES_IN_A_SECOND/this.fps);
@@ -19,16 +18,23 @@ var Animation = function(name, fps, unit) {
 		}
 	};
 
-  this.onGraphicsUpdate = function(context, x, y, object) {
-		if(this.gameStateUpdatesCount>=0 && object!=null) {
-      object.createWalkAnimation();
+  this.onGraphicsUpdate = function(context, x, y) {
+		if(this.gameStateUpdatesCount>=0) {
+      createWalkAnimation();
     }
 	};
 }
 
 var AnimationManager = function() {
   this.createWalkAnimation = function() {
-    var animation = new Animation("wkRight", 9, this.unit);
+    var animation = new Animation("wkRight", 9);
+    PLAYER.setCR([PLAYER.col+1,PLAYER.row]);
+    PLAYER.getPlayer().gotoAndPlay("wkRight");
+    return animation;
+  }
+
+  this.createFaceRAnimation = function(object) {
+    var animation = new Animation("fcRight", 1);
     return animation;
   }
 }
