@@ -25,7 +25,7 @@
     #textbox {
       float: left;
       border: 4px solid black;
-      width: 400px
+      background-color: #A4A4A4
     }
   </style>
   </head>
@@ -36,13 +36,12 @@
       <div id="gameboard" style="width: 400px; height: 400px;">
         <canvas id="canvas" width="400" height="400"></canvas>
       </div>
+      <div id="textbox" style="width: 400px: height: 70px;">
+        <span id="text_target"></span>
+      </div>
       <div id="divider"></div>
       <div id="editor2">console.log("Nice.");</div>
-      <div id="textbox">
-        Testing Testing
-      </div>
-      <span id="text_target"></span>
-    </div>
+
     <div style="max-width:400px; padding-top:10px;">
       <center>
         <input type="button" value="Run Code" onclick="runCode();"/>
