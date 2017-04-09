@@ -18,8 +18,8 @@ function GameLoop(gameEntities, inputQueue, stage) {
   this.gameEntities = gameEntities;
   this.inputQueue = inputQueue;
 
-  this.stage = stage;
-  this.context = this.stage.canvas.getContext('2d');
+
+  this.context = STAGE.canvas.getContext('2d');
 
   this.ups = -1;
   this.fps = -1;
@@ -89,7 +89,6 @@ function GameLoop(gameEntities, inputQueue, stage) {
 	};
 
   this.updateGraphics = function() {
-    this.checkPlayerHealth();
 		for(var i=0; i<this.gameEntities.length; i++) {
 			var gameEntity = this.gameEntities[i];
 			gameEntity.baseUpdateGraphics(this.context);
@@ -99,39 +98,5 @@ function GameLoop(gameEntities, inputQueue, stage) {
 		this.lastFpsCount++;
   };
 
-  this.checkPlayerHealth = function() {
-    if(PLAYER.getHealth()==4){
-      HEARTS[4].empty();
-      HEARTS[3].full();
-      HEARTS[2].full();
-      HEARTS[1].full();
-      HEARTS[0].full();
-    } else if(PLAYER.getHealth()==3) {
-      HEARTS[4].empty();
-      HEARTS[3].empty();
-      HEARTS[2].full();
-      HEARTS[1].full();
-      HEARTS[0].full();
-    } else if(PLAYER.getHealth()==2) {
-      HEARTS[4].empty();
-      HEARTS[3].empty();
-      HEARTS[2].empty();
-      HEARTS[1].full();
-      HEARTS[0].full();
-    } else if(PLAYER.getHealth()==1) {
-      HEARTS[4].empty();
-      HEARTS[3].empty();
-      HEARTS[2].empty();
-      HEARTS[1].empty();
-      HEARTS[0].full();
-    } else if(PLAYER.getHealth()==0) {
-      HEARTS[4].empty();
-      HEARTS[3].empty();
-      HEARTS[2].empty();
-      HEARTS[1].empty();
-      HEARTS[0].empty();
-      alert("Game Over");
-    }
-  }
 
 }
