@@ -2,20 +2,17 @@
 * @constructor
 */
 
-function GameEntity(cr, map, width, height) {
+function GameEntity(cr, map) {
   this.col = cr[0];
   this.row = cr[1];
-  PLAYER = new PlayerEntity(this.col, this.row, new Animation("wkRight", 9));
-  LEVEL_MAP.occupy([this.col, this.row], this.player);
-  this.startX = this.col*40-1;
-  this.startY = this.row*40-5;
-  this.width = width;
-  this.height = height;
+  PLAYER = new PlayerEntity(this.col, this.row, new Animation("fcRight", 1));
+
+  LEVEL_MAP.occupy([this.col, this.row], PLAYER.getPlayer());
 
   this.accumulatedTimeMs = 0;
   this.currentAnimationImageIdx = 0;
 
-  this.currentAnimation = null;
+  this.currentAnimation = new Animation("fcRight",1);
 
   this.finiteStateMachine = new FiniteStateMachine(this);
 
@@ -43,20 +40,23 @@ function GameEntity(cr, map, width, height) {
   };
 
   function PlayerEntity(col, row, current) {
+    this.health = 5;
     this.col = col;
     this.row = row;
     this.current = current;
     this.player = new createjs.Sprite(PLAYER_SHEET, "fcLeft");
     STAGE.addChild(this.player);
-    this.player.x = col*40-1;
-    this.player.y = row*40-5;
-    this.startX = this.player.x;
-    this.startY = this.player.y;
+    this.player.x = this.col*40-1;
+    this.player.y = this.row*40-5;
+
+    this.getHealth = function() {
+      return this.health;
+    }
 
     this.setCR = function(cr) {
       LEVEL_MAP.unoccupy([this.col, this.row]);
-      col = cr[0];
-      row = cr[1];
+      this.col = cr[0];
+      this.row = cr[1];
       LEVEL_MAP.occupy(cr, this.player);
       this.setXY();
     }

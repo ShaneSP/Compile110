@@ -38,8 +38,6 @@ function GameLoop(gameEntities, inputQueue, stage) {
     this.lastLoopCallTime = this.getCurrentTimeMs();
 
     this.update();
-
-    this.stage.update();
   };
 
   this.update = function() {
@@ -63,13 +61,13 @@ function GameLoop(gameEntities, inputQueue, stage) {
   };
 
   this.processInput = function() {
-    while(!inputQueue.isEmpty()) {
-      var inputEvent = inputQueue.pop();
-      for(var i=0; i<this.gameEntities.length; i++) {
-        var gameEntity = this.gameEntities[i];
-        gameEntity.processInput(inputEvent);
+      while(!inputQueue.isEmpty()) {
+        var inputEvent = inputQueue.pop();
+        for(var i=0; i<this.gameEntities.length; i++) {
+          var gameEntity = this.gameEntities[i];
+          gameEntity.processInput(inputEvent);
+        }
       }
-    }
   };
 
   this.updateState = function() {
@@ -77,7 +75,7 @@ function GameLoop(gameEntities, inputQueue, stage) {
 
     for(var i=0; i<this.gameEntities.length; i++) {
       var gameEntity = this.gameEntities[i];
-      gameEntity.baseUpdateGraphics(this.context);
+      gameEntity.updateState();
     }
 
     this.lastFpsCount++;
@@ -91,11 +89,49 @@ function GameLoop(gameEntities, inputQueue, stage) {
 	};
 
   this.updateGraphics = function() {
+    this.checkPlayerHealth();
 		for(var i=0; i<this.gameEntities.length; i++) {
 			var gameEntity = this.gameEntities[i];
 			gameEntity.baseUpdateGraphics(this.context);
+      STAGE.update();
 		}
 
 		this.lastFpsCount++;
   };
+
+  this.checkPlayerHealth = function() {
+    if(PLAYER.getHealth()==4){
+      HEARTS[4].empty();
+      HEARTS[3].full();
+      HEARTS[2].full();
+      HEARTS[1].full();
+      HEARTS[0].full();
+    } else if(PLAYER.getHealth()==3) {
+      HEARTS[4].empty();
+      HEARTS[3].empty();
+      HEARTS[2].full();
+      HEARTS[1].full();
+      HEARTS[0].full();
+    } else if(PLAYER.getHealth()==2) {
+      HEARTS[4].empty();
+      HEARTS[3].empty();
+      HEARTS[2].empty();
+      HEARTS[1].full();
+      HEARTS[0].full();
+    } else if(PLAYER.getHealth()==1) {
+      HEARTS[4].empty();
+      HEARTS[3].empty();
+      HEARTS[2].empty();
+      HEARTS[1].empty();
+      HEARTS[0].full();
+    } else if(PLAYER.getHealth()==0) {
+      HEARTS[4].empty();
+      HEARTS[3].empty();
+      HEARTS[2].empty();
+      HEARTS[1].empty();
+      HEARTS[0].empty();
+      alert("Game Over");
+    }
+  }
+
 }

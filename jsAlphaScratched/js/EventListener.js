@@ -19,6 +19,10 @@ function EventListener(inputQueue) {
     this.faceRight = function() {
         this.event("faceR");
     }
+
+    this.faceLeft = function() {
+        this.event("faceL");
+    }
 }
 
 function InputEvent(inputEventType, inputEventState, timeStamp) {

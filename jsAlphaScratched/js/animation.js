@@ -20,21 +20,31 @@ var Animation = function(name, fps) {
 
   this.onGraphicsUpdate = function(context, x, y) {
 		if(this.gameStateUpdatesCount>=0) {
-      createWalkAnimation();
+      if(this.name == "wkRight") {
+        createWalkAnimation();
+      } else if(this.name == "fcRight") {
+        createFaceRAnimation();
+      }
     }
 	};
 }
 
 var AnimationManager = function() {
-  this.createWalkAnimation = function() {
+  this.createWalkRightAnimation = function() {
     var animation = new Animation("wkRight", 9);
-    PLAYER.setCR([PLAYER.col+1,PLAYER.row]);
-    PLAYER.getPlayer().gotoAndPlay("wkRight");
+    PLAYER.player.gotoAndPlay("wkRight");
     return animation;
   }
 
-  this.createFaceRAnimation = function(object) {
+  this.createFaceRAnimation = function() {
     var animation = new Animation("fcRight", 1);
+    PLAYER.player.gotoAndPlay("fcRight");
+    return animation;
+  }
+
+  this.createFaceLAnimation = function() {
+    var animation = new Animation("fcLeft", 1);
+    PLAYER.player.gotoAndPlay("fcLeft");
     return animation;
   }
 }
