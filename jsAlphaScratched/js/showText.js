@@ -6,5 +6,5 @@ var showText = function(target, message, index, interval) {
 }
 
 $(function () {
-  showText("#msg", "This is a test message. I want to see how it will show up on the webpage.", 0, 100);
+  showText("#textbox", "This is a test message. I want to see how it will show up on the webpage.", 0, 100);
 });
