@@ -56,6 +56,8 @@ function setTop() {
   krishead.y = 25;
   topstage.addChild(krishead);
 
+  energy = new energybar(5, topstage);
+
   createjs.Ticker.timingMode = createjs.Ticker.RAF;
   createjs.Ticker.addEventListener("tick", toptick);
   createjs.Ticker.setInterval(15);
