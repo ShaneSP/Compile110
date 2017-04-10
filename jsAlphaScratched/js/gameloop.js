@@ -93,7 +93,7 @@ function GameLoop(gameEntities, inputQueue, stage) {
 			var gameEntity = this.gameEntities[i];
 			gameEntity.baseUpdateGraphics(this.context);
       STAGE.update();
-		}
+    }
 
 		this.lastFpsCount++;
   };
