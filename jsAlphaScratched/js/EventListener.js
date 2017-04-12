@@ -13,15 +13,15 @@ function EventListener(inputQueue) {
     }
 
     this.moveRight = function() {
-        this.event("right");
+        this.event(INPUT_EVENT_TYPE.right);
     }
 
     this.faceRight = function() {
-        this.event("faceR");
+        this.event(INPUT_EVENT_TYPE.faceR);
     }
 
     this.faceLeft = function() {
-        this.event("faceL");
+        this.event(INPUT_EVENT_TYPE.faceL);
     }
 }
 

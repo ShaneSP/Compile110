@@ -18,13 +18,8 @@ function GameLoop(gameEntities, inputQueue, stage) {
   this.gameEntities = gameEntities;
   this.inputQueue = inputQueue;
 
-
   this.context = STAGE.canvas.getContext('2d');
 
-  this.ups = -1;
-  this.fps = -1;
-  this.lastUpsCount = 0;
-  this.lastFpsCount = 0;
   this.lastSpeedMeasureTime = new Date().getTime();
 
   this.lastLoopCallTime = 0;
@@ -36,13 +31,11 @@ function GameLoop(gameEntities, inputQueue, stage) {
   */
   this.start = function() {
     this.lastLoopCallTime = this.getCurrentTimeMs();
-
     this.update();
   };
 
   this.update = function() {
     var self = this;
-
     var actualLoopDurationMs = self.getCurrentTimeMs()-self.lastLoopCallTime;
     self.lastLoopCallTime = self.getCurrentTimeMs();
     self.accumulatedTimeMs += actualLoopDurationMs;
@@ -52,7 +45,6 @@ function GameLoop(gameEntities, inputQueue, stage) {
     }
 
     self.updateGraphics();
-
     /*
 	 * request a new graphics rendering, specifying this function as the function to be called back when
 	 * the browser schedules a frame update
@@ -77,8 +69,6 @@ function GameLoop(gameEntities, inputQueue, stage) {
       var gameEntity = this.gameEntities[i];
       gameEntity.updateState();
     }
-
-    this.lastFpsCount++;
   };
 
   /**
@@ -94,8 +84,6 @@ function GameLoop(gameEntities, inputQueue, stage) {
 			gameEntity.baseUpdateGraphics(this.context);
       STAGE.update();
     }
-
-		this.lastFpsCount++;
   };
 
 

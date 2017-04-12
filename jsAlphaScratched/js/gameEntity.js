@@ -3,16 +3,14 @@
 */
 
 function GameEntity(cr, map) {
-  this.col = cr[0];
-  this.row = cr[1];
-  PLAYER = new PlayerEntity(this.col, this.row, new Animation("fcRight", 1));
-
-  LEVEL_MAP.occupy([this.col, this.row], PLAYER.getPlayer());
+  this.cr = cr;
+  PLAYER = new PlayerEntity(this.cr[0], this.cr[1], new Animation("fcRight", 30));
+  //console.log("made PlayerEntity");
 
   this.accumulatedTimeMs = 0;
   this.currentAnimationImageIdx = 0;
 
-  this.currentAnimation = new Animation("fcRight",1);
+  this.currentAnimation = null;
 
   this.finiteStateMachine = new FiniteStateMachine(this);
 
@@ -30,6 +28,7 @@ function GameEntity(cr, map) {
   */
 
   this.updateState = function() {
+    //change this when implementing child entities
     this.finiteStateMachine.onUnitUpdateState();
     this.currentAnimation.onGameStateUpdate();
   };
@@ -54,6 +53,7 @@ function GameEntity(cr, map) {
     }
 
     this.setCR = function(cr) {
+      //implement velocity of animations
       LEVEL_MAP.unoccupy([this.col, this.row]);
       this.col = cr[0];
       this.row = cr[1];
@@ -77,7 +77,7 @@ function GameEntity(cr, map) {
     this.updateGraphics = function(context) {
       this.current.onGraphicsUpdate(context, this.startX, this.startY);
     }
-    this.setXY();
+    this.setCR([this.col,this.row]);
   };
 
 };

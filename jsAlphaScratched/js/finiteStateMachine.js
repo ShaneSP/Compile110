@@ -42,14 +42,17 @@ var FiniteStateMachine = function(unit) {
 				inputEvent.type == INPUT_EVENT_TYPE.right ||
         inputEvent.type == INPUT_EVENT_TYPE.up) &&
 				inputEvent.state == INPUT_EVENT_STATE.end) {
+          console.log("inputevent type is walk");
+          //input state is never ended
 			//on a motion action (we're ending a motion), don't register/equeue it
-      alert(inputEvent.type);
-		} else {
-			this.actionsHistory.push(inputEvent);
-			while(this.actionsHistory.length > USER_INPUT_BUFFER_CAPACITY) {
-				this.actionsHistory.shift();//remove oldest input event
-			}
 		}
+    // else {
+    //   console.log("inputevent type isn't walk");
+		// 	this.actionsHistory.push(inputEvent);
+		// 	while(this.actionsHistory.length > USER_INPUT_BUFFER_CAPACITY) {
+		// 		this.actionsHistory.shift();//remove oldest input event
+		// 	}
+		// }
 
 		this.currentState.onUnitProcessInput(inputEvent);
   };
@@ -58,17 +61,17 @@ var FiniteStateMachine = function(unit) {
 		var nextState = this.currentState.onUnitUpdateState();
 		//when switching between naturally occurring states... :
 		if(nextState !==  this.currentState) {
-			//before init-ing the next state, put the one we just ended into the state history:
-			if(this.currentState !== this.states[this.statesEnum.FACE_U]
-        || this.currentState !== this.states[this.statesEnum.FACE_L]
-        || this.currentState !== this.states[this.statesEnum.FACE_R]
-        || this.currentState !== this.states[this.statesEnum.FACE_D]) {
-				this.statesHistory.push(this.currentState);
-				while(this.statesHistory.length > STATES_HISTORY_CAPACITY) {
-					this.statesHistory.shift();//remove oldest state
-				}
-			}
-
+		// 	//before init-ing the next state, put the one we just ended into the state history:
+		// 	if(this.currentState !== this.states[this.statesEnum.FACE_U]
+    //     || this.currentState !== this.states[this.statesEnum.FACE_L]
+    //     || this.currentState !== this.states[this.statesEnum.FACE_R]
+    //     || this.currentState !== this.states[this.statesEnum.FACE_D]) {
+		// 		this.statesHistory.push(this.currentState);
+		// 		while(this.statesHistory.length > STATES_HISTORY_CAPACITY) {
+		// 			this.statesHistory.shift();//remove oldest state
+		// 		}
+		// 	}
+      console.log(nextState);
 			nextState.baseState_init();
 		}
 		this.currentState = nextState;
@@ -212,11 +215,8 @@ var FiniteStateMachine = function(unit) {
   }
 
   function BaseWalkState(unit, inputEventType) {
-    if(inputEventType == "right") {
-  	   $.extend(this,new BaseMoveState(unit, ANIMATION_MANAGER.createWalkRightAnimation(), inputEventType));
-    } else {
-       $.extend(this,new BaseMoveState(unit, ANIMATION_MANAGER.createWalkRightAnimation(), inputEventType));
-    }
+  	$.extend(this,new BaseMoveState(unit, ANIMATION_MANAGER.createWalkRightAnimation(), inputEventType));
+
 
   	this.onUnitUpdateState = function() {
   		if(this.nextState !=null) {
@@ -225,12 +225,13 @@ var FiniteStateMachine = function(unit) {
         //PLAYER.setCR([PLAYER.col+1,PLAYER.row]);
   			return tmp;
   		} else {
-  			PLAYER.setCR([PLAYER.col+1,PLAYER.row]);
+  			//PLAYER.setCR([PLAYER.col+1,PLAYER.row]);
   		}
 	  };
   }
 
   function WalkRightState(unit) {
+      console.log("WalkRightState");
   	 $.extend(this,new BaseWalkState(unit, INPUT_EVENT_TYPE.right));
   }
 
@@ -247,9 +248,11 @@ var FiniteStateMachine = function(unit) {
   function FaceUpState(unit) {}
   function FaceDownState(unit) {}
   function FaceRightState(unit) {
+    console.log("FaceRightState");
     $.extend(this, new BaseStaticState(unit, INPUT_EVENT_TYPE.faceR));
   }
   function FaceLeftState(unit) {
+    console.log("FaceLeftState");
     $.extend(this, new BaseStaticState(unit, INPUT_EVENT_TYPE.faceL));
   }
 }

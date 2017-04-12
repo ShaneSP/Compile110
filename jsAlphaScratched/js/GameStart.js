@@ -10,6 +10,7 @@ function createInputQueueGame() {
   var bcr = [8,4];
   //player = new playerclass(cr, levelmap, stage, PLAYER_SHEET);
   //bit = new monsterclass(bcr, levelmap, stage, BIT_SHEET, player);
+
   gameEntity = new GameEntity(cr, LEVEL_MAP);
   var gameEntities = new Array();
   gameEntities[0] = gameEntity;
