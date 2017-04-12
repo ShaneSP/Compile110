@@ -23,7 +23,7 @@ var Animation = function(name, fps) {
     //this if-statement is wrong
 		if(this.gameStateUpdatesCount>=0) {
       if(this.name == "wkRight") {
-        if(!LEVEL_MAP.tileOccupied([PLAYER.col+1,PLAYER.row])){
+        if(!LEVEL_MAP.tileOccupied([PLAYER.col+1,PLAYER.row]) && LEVEL_MAP.tileWalkable([PLAYER.col+1,PLAYER.row])){
           ANIMATION_MANAGER.createWalkRightAnimation();
           PLAYER.setCR([PLAYER.col+1,PLAYER.row]);
         }
