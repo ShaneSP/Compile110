@@ -75,7 +75,7 @@ function GameEntity(cr, map) {
     }
 
     this.updateGraphics = function(context) {
-      this.current.onGraphicsUpdate(context, this.startX, this.startY);
+      this.current.onGraphicsUpdate(context);
     }
     this.setCR([this.col,this.row]);
   };

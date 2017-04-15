@@ -1,3 +1,5 @@
+//TODO: implement Event
+
 function EventListener(inputQueue) {
     var self = this;
     this.inputQueue=inputQueue;
@@ -9,6 +11,7 @@ function EventListener(inputQueue) {
         if(inputEventType != undefined) {
             var timeStamp = new Date().getTime();
             this.inputQueue.push(new InputEvent(inputEventType, INPUT_EVENT_STATE.start, timeStamp));
+            this.inputQueue.push(new InputEvent(inputEventType, INPUT_EVENT_STATE.end, timeStamp));
         }
     }
 

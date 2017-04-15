@@ -1,4 +1,4 @@
-var Animation = function(name, fps) {
+function Animation(name, fps) {
   this.name = name;
   this.fps = fps;
   this.frameIdxIncrem = Math.floor(FIXED_UPDATES_IN_A_SECOND/this.fps);
@@ -24,17 +24,18 @@ var Animation = function(name, fps) {
 		if(this.gameStateUpdatesCount>=0) {
       if(this.name == "wkRight") {
         if(!LEVEL_MAP.tileOccupied([PLAYER.col+1,PLAYER.row]) && LEVEL_MAP.tileWalkable([PLAYER.col+1,PLAYER.row])){
-          ANIMATION_MANAGER.createWalkRightAnimation();
+
           PLAYER.setCR([PLAYER.col+1,PLAYER.row]);
         }
       } else if(this.name == "fcRight") {
-        ANIMATION_MANAGER.createFaceRAnimation();
+
       }
     }
 	};
 }
 
-var AnimationManager = function() {
+function AnimationManager() {
+
   this.createWalkRightAnimation = function() {
     console.log("animation manager walk right");
     var animation = new Animation("wkRight", 9);

@@ -43,7 +43,6 @@ var FiniteStateMachine = function(unit) {
         inputEvent.type == INPUT_EVENT_TYPE.up) &&
 				inputEvent.state == INPUT_EVENT_STATE.end) {
           console.log("inputevent type is walk");
-          //input state is never ended
 			//on a motion action (we're ending a motion), don't register/equeue it
 		}
     // else {
@@ -71,8 +70,7 @@ var FiniteStateMachine = function(unit) {
 		// 			this.statesHistory.shift();//remove oldest state
 		// 		}
 		// 	}
-      console.log(nextState);
-			nextState.baseState_init();
+			 nextState.baseState_init();
 		}
 		this.currentState = nextState;
   }
@@ -84,14 +82,13 @@ var FiniteStateMachine = function(unit) {
   		this.init();
   	}
 
-  	this.init = function() {};
-
   	this.onUnitProcessInput = function(inputEvent) {};
 
   	this.onUnitUpdateState = function() {};
 
   	this.getState = function(stateEnum) {
   		var state = this.unit.finiteStateMachine.states[stateEnum];
+      console.log(state);
   		return state;
   	};
 
@@ -165,32 +162,16 @@ var FiniteStateMachine = function(unit) {
   	this.onUnitProcessInput = function(inputEvent) {
   		if(this.stateInputEventType != null && inputEvent.type == this.stateInputEventType && inputEvent.state == INPUT_EVENT_STATE.end) {
   			this.nextState = this.getFaceRightState();
-  		} else if(inputEvent.type == INPUT_EVENT_TYPE.up && inputEvent.state == INPUT_EVENT_STATE.start) {
-  			this.nextState = this.getWalkUpState();
   		} else if(inputEvent.type == INPUT_EVENT_TYPE.right && inputEvent.state == INPUT_EVENT_STATE.start) {
-  			this.nextState = this.getWalkRightState();
+        this.nextState = this.getWalkRightState();
   		} else if(inputEvent.type == INPUT_EVENT_TYPE.left && inputEvent.state == INPUT_EVENT_STATE.start) {
   			this.nextState = this.getWalkLeftState();
-  		} else if(inputEvent.type == INPUT_EVENT_TYPE.down && inputEvent.state == INPUT_EVENT_STATE.start) {
-  			this.nextState = this.getWalkDownState();
-        //MIGHT NOT WANT TO CHANGE STATE WHEN SHIELDING
-      } else if(inputEvent.type == INPUT_EVENT_TYPE.shieldR) {
-  			this.nextState = this.getShieldRightState();
-      } else if(inputEvent.type == INPUT_EVENT_TYPE.shieldL) {
-  			this.nextState = this.getShieldLeftState();
-      } else if(inputEvent.type == INPUT_EVENT_TYPE.shieldU) {
-  			this.nextState = this.getShieldUpState();
-      } else if(inputEvent.type == INPUT_EVENT_TYPE.shieldD) {
-  			this.nextState = this.getShieldDownState();
       } else if(inputEvent.type == INPUT_EVENT_TYPE.faceR) {
   			this.nextState = this.getFaceRightState();
       } else if(inputEvent.type == INPUT_EVENT_TYPE.faceL) {
   			this.nextState = this.getFaceLeftState();
-      } else if(inputEvent.type == INPUT_EVENT_TYPE.faceU) {
-  			this.nextState = this.getFaceUpState();
-      } else if(inputEvent.type == INPUT_EVENT_TYPE.faceD) {
-  			this.nextState = this.getFaceDownState();
       }
+      console.log(this.nextState);
   	};
   }
 
@@ -198,6 +179,8 @@ var FiniteStateMachine = function(unit) {
     if(inputEventType == "faceR") {
       $.extend(this,new BaseMoveState(unit, ANIMATION_MANAGER.createFaceRAnimation(), inputEventType));
     } else {
+      //default to last direction faced
+      //figure out last thing animation manager did last
        $.extend(this,new BaseMoveState(unit, ANIMATION_MANAGER.createFaceLAnimation(), inputEventType));
     }
 
@@ -205,10 +188,8 @@ var FiniteStateMachine = function(unit) {
       if(this.nextState != null) {
         var tmp = this.nextState;
         this.nextState = null;
-        //PLAYER.setCR([PLAYER.col+1,PLAYER.row]);
         return tmp;
       } else {
-        PLAYER.setCR([PLAYER.col,PLAYER.row]);
         return this;
       }
     }
@@ -222,10 +203,9 @@ var FiniteStateMachine = function(unit) {
   		if(this.nextState !=null) {
   			var tmp = this.nextState;
   			this.nextState = null;
-        //PLAYER.setCR([PLAYER.col+1,PLAYER.row]);
   			return tmp;
   		} else {
-  			//PLAYER.setCR([PLAYER.col+1,PLAYER.row]);
+        return this;
   		}
 	  };
   }
@@ -233,6 +213,7 @@ var FiniteStateMachine = function(unit) {
   function WalkRightState(unit) {
       console.log("WalkRightState");
   	 $.extend(this,new BaseWalkState(unit, INPUT_EVENT_TYPE.right));
+     this.unit.currentAnimation = ANIMATION_MANAGER.createWalkRightAnimation();
   }
 
   function WalkLeftState(unit) {
@@ -250,6 +231,7 @@ var FiniteStateMachine = function(unit) {
   function FaceRightState(unit) {
     console.log("FaceRightState");
     $.extend(this, new BaseStaticState(unit, INPUT_EVENT_TYPE.faceR));
+    ANIMATION_MANAGER.createFaceRAnimation();
   }
   function FaceLeftState(unit) {
     console.log("FaceLeftState");
