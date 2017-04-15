@@ -1,5 +1,5 @@
 /*
-* @constructor
+* 2 TODO
 */
 
 function GameEntity(cr, map) {
@@ -12,7 +12,7 @@ function GameEntity(cr, map) {
 
   this.currentAnimation = null;
 
-  this.finiteStateMachine = new FiniteStateMachine(this);
+  //this.finiteStateMachine = new FiniteStateMachine(this);
 
 
   /*
@@ -20,7 +20,7 @@ function GameEntity(cr, map) {
   */
 
   this.processInput = function(e) {
-    this.finiteStateMachine.onUnitProcessInput(e);
+    //this.finiteStateMachine.onUnitProcessInput(e);
   };
 
   /*
@@ -29,11 +29,11 @@ function GameEntity(cr, map) {
 
   this.updateState = function() {
     //change this when implementing child entities
-    this.finiteStateMachine.onUnitUpdateState();
-    this.currentAnimation.onGameStateUpdate();
+    // this.finiteStateMachine.onUnitUpdateState();
+    // this.currentAnimation.onGameStateUpdate();
   };
 
-  this.baseUpdateGraphics = function(context) {
+  this.updateGraphics = function(context) {
     //need to make PlayerEntity extend GameEntity
     PLAYER.updateGraphics();
   };
@@ -61,6 +61,7 @@ function GameEntity(cr, map) {
       this.setXY();
     }
 
+    //TODO: steadily move player to next position
     this.setXY = function(){
       this.player.x = this.col*40-1;
       this.player.y = this.row*40-5;
@@ -74,6 +75,7 @@ function GameEntity(cr, map) {
       return this.player;
     }
 
+    //TODO: workout handling animations here
     this.updateGraphics = function(context) {
       this.current.onGraphicsUpdate(context);
     }

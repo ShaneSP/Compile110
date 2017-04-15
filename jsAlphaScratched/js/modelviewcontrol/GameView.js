@@ -1,4 +1,4 @@
-//TODO: implement ListView and ListController
+//3 TODO
 
 /**
  * The View. View presents the model and provides
@@ -7,14 +7,35 @@
  */
 function GameView(model, elements) {
     this._model = model;
+    //html elements
     this._elements = elements;
+
+    this.updatedGraphics = new Event(this);
+    this.runCode = new Event(this);
 
     var _this = this;
 
     // attach model listeners here
-    
+    this._model.inputEvent.attach(function () {
+      _this.processInput();
+    });
 
+    this._model.entityAdded.attach(function () {
+      _this.processInput();
+    });
+
+    this._model.entityRemoved.attach(function () {
+      _this.processInput();
+    });
+
+    //attach listeners to runcode button
+    this._elements.button.click(function () {
+      _this.runCode.notify();
+    });
 }
+
+//TODO: setting the CR and updating player position should be done within
+//      the gameEntity's processInput()/updateGraphics()
 
 GameView.prototype = {
     show : function () {
@@ -23,6 +44,22 @@ GameView.prototype = {
 
     update : function () {
         //TODO: Stage ticker
+        for(var i=0; i<GAME_ENTITIES.length; i++) {
+    			var gameEntity = GAME_ENTITIES[i];
+    			gameEntity.updateGraphics(); //TODO: change gameEntity's updateGraphics()
+          STAGE.update();
+        }
+    },
+
+    processInput : function () {
+      while(!this._model._queue.isEmpty()) {
+        var inputEvent = this._model._queue.pop();
+        for(var i=0; i<GAME_ENTITIES.length; i++) {
+    			var gameEntity = GAME_ENTITIES[i];
+          gameEntity.processInput(inputEvent); //TODO: change gameEntity's processInput()
+        }
+      }
+      this.update();
     }
 };
 
@@ -36,27 +73,14 @@ function GameController(model, view) {
 
     var _this = this;
 
-    this._view.moveRightEvent.attach(function () {
-        _this.moveRight();
-    });
-
-    this._view.moveLeftEvent.attach(function () {
-        _this.moveLeft();
-    });
+    this._view.runCode.attach(function () {
+      _this.runCode();
+    })
 }
 
 GameController.prototype = {
-    moveRight : function () {
-        console.log("moveRight");
-        if (item && LEVEL_MAP.tileWalkable && !LEVEL_MAP.tileOccupied) {
-            PLAYER.setCR([PLAYER.col+1,PLAYER.row]);
-        }
-    },
-
-    moveLeft : function () {
-        console.log("moveLeft");
-        if (LEVEL_MAP.tileWalkable && !LEVEL_MAP.tileOccupied) {
-            PLAYER.setCR([PLAYER.col+1,PLAYER.row]);
-        }
+    runCode : function() {
+      var code = editor.getValue();
+      eval(code);
     }
 };

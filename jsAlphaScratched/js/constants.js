@@ -12,6 +12,8 @@ var STAGE = new createjs.Stage(canvas);
 
 var PLAYER = null;
 
+var GAME_ENTITIES = new Array();
+
 var PLAYER_SHEET = new createjs.SpriteSheet({
 	"images": ["assets/spritesheet_2.png"],
 	"frames": {"height": 42, "width": 42, "count": 74, "regX": 0, "regY": 1, "spacing": 1, "margin": 1},
