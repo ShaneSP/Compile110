@@ -24,7 +24,7 @@ function createInputQueueGame() {
 
   var model = new GameModel(GAME_ENTITIES,inputQueue);
   var view = new GameView(model, {
-            'button' :($'button') //TODO: add Run Code button here
+            'button' : $('button') //TODO: add Run Code button here
           });
   var controller = new GameController(model, view);
   view.show();
@@ -32,7 +32,7 @@ function createInputQueueGame() {
 
 //need to implement an exception catch
 
-function runCode() {
-  var code = editor.getValue();
-  eval(code);
-}
+// function runCode() {
+//   var code = editor.getValue();
+//   eval(code);
+// }

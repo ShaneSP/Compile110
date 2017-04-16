@@ -20,17 +20,10 @@ function GameModel(entities, inputQueue) {
 }
 
 GameModel.prototype = {
-    processInput : function() {
-      while(!_queue.isEmpty()) {
-        var inputEvent = _queue.pop();
-        for(var i=0; i<this.entities.length; i++) {
-          var gameEntity = this.entities[i];
-          gameEntity.processInput(inputEvent);
-        }
-        this.inputEvent.notify({inputEvent});
-      }
+    input : function (e) {
+      this.inputEvent.notify({e});
     },
-
+    
     addEntity : function (e) {
       this._entities.push(e);
       this.entityAdded.notify({e});

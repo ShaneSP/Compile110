@@ -42,11 +42,11 @@ GameView.prototype = {
         this.update();
     },
 
-    update : function () {
+    update : function (a) {
         //TODO: Stage ticker
         for(var i=0; i<GAME_ENTITIES.length; i++) {
     			var gameEntity = GAME_ENTITIES[i];
-    			gameEntity.updateGraphics(); //TODO: change gameEntity's updateGraphics()
+    			gameEntity.updateGraphics(a); //TODO: change gameEntity's updateGraphics()
           STAGE.update();
         }
     },
@@ -58,8 +58,9 @@ GameView.prototype = {
     			var gameEntity = GAME_ENTITIES[i];
           gameEntity.processInput(inputEvent); //TODO: change gameEntity's processInput()
         }
+        this.update(inputEvent);
       }
-      this.update();
+
     }
 };
 
@@ -74,6 +75,7 @@ function GameController(model, view) {
     var _this = this;
 
     this._view.runCode.attach(function () {
+      console.log("attaching runCode");
       _this.runCode();
     })
 }
@@ -82,5 +84,10 @@ GameController.prototype = {
     runCode : function() {
       var code = editor.getValue();
       eval(code);
+    },
+
+    moveRight : function() {
+      console.log("moveRight");
+      this._model._queue.push("wkRight");
     }
 };

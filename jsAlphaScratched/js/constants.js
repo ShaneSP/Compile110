@@ -69,7 +69,7 @@ var MAP_LAYOUT = [
 
 var LEVEL_MAP = new map(MAP_LAYOUT, STAGE, TILE_SHEET);
 
-var ANIMATION_MANAGER = new AnimationManager();
+//var ANIMATION_MANAGER = new AnimationManager();
 
 var INPUT_EVENT_STATE = {
 	"start":1,

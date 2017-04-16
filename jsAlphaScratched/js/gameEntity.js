@@ -4,7 +4,7 @@
 
 function GameEntity(cr, map) {
   this.cr = cr;
-  PLAYER = new PlayerEntity(this.cr[0], this.cr[1], new Animation("fcRight", 30));
+  PLAYER = new PlayerEntity(this.cr[0], this.cr[1], "fcRight");
   //console.log("made PlayerEntity");
 
   this.accumulatedTimeMs = 0;
@@ -21,6 +21,7 @@ function GameEntity(cr, map) {
 
   this.processInput = function(e) {
     //this.finiteStateMachine.onUnitProcessInput(e);
+    PLAYER.processInput(e);
   };
 
   /*
@@ -58,7 +59,7 @@ function GameEntity(cr, map) {
       this.col = cr[0];
       this.row = cr[1];
       LEVEL_MAP.occupy(cr, this.player);
-      this.setXY();
+      //this.setXY();
     }
 
     //TODO: steadily move player to next position
@@ -75,9 +76,22 @@ function GameEntity(cr, map) {
       return this.player;
     }
 
+    this.processInput = function(e) {
+      var nextEvent = e;
+      if(nextEvent == "wkRight") {
+        if(!LEVEL_MAP.tileOccupied([this.col+1,this.row])
+          && LEVEL_MAP.tileWalkable([this.col+1,this.row])) {
+          this.setCR([this.col+1,this.row]);
+        } else {
+          console.log("there's a snake in my boot");
+        }
+      }
+    }
+
     //TODO: workout handling animations here
-    this.updateGraphics = function(context) {
-      this.current.onGraphicsUpdate(context);
+    this.updateGraphics = function(name) {
+      this.player.gotoAndPlay(name);
+      this.setXY();
     }
     this.setCR([this.col,this.row]);
   };

@@ -38,12 +38,9 @@
       <table id="">
         <tr>
           <td>
-            <div id="editor">player.moveRight();
-//press "Run Code" button and look at console.
-//the currentState is displayed, why is nextState null?
-            </div>
+            <div id="editor">player.moveRight();</div>
             <center>
-              <input type="button" value="Run Code" onclick="runCode();"/>
+              <input type="button" value="Run Code" id="button"/>
             </center>
           </td>
           <td style="width:400px;">
@@ -80,12 +77,14 @@
 
     <script src="js/map.js"></script>
     <script src="js/queue.js"></script>
-    <script src="js/animation.js"></script>
+    <!-- <script src="js/animation.js"></script> -->
     <script src="js/constants.js"></script>
-    <script src="js/EventListener.js"></script>
-    <script src="js/finiteStateMachine.js"></script>
+    <script src="js/modelviewcontrol/Event.js"></script>
+    <!-- <script src="js/finiteStateMachine.js"></script> -->
     <script src="js/gameEntity.js"></script>
-    <script src="js/gameloop.js"></script>
+    <script src="js/modelviewcontrol/GameModel.js"></script>
+    <script src="js/modelviewcontrol/GameView.js"></script>
+    <!-- <script src="js/gameloop.js"></script> -->
     <script src="js/GameStart.js"></script>
 
     <br/>
