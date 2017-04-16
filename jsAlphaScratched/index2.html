@@ -38,7 +38,11 @@
       <table id="">
         <tr>
           <td>
-            <div id="editor">player.moveRight();</div>
+            <div id="editor">this.moveRight();
+if(PLAYER.col==8) {
+    this.moveLeft();
+}
+console.log(PLAYER.col);</div>
             <center>
               <input type="button" value="Run Code" id="button"/>
             </center>

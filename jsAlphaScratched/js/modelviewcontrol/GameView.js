@@ -89,5 +89,12 @@ GameController.prototype = {
     moveRight : function() {
       console.log("moveRight");
       this._model._queue.push("wkRight");
+      this._model.inputEvent.notify();
+    },
+
+    moveLeft : function() {
+      console.log("moveLeft");
+      this._model._queue.push("wkLeft");
+      this._model.inputEvent.notify();
     }
 };

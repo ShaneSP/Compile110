@@ -82,15 +82,20 @@ function GameEntity(cr, map) {
         if(!LEVEL_MAP.tileOccupied([this.col+1,this.row])
           && LEVEL_MAP.tileWalkable([this.col+1,this.row])) {
           this.setCR([this.col+1,this.row]);
-        } else {
-          console.log("there's a snake in my boot");
+        }
+      } else if(nextEvent == "wkLeft") {
+        if(!LEVEL_MAP.tileOccupied([this.col-1,this.row])
+          && LEVEL_MAP.tileWalkable([this.col-1,this.row])) {
+          this.setCR([this.col-1,this.row]);
         }
       }
     }
+  
 
     //TODO: workout handling animations here
     this.updateGraphics = function(name) {
       this.player.gotoAndPlay(name);
+      console.log(name);
       this.setXY();
     }
     this.setCR([this.col,this.row]);
