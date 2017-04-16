@@ -49,6 +49,8 @@ function GameEntity(cr, map) {
     this.row = row;
     this.current = current;
     this.player = new createjs.Sprite(PLAYER_SHEET, this.current);
+    this.player.framerate = .5;
+
     STAGE.addChild(this.player);
     this.player.x = this.col*40-1;
     this.player.y = this.row*40-5;

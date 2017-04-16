@@ -38,11 +38,14 @@
       <table id="">
         <tr>
           <td>
-            <div id="editor">this.moveRight();
-if(PLAYER.col==8) {
-    this.moveLeft();
-}
-console.log(PLAYER.col);</div>
+            <div id="editor">for(var i = 0; i < 7; i++) {
+    this.moveRight()
+    if(PLAYER.col==8) {
+        this.moveLeft();
+        i--;
+    }
+    console.log(PLAYER.col);
+}</div>
             <center>
               <input type="button" value="Run Code" id="button"/>
             </center>

@@ -31,6 +31,7 @@ function createInputQueueGame() {
 
   createjs.Ticker.addEventListener("tick", handleTick);
   // createjs.Ticker.timingMode = createjs.Ticker.RAF_SYNCHED;
+  createjs.Ticker.setInterval(15);
   createjs.Ticker.setFPS(15);
   //view.show();
 }
