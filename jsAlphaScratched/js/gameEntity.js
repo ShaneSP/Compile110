@@ -36,7 +36,7 @@ function GameEntity(cr, map) {
 
   this.updateGraphics = function(context) {
     //need to make PlayerEntity extend GameEntity
-    PLAYER.updateGraphics();
+    PLAYER.updateGraphics(context);
   };
 
   function PlayerEntity(col, row, current) {
@@ -90,12 +90,12 @@ function GameEntity(cr, map) {
         }
       }
     }
-  
+
 
     //TODO: workout handling animations here
     this.updateGraphics = function(name) {
       this.player.gotoAndPlay(name);
-      console.log(name);
+      console.log(this.player.currentAnimation);
       this.setXY();
     }
     this.setCR([this.col,this.row]);

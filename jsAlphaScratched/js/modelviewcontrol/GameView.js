@@ -44,6 +44,7 @@ GameView.prototype = {
 
     update : function (a) {
         //TODO: Stage ticker
+        console.log("inputEvent: " + a);
         for(var i=0; i<GAME_ENTITIES.length; i++) {
     			var gameEntity = GAME_ENTITIES[i];
     			gameEntity.updateGraphics(a); //TODO: change gameEntity's updateGraphics()

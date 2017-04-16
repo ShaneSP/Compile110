@@ -27,6 +27,7 @@ function createInputQueueGame() {
             'button' : $('input[type=button]') //TODO: add Run Code button here
           });
   var controller = new GameController(model, view);
+  
   view.show();
 }
 
