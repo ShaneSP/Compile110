@@ -16,8 +16,8 @@ function GameView(model, elements) {
     var _this = this;
 
     // attach model listeners here
-    this._model.inputEvent.attach(function () {
-      _this.processInput();
+    this._model.inputEvent.attach(function (sender, args) {
+      _this.processInput(args);
     });
 
     this._model.entityAdded.attach(function () {
@@ -39,20 +39,7 @@ function GameView(model, elements) {
 
 GameView.prototype = {
     show : function () {
-      this.processInput();
       this.update();
-    },
-
-    update : function (a) {
-        //TODO: Stage ticker
-        // console.log("inputEvent: " + a);
-        for(var i=0; i<GAME_ENTITIES.length; i++) {
-    			var gameEntity = GAME_ENTITIES[i];
-    			gameEntity.updateGraphics(a); //TODO: change gameEntity's updateGraphics()
-        }
-    },
-
-    processInput : function () {
       var animationsDone = true;
       for(var i=0; i<GAME_ENTITIES.length; i++) {
         var gameEntity = GAME_ENTITIES[i];
@@ -65,11 +52,46 @@ GameView.prototype = {
         var inputEvent = this._model._queue.pop();
         for(var i=0; i<GAME_ENTITIES.length; i++) {
     			var gameEntity = GAME_ENTITIES[i];
-          gameEntity.processInput(inputEvent); //TODO: change gameEntity's processInput()
+          gameEntity.processAnimation(inputEvent[1]);
         }
-        this.update(inputEvent);
+      }
+    },
+
+    update : function (a) {
+        //TODO: Stage ticker
+        for(var i=0; i<GAME_ENTITIES.length; i++) {
+    			var gameEntity = GAME_ENTITIES[i];
+    			gameEntity.updateGraphics(a); //TODO: change gameEntity's updateGraphics()
+        }
+    },
+
+    processInput : function(inputEvent) {
+      console.log(inputEvent);
+      for(var i=0; i<GAME_ENTITIES.length; i++) {
+  			var gameEntity = GAME_ENTITIES[i];
+        var animationaction = gameEntity.processInput(inputEvent[1]);
+        this._model._queue.push([inputEvent[0], animationaction]);
       }
     }
+
+    // processInput : function () {
+    //   var animationsDone = true;
+    //   for(var i=0; i<GAME_ENTITIES.length; i++) {
+    //     var gameEntity = GAME_ENTITIES[i];
+    //     animationsDone = animationsDone && gameEntity.animationDone();
+    //   }
+    //   if (!animationsDone) {
+    //     return;
+    //   }
+    //   if (!this._model._queue.isEmpty()) {
+    //     var inputEvent = this._model._queue.pop();
+    //     for(var i=0; i<GAME_ENTITIES.length; i++) {
+    // 			var gameEntity = GAME_ENTITIES[i];
+    //       gameEntity.processInput(inputEvent); //TODO: change gameEntity's processInput()
+    //     }
+    //     this.update(inputEvent);
+    //   }
+    // }
 };
 
 /**
@@ -96,13 +118,11 @@ GameController.prototype = {
 
     moveRight : function() {
       console.log("moveRight");
-      this._model._queue.push("wkRight");
-      this._model.inputEvent.notify();
+      this._model.inputEvent.notify(["player","wkRight"]);
     },
 
     moveLeft : function() {
       console.log("moveLeft");
-      this._model._queue.push("wkLeft");
-      this._model.inputEvent.notify();
+      this._model.inputEvent.notify(["player","wkLeft"]);
     }
 };
