@@ -39,6 +39,10 @@ function GameEntity(cr, map) {
     PLAYER.updateGraphics(context);
   };
 
+  this.animationDone = function() {
+    return PLAYER.animationDone();
+  }
+
   function PlayerEntity(col, row, current) {
     this.health = 5;
     this.col = col;
@@ -64,16 +68,57 @@ function GameEntity(cr, map) {
 
     //TODO: steadily move player to next position
     this.setXY = function(){
-      this.player.x = this.col*40-1;
-      this.player.y = this.row*40-5;
+      if (this.col*40-1 - this.player.x > 3) {
+        this.player.x = this.player.x + 3;
+      }
+      else if (this.col*40-1 - this.player.x < -3) {
+        this.player.x = this.player.x - 3;
+      }
+      if (this.row*40-5 - this.player.y > 3) {
+        this.player.y = this.player.y + 3;
+      }
+      else if (this.row*40-5 - this.player.y < -3) {
+        this.player.y = this.player.y - 3;
+      }
+    }
+
+    this.getXY = function(){
+      return [this.player.x, this.player.y];
+    }
+
+    this.movementDone = function() {
+      if (this.player.x == this.col*40-1 && this.player.y == this.row*40-5) {
+        return true;
+      }
+      else if (Math.abs(this.row*40-5 - this.player.y) < 4 && Math.abs(this.col*40-1 - this.player.x) < 4) {
+        this.player.x = this.col*40-1;
+        this.player.y = this.row*40-5;
+        this.changePosition("fc" + this.current.substring(2, 10));
+        return true;
+      }
+      return false;
+    }
+
+    this.animationDone = function() {
+      return this.movementDone();
     }
 
     this.getX = function() {
       return this.player.x;
     }
 
+    this.getY = function() {
+      return this.player.y;
+    }
+
     this.getPlayer = function() {
       return this.player;
+    }
+
+    this.changePosition = function(pos) {
+      console.log(pos);
+      this.current = pos;
+      this.player.gotoAndPlay(pos);
     }
 
     this.processInput = function(e) {
@@ -81,11 +126,13 @@ function GameEntity(cr, map) {
       if(nextEvent == "wkRight") {
         if(!LEVEL_MAP.tileOccupied([this.col+1,this.row])
           && LEVEL_MAP.tileWalkable([this.col+1,this.row])) {
+          this.changePosition(nextEvent);
           this.setCR([this.col+1,this.row]);
         }
       } else if(nextEvent == "wkLeft") {
         if(!LEVEL_MAP.tileOccupied([this.col-1,this.row])
           && LEVEL_MAP.tileWalkable([this.col-1,this.row])) {
+          this.changePosition(nextEvent);
           this.setCR([this.col-1,this.row]);
         }
       }
@@ -95,11 +142,12 @@ function GameEntity(cr, map) {
     //TODO: workout handling animations here
     this.updateGraphics = function(name) {
       var nextAnim = name;
-      if(nextAnim != this.player.currentAnimation) {
-        this.player.gotoAndPlay(name);
-        this.setXY();
+      if(nextAnim != this.player.currentAnimation && nextAnim != undefined) {
+        this.changePosition(name);
       }
+      this.setXY();
     }
+
     this.setCR([this.col,this.row]);
   };
 

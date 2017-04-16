@@ -39,12 +39,13 @@ function GameView(model, elements) {
 
 GameView.prototype = {
     show : function () {
-        this.update();
+      this.processInput();
+      this.update();
     },
 
     update : function (a) {
         //TODO: Stage ticker
-        console.log("inputEvent: " + a);
+        // console.log("inputEvent: " + a);
         for(var i=0; i<GAME_ENTITIES.length; i++) {
     			var gameEntity = GAME_ENTITIES[i];
     			gameEntity.updateGraphics(a); //TODO: change gameEntity's updateGraphics()
@@ -52,7 +53,15 @@ GameView.prototype = {
     },
 
     processInput : function () {
-      while(!this._model._queue.isEmpty()) {
+      var animationsDone = true;
+      for(var i=0; i<GAME_ENTITIES.length; i++) {
+        var gameEntity = GAME_ENTITIES[i];
+        animationsDone = animationsDone && gameEntity.animationDone();
+      }
+      if (!animationsDone) {
+        return;
+      }
+      if (!this._model._queue.isEmpty()) {
         var inputEvent = this._model._queue.pop();
         for(var i=0; i<GAME_ENTITIES.length; i++) {
     			var gameEntity = GAME_ENTITIES[i];
@@ -60,7 +69,6 @@ GameView.prototype = {
         }
         this.update(inputEvent);
       }
-
     }
 };
 

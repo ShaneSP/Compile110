@@ -30,8 +30,8 @@ function createInputQueueGame() {
   var controller = new GameController(model, view);
 
   createjs.Ticker.addEventListener("tick", handleTick);
-  createjs.Ticker.timingMode = createjs.Ticker.RAF_SYNCHED;
-  createjs.Ticker.setFPS(30);
+  // createjs.Ticker.timingMode = createjs.Ticker.RAF_SYNCHED;
+  createjs.Ticker.setFPS(15);
   //view.show();
 }
 

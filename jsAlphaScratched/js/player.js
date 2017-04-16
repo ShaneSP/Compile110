@@ -66,16 +66,16 @@ var playerclass = function (cr, map, stage, characterSheet) {
       this.currentevent = this.eventqueue.pop();
       switch(this.currentevent) {
         case "moveRight":
-          this.beginRight();
+          this.moveRight();
           break;
         case "moveLeft":
-          this.beginLeft();
+          this.moveLeft();
           break;
         case "moveUp":
-          this.beginUp();
+          this.moveUp();
           break;
         case "moveDown":
-          this.beginDown();
+          this.moveDown();
           break;
       }
     }
@@ -90,7 +90,7 @@ var playerclass = function (cr, map, stage, characterSheet) {
     this.position = pos;
     this.character.gotoAndPlay(pos);
   }
-  this.beginRight = function() {
+  this.moveRight = function() {
     if (this.map.tileOccupied([this.col+1, this.row]) == false && this.map.tileWalkable([this.col+1, this.row])) {
       this.setCR([this.col+1, this.row]);
       this.changePosition("wkRight");
@@ -100,7 +100,7 @@ var playerclass = function (cr, map, stage, characterSheet) {
       this.emptyCurrent();
     }
   }
-  this.beginLeft = function() {
+  this.moveLeft = function() {
     if (this.map.tileOccupied([this.col-1, this.row]) == false && this.map.tileWalkable([this.col-1, this.row])) {
       this.setCR([this.col-1, this.row]);
       this.changePosition("wkLeft");
@@ -110,7 +110,7 @@ var playerclass = function (cr, map, stage, characterSheet) {
       this.emptyCurrent();
     }
   }
-  this.beginUp = function() {
+  this.moveUp = function() {
     if (this.map.tileOccupied([this.col, this.row-1]) == false && this.map.tileWalkable([this.col, this.row-1])) {
       this.setCR([this.col, this.row-1]);
       this.changePosition("wkBackward");
@@ -120,7 +120,7 @@ var playerclass = function (cr, map, stage, characterSheet) {
       this.emptyCurrent();
     }
   }
-  this.beginDown = function() {
+  this.moveDown = function() {
     if (this.map.tileOccupied([this.col, this.row+1]) == false && this.map.tileWalkable([this.col, this.row+1])) {
       this.setCR([this.col, this.row+1]);
       this.changePosition("wkForward");
@@ -129,18 +129,6 @@ var playerclass = function (cr, map, stage, characterSheet) {
       this.changePosition("fcForward");
       this.emptyCurrent();
     }
-  }
-  this.moveRight = function() {
-    this.eventqueue.push("moveRight");
-  }
-  this.moveLeft = function() {
-    this.eventqueue.push("moveLeft");
-  }
-  this.moveUp = function() {
-    this.eventqueue.push("moveUp");
-  }
-  this.moveDown = function() {
-    this.eventqueue.push("moveDown");
   }
 
   // this.finishAnimation = function() {
