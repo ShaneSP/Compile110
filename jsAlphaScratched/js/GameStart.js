@@ -28,7 +28,7 @@ function createInputQueueGame() {
           });
   var controller = new GameController(model, view);
 
-  createjs.Ticker.addEventListener("tick", view.show);
+  createjs.Ticker.addEventListener("tick", view.update);
 
   view.show();
 }
