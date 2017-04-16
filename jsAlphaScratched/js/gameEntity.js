@@ -94,9 +94,11 @@ function GameEntity(cr, map) {
 
     //TODO: workout handling animations here
     this.updateGraphics = function(name) {
-      this.player.gotoAndPlay(name);
-      console.log(this.player.currentAnimation);
-      this.setXY();
+      var nextAnim = name;
+      if(nextAnim != this.player.currentAnimation) {
+        this.player.gotoAndPlay(name);
+        this.setXY();
+      }
     }
     this.setCR([this.col,this.row]);
   };

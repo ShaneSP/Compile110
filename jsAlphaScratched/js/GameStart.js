@@ -2,6 +2,7 @@
 
 var player; //eventListener
 var gameEntity;
+var view;
 
 function main() {
   createInputQueueGame();
@@ -23,14 +24,20 @@ function createInputQueueGame() {
   //gameLoop.start();
 
   var model = new GameModel(GAME_ENTITIES,inputQueue);
-  var view = new GameView(model, {
+  view = new GameView(model, {
             'button' : $('input[type=button]') //TODO: add Run Code button here
           });
   var controller = new GameController(model, view);
 
-  createjs.Ticker.addEventListener("tick", view.update);
+  createjs.Ticker.addEventListener("tick", handleTick);
+  createjs.Ticker.timingMode = createjs.Ticker.RAF_SYNCHED;
+  createjs.Ticker.setFPS(30);
+  //view.show();
+}
 
+function handleTick() {
   view.show();
+  STAGE.update();
 }
 
 //need to implement an exception catch
