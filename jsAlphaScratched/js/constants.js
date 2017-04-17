@@ -11,6 +11,7 @@ var STAGE = new createjs.Stage(canvas);
 
 var PLAYER = null;
 var BIT = null;
+var SWORD = null;
 
 var GAME_ENTITIES = new Array();
 
@@ -18,18 +19,18 @@ var PLAYER_SHEET = new createjs.SpriteSheet({
 	"images": ["assets/spritesheet_2.png"],
 	"frames": {"height": 42, "width": 42, "count": 74, "regX": 0, "regY": 1, "spacing": 1, "margin": 1},
 	"animations": {
-		"wkForward": [0, 6],
+		"wkDown": [0, 6],
 		"wkRight": [9, 17],
 		"wkLeft": [18, 26],
-		"wkBackward": [27, 33],
-		"fcForward": [0],
+		"wkUp": [27, 33],
+		"fcDown": [0],
 		"fcRight": [9],
 		"fcLeft": [18],
-		"fcBackward": [27],
-		"shieldR": [36,42],
-		"shieldL": [45,51],
-		"shieldF": [54,60],
-		"shieldB": [63,69]
+		"fcUp": [27],
+		"shRight": [36,42],
+		"shLeft": [45,51],
+		"shDown": [54,60],
+		"shUp": [63,69]
 		}
 });
 
@@ -54,16 +55,30 @@ var TILE_SHEET = new createjs.SpriteSheet({
 	}
 });
 
+var SWORD_SHEET = new createjs.SpriteSheet({
+	"images": ["assets/sword_42px.png"],
+	"frames": {
+		"height": 42,
+		"width": 42,
+		"regX": 0,
+		"regY": 0,
+		"count": 9
+	},
+	"animations": {
+		"idle": [0,8]
+	}
+});
+
 var MAP_LAYOUT = [
 	[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-	[0, 1, 1, 1, 1, 1, 1, 1, 1, 0],
-	[0, 1, 1, 1, 1, 1, 1, 1, 1, 0],
-	[0, 1, 1, 1, 1, 1, 1, 1, 1, 0],
-	[0, 1, 1, 1, 1, 1, 1, 1, 1, 0],
-	[0, 1, 1, 1, 1, 1, 1, 1, 1, 0],
-	[0, 1, 1, 1, 1, 1, 1, 1, 1, 0],
-	[0, 1, 1, 1, 1, 1, 1, 1, 1, 0],
-	[0, 1, 1, 1, 1, 1, 1, 1, 1, 0],
+	[0, 0, 0, 0, 0, 1, 1, 1, 0, 0],
+	[0, 0, 0, 0, 0, 1, 1, 1, 0, 0],
+	[0, 0, 0, 0, 1, 1, 1, 1, 1, 1],
+	[1, 0, 0, 1, 1, 1, 1, 1, 1, 1],
+	[1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+	[0, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+	[0, 0, 0, 1, 1, 1, 1, 1, 1, 0],
+	[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 	[0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 ];
 

@@ -24,8 +24,8 @@ function GameView(model, elements) {
       _this.addBit();
     });
 
-    this._model.entityRemoved.attach(function () {
-      _this.processInput();
+    this._model.swordAdded.attach(function () {
+      _this.addSword();
     });
 
     //attach listeners to runcode button
@@ -72,8 +72,13 @@ GameView.prototype = {
     },
 
     addBit : function() {
-      BIT = new GameEntity([8,4],LEVEL_MAP,"bit");
-      GAME_ENTITIES[1] = BIT;
+      BIT = new GameEntity([8,5],LEVEL_MAP,"bit");
+      GAME_ENTITIES[GAME_ENTITIES.length] = BIT;
+    },
+
+    addSword : function() {
+      SWORD = new GameEntity([6,1], LEVEL_MAP, "sword");
+      GAME_ENTITIES[GAME_ENTITIES.length] = SWORD;
     }
 
     // processInput : function () {
@@ -128,7 +133,41 @@ GameController.prototype = {
       this._model.inputEvent.notify(["player","wkLeft"]);
     },
 
+    moveUp : function() {
+      console.log("moveUp");
+      this._model.inputEvent.notify(["player","wkUp"]);
+    },
+
+    moveDown : function() {
+      console.log("moveDown");
+      this._model.inputEvent.notify(["player","wkDown"]);
+    },
+
+    shieldRight : function() {
+      console.log("shieldRight");
+      this._model.inputEvent.notify(["player","shRight"]);
+    },
+
+    shieldLeft : function() {
+      console.log("shieldLeft");
+      this._model.inputEvent.notify(["player","shLeft"]);
+    },
+
+    shieldUp : function() {
+      console.log("moveUp");
+      this._model.inputEvent.notify(["player","shUp"]);
+    },
+
+    shieldDown : function() {
+      console.log("shieldDown");
+      this._model.inputEvent.notify(["player","shDown"]);
+    },
+
     addEnemy : function() {
       this._model.entityAdded.notify();
+    },
+
+    addSword : function() {
+      this._model.swordAdded.notify();
     }
 };

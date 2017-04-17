@@ -10,6 +10,9 @@ function GameEntity(cr, map, type) {
 
     case 'bit' : return new BitEntity(this.cr[0], this.cr[1], "idle");
     break;
+
+    case 'sword' : return new SwordEntity(this.cr[0], this.cr[1], "idle");
+    break;
   }
 
   //TODO: player is the only one processing input?
@@ -37,6 +40,8 @@ function GameEntity(cr, map, type) {
 
   function PlayerEntity(col, row, current) {
     this.health = 5;
+    this.isShielding = false;
+    this.hasSword = false;
 
     // Game Logc
     this.col = col;
@@ -50,8 +55,8 @@ function GameEntity(cr, map, type) {
     this.player = new createjs.Sprite(PLAYER_SHEET, this.current);
     this.player.framerate = .5;
     STAGE.addChild(this.player);
-    this.player.x = this.col*40-1;
-    this.player.y = this.row*40-5;
+    this.player.x = this.col*50-1;
+    this.player.y = this.row*50-5;
 
     this.getHealth = function() {
       return this.health;
@@ -72,16 +77,16 @@ function GameEntity(cr, map, type) {
     // ANIMATION
 
     this.nextXY = function() {
-      if (this.viscol*40-1 - this.player.x > 3) {
+      if (this.viscol*50-1 - this.player.x > 3) {
         this.player.x = this.player.x + 3;
       }
-      else if (this.viscol*40-1 - this.player.x < -3) {
+      else if (this.viscol*50-1 - this.player.x < -3) {
         this.player.x = this.player.x - 3;
       }
-      if (this.visrow*40-5 - this.player.y > 3) {
+      if (this.visrow*50-5 - this.player.y > 3) {
         this.player.y = this.player.y + 3;
       }
-      else if (this.visrow*40-5 - this.player.y < -3) {
+      else if (this.visrow*50-5 - this.player.y < -3) {
         this.player.y = this.player.y - 3;
       }
     }
@@ -91,7 +96,7 @@ function GameEntity(cr, map, type) {
       if(nextAnim != this.player.animation && nextAnim != undefined) {
         this.changePosition(name);
       }
-      this.nextXY();
+        this.nextXY();
     }
 
     // Will also do non-movement animation
@@ -100,14 +105,14 @@ function GameEntity(cr, map, type) {
     }
 
     this.movementDone = function() {
-      if (this.player.x == this.viscol*40-1
-        && this.player.y == this.visrow*40-5) {
+      if (this.player.x == this.viscol*50-1
+        && this.player.y == this.visrow*50-5) {
         return true;
       }
-      else if (Math.abs(this.visrow*40-5 - this.player.y) < 4
-      && Math.abs(this.viscol*40-1 - this.player.x) < 4) {
-        this.player.x = this.viscol*40-1;
-        this.player.y = this.visrow*40-5;
+      else if (Math.abs(this.visrow*50-5 - this.player.y) < 4
+      && Math.abs(this.viscol*50-1 - this.player.x) < 4) {
+        this.player.x = this.viscol*50-1;
+        this.player.y = this.visrow*50-5;
         this.changePosition("fc" + this.animation.substring(2, 10));
         return true;
       }
@@ -127,8 +132,26 @@ function GameEntity(cr, map, type) {
       } else if(nextEvent == "wkLeft") {
         this.changePosition("wkLeft");
         this.setVisCR([this.viscol-1,this.visrow]);
+      } else if(nextEvent == "wkUp") {
+        this.changePosition("wkUp");
+        this.setVisCR([this.viscol,this.visrow-1]);
+      } else if(nextEvent == "wkDown") {
+        this.changePosition("wkDown");
+        this.setVisCR([this.viscol,this.visrow+1]);
+      } else if(nextEvent == "shRight") {
+        this.changePosition("shRight");
+        //this.setVisCR([this.viscol,this.visrow]);
+      } else if(nextEvent == "shLeft") {
+        this.changePosition("shLeft");
+        //this.setVisCR([this.viscol,this.visrow]);
+      } else if(nextEvent == "shUp") {
+        this.changePosition("shUp");
+        //this.setVisCR([this.viscol,this.visrow]);
+      } else if(nextEvent == "shDown") {
+        this.changePosition("shDown");
+        //this.setVisCR([this.viscol,this.visrow]);
       }
-      console.log([this.viscol,this.visrow]);
+      //console.log([this.viscol,this.visrow]);
     }
 
     // GAME LOGIC
@@ -183,6 +206,49 @@ function GameEntity(cr, map, type) {
           this.setCurrent("fcLeft");
           return "fcLeft";
         }
+      }  else if(nextEvent == "wkUp") {
+        if(!LEVEL_MAP.tileOccupied([this.col,this.row-1])
+          && LEVEL_MAP.tileWalkable([this.col,this.row-1])) {
+          this.setCR([this.col,this.row-1]);
+          this.setCurrent("fcUp");
+          return "wkUp";
+        }
+        else {
+          this.setCurrent("fcUp");
+          return "fcUp";
+        }
+      }  else if(nextEvent == "wkDown") {
+        if(!LEVEL_MAP.tileOccupied([this.col,this.row+1])
+          && LEVEL_MAP.tileWalkable([this.col,this.row+1])) {
+          this.setCR([this.col,this.row+1]);
+          this.setCurrent("fcDown");
+          return "wkDown";
+        }
+        else {
+          this.setCurrent("fcDown");
+          return "fcDown";
+        }
+//----------------SHIELD--------------------//
+      } else if(nextEvent == "shRight") {
+          this.setCR([this.col,this.row]);
+          this.setCurrent("fcRight");
+          this.isShielding=true;
+          return "shRight";
+      } else if(nextEvent == "shLeft") {
+          this.setCR([this.col,this.row]);
+          this.setCurrent("fcLeft");
+          this.isShielding=true;
+          return "shLeft";
+      }  else if(nextEvent == "shUp") {
+          this.setCR([this.col,this.row-1]);
+          this.setCurrent("fcUp");
+          this.isShielding=true;
+          return "shUp";
+      }  else if(nextEvent == "shDown") {
+          this.setCR([this.col,this.row+1]);
+          this.setCurrent("fcDown");
+          this.isShielding=true;
+          return "shDown";
       }
     }
 
@@ -206,8 +272,8 @@ function GameEntity(cr, map, type) {
     this.animation = current;
     this.bit = new createjs.Sprite(BIT_SHEET, this.current);
     STAGE.addChild(this.bit);
-    this.bit.x = this.col*42-1;
-    this.bit.y = this.row*45-5;
+    this.bit.x = this.col*52.5;
+    this.bit.y = this.row*55-5;
 
     this.getHealth = function() {
       return this.health;
@@ -228,16 +294,16 @@ function GameEntity(cr, map, type) {
     // ANIMATION
 
     this.nextXY = function() {
-      if (this.viscol*40-1 - this.bit.x > 3) {
+      if (this.viscol*50-1 - this.bit.x > 3) {
         this.bit.x = this.bit.x + 3;
       }
-      else if (this.viscol*40-1 - this.bit.x < -3) {
+      else if (this.viscol*50-1 - this.bit.x < -3) {
         this.bit.x = this.bit.x - 3;
       }
-      if (this.visrow*40-5 - this.bit.y > 3) {
+      if (this.visrow*50-5 - this.bit.y > 3) {
         this.bit.y = this.bit.y + 3;
       }
-      else if (this.visrow*40-5 - this.bit.y < -3) {
+      else if (this.visrow*50-5 - this.bit.y < -3) {
         this.bit.y = this.bit.y - 3;
       }
     }
@@ -258,6 +324,7 @@ function GameEntity(cr, map, type) {
           this.agrocount = this.agrocount + 1;
           if (this.agrocount > 21) {
             this.changePosition("charge");
+            //TODO: spawn bit beam
             this.agrocount = 0;
           }
         }
@@ -325,3 +392,107 @@ function GameEntity(cr, map, type) {
 
     this.setCR([this.col,this.row]);
   };
+
+//----------------SWORD_ENTITY----------------//
+function SwordEntity(col, row, current) {
+  // Game Logc
+  this.col = col;
+  this.row = row;
+  this.current = current;
+
+  // Animation
+  this.viscol = col;
+  this.visrow = row;
+  this.animation = current;
+  this.sword = new createjs.Sprite(SWORD_SHEET, this.current);
+  STAGE.addChild(this.sword);
+  this.sword.x = this.col*50;
+  this.sword.y = this.row*55-5;
+
+  this.setCR = function(cr) {
+    LEVEL_MAP.unoccupy([this.col, this.row]);
+    this.col = cr[0];
+    this.row = cr[1];
+    LEVEL_MAP.occupy(cr, this.sword);
+  }
+
+  this.setVisCR = function(cr) {
+    this.viscol = cr[0];
+    this.visrow = cr[1];
+  }
+
+  // ANIMATION
+
+  this.nextXY = function() {
+    if (this.viscol*50-1 - this.sword.x > 3) {
+      this.sword.x = this.sword.x + 3;
+    }
+    else if (this.viscol*50-1 - this.sword.x < -3) {
+      this.sword.x = this.sword.x - 3;
+    }
+    if (this.visrow*50-5 - this.sword.y > 3) {
+      this.sword.y = this.sword.y + 3;
+    }
+    else if (this.visrow*50-5 - this.sword.y < -3) {
+      this.sword.y = this.sword.y - 3;
+    }
+  }
+
+  this.updateGraphics = function(name) {
+    if(!name==undefined){
+      this.changePosition(name);
+    }
+  }
+
+  // Will also do non-movement animation
+  this.animationDone = function() {
+    return true;
+  }
+
+  this.movementDone = function() {
+
+  }
+
+  this.changePosition = function(pos) {
+    this.animation = pos;
+    this.sword.gotoAndPlay(pos);
+  }
+
+  this.processAnimation = function(e) {
+
+  }
+
+  // GAME LOGIC
+
+  //TODO: steadily move player to next position
+  this.setXY = function(){
+    // this.player.x = this.col*40-1;
+    // this.player.y = this.row*40-5;
+  }
+
+  this.getXY = function(){
+    return [this.sword.x, this.sword.y];
+  }
+
+  this.getX = function() {
+    return this.sword.x;
+  }
+
+  this.getY = function() {
+    return this.sword.y;
+  }
+
+  this.getBit = function() {
+    return this.sword;
+  }
+
+  this.setCurrent = function(pos) {
+    this.current = pos;
+  }
+
+  this.processInput = function(e) {
+
+  }
+
+  this.setCR([this.col,this.row]);
+};

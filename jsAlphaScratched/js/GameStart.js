@@ -3,19 +3,20 @@
 var player; //eventListener
 var gameEntity;
 var view;
+var tick =0;
 
 function main() {
   createInputQueueGame();
 }
 
 function createInputQueueGame() {
-  var cr = [1, 4];
+  var cr = [1, 5];
   var bcr = [8,4];
   //player = new playerclass(cr, levelmap, stage, PLAYER_SHEET);
   //bit = new monsterclass(bcr, levelmap, stage, BIT_SHEET, player);
 
   PLAYER = new GameEntity(cr, LEVEL_MAP, "player");
-  
+
   GAME_ENTITIES[0] = PLAYER;
 
   var inputQueue = new Queue(USER_INPUT_BUFFER_CAPACITY);
@@ -38,8 +39,11 @@ function createInputQueueGame() {
 }
 
 function handleTick() {
-  view.show();
-  STAGE.update();
+  if(tick % 4 == 0) {
+    view.show();
+    STAGE.update();
+  }
+  tick++;
 }
 
 //need to implement an exception catch
