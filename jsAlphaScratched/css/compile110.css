@@ -1,0 +1,29 @@
+#editor {
+  height: 780px;
+  width: 400px;
+  float: left;
+}
+#editor2 {
+  height: 800px;
+  width: 400px;
+  float: left;
+}
+#divider {
+  width: 10px;
+  max-width: 10px;
+  height: 400px;
+  float: left;
+}
+#gameboard {
+  float: left;
+}
+#textbox {
+  float: left;
+  border: 4px solid black;
+  background-color: #A4A4A4;
+  padding: 6px;
+}
+input[type=button] {
+  width: 400px;
+  height: 20px;
+}
