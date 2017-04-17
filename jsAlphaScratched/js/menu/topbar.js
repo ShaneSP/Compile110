@@ -7,11 +7,11 @@ function setTop() {
   topstage = new createjs.Stage(topcanvas);
 
   fboarder = new createjs.Shape();
-  fboarder.graphics.beginFill("#000").drawRect(0, 0, 400, 100);
+  fboarder.graphics.beginFill("#000").drawRect(0, 0, 500, 100);
   topstage.addChild(fboarder);
 
   background = new createjs.Shape();
-  background.graphics.beginFill("#999").drawRect(4, 4, 392, 92);
+  background.graphics.beginFill("#999").drawRect(4, 4, 492, 92);
   topstage.addChild(background);
 
   krisheadSheet = new createjs.SpriteSheet({

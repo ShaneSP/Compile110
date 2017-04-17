@@ -1,76 +1,15 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
-  <style type="text/css" media="screen">
-    #editor {
-      height: 500px;
-      width: 400px;
-      float: left;
-    }
-    #editor2 {
-      height: 500px;
-      width: 400px;
-      float: left;
-    }
-    #divider {
-      width: 10px;
-      max-width: 10px;
-      height: 400px;
-      float: left;
-    }
-    #gameboard {
-      float: left;
-      padding-top: 40px;
-    }
-  </style>
+    <title>compile(110);</title>
   </head>
-  <body>
-    <div style="height:500px; width:1220px;">
-      <div id="editor">player.moveRight();</div>
-      <div id="divider"></div>
-      <div id="gameboard" style="width: 400px; height: 400px;">
-        <canvas id="canvas" width="400" height="400"></canvas>
-      </div>
-      <div id="divider"></div>
-      <div id="editor2">console.log("Nice.");</div>
-    </div>
-    <div style="max-width:400px; padding-top:10px;">
-      <center>
-        <input type="button" value="Run Code" onclick="runCode();"/>
-      </center>
-    </div>
-    <script src="js/libraries/easeljs-0.8.2.combined.js"></script>
-    <script src="js/libraries/preloadjs-0.6.2.combined.js"></script>
-    <script src="js/map.js"></script>
-    <script src="js/queue.js"></script>
-    <script src="js/player.js"></script>
-    <script src="js/monster.js"></script>
-    <script src="js/grid.js"></script>
-    <script src="js/setHalfVolume.js"></script>
-    <br/>
-    <script src="ace/ace-builds-master/src-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
-    <script>
-      var editor = ace.edit("editor");
-      editor.setTheme("ace/theme/monokai");
-      editor.getSession().setMode("ace/mode/javascript");
-      var enemycode = ace.edit("editor2");
-      enemycode.setReadOnly(true);
-      enemycode.setTheme("ace/theme/monokai");
-      enemycode.getSession().setMode("ace/mode/javascript");
-    </script>
-    <!-- <div style="max-width:400px;">
-      <center>
-        <input type="button" value="Move Up" onclick="player.moveUp();"/>
-        <br/>
-        <input type="button" value="Move Left" onclick="player.moveLeft();"/>
-        <input type="button" value="Move Right" onclick="player.moveRight();"/>
-        <br/>
-        <input type="button" value="Move Down" onclick="player.moveDown();"/>
-      </center>
-    </div> -->
-    <!-- <audio id="bgm" autoplay loop onloadeddata="setVolume()">
-        <source src="21.mp3">>
-    </audio> -->
 
+  <body>
+    <div class="mainMenu" id="mainMenu">
+      <h1 style="font-family:Comic Sans MS;">compile(110);</h1>
+      <a href="index2.html">
+        <button>Start</button>
+      </a>
+    </div>
   </body>
 </html>
