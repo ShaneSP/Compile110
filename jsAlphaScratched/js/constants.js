@@ -4,13 +4,13 @@ var FIXED_UPDATES_IN_A_SECOND = 1500;
 var FIXED_STEP_IDEAL_DURATION_MS = 1000/FIXED_UPDATES_IN_A_SECOND;
 var WALK_SPEED_PIXELS_PER_SECOND = 15;
 var WALK_SPEED_PIXELS_PER_UPDATE = WALK_SPEED_PIXELS_PER_SECOND/FIXED_UPDATES_IN_A_SECOND;
-var STATES_HISTORY_CAPACITY = 10;
 var USER_INPUT_BUFFER_CAPACITY = 10;
 
 var CANVAS = document.getElementById("canvas");
 var STAGE = new createjs.Stage(canvas);
 
 var PLAYER = null;
+var BIT = null;
 
 var GAME_ENTITIES = new Array();
 
@@ -68,29 +68,6 @@ var MAP_LAYOUT = [
 ];
 
 var LEVEL_MAP = new map(MAP_LAYOUT, STAGE, TILE_SHEET);
-
-//var ANIMATION_MANAGER = new AnimationManager();
-
-var INPUT_EVENT_STATE = {
-	"start":1,
-	"end":0
-};
-
-//implement method calls for these types
-var INPUT_EVENT_TYPE = {
-	"shieldR":10,
-  "shieldL":12,
-  "shieldU":14,
-  "shieldD":16,
-	"faceR":20,
-  "faceL":22,
-  "faceU":24,
-  "faceD":26,
-	"right":30,
-	"left":40,
-	"down":50,
-  "up":60
-};
 
 function resetUPS(ups) {
 	FIXED_UPDATES_IN_A_SECOND = ups;

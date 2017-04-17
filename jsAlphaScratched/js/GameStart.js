@@ -14,8 +14,9 @@ function createInputQueueGame() {
   //player = new playerclass(cr, levelmap, stage, PLAYER_SHEET);
   //bit = new monsterclass(bcr, levelmap, stage, BIT_SHEET, player);
 
-  gameEntity = new GameEntity(cr, LEVEL_MAP);
-  GAME_ENTITIES[0] = gameEntity;
+  PLAYER = new GameEntity(cr, LEVEL_MAP, "player");
+  
+  GAME_ENTITIES[0] = PLAYER;
 
   var inputQueue = new Queue(USER_INPUT_BUFFER_CAPACITY);
   //var gameLoop = new GameLoop(gameEntities, inputQueue, STAGE);
