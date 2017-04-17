@@ -44,13 +44,13 @@ var BIT_SHEET = new createjs.SpriteSheet({
 });
 
 var TILE_SHEET = new createjs.SpriteSheet({
-	"images": ["assets/floortiles40px.png"],
+	"images": ["enlargedAssets/lvl0.png"],
 	"frames": {
-		"height": 40,
-		"width": 40,
+		"height": 500,
+		"width": 500,
 		"regX": 0,
 		"regY": 0,
-		"count": 14
+		"count": 1
 	}
 });
 
