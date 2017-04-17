@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <style type="text/css" media="screen">
+    #editor {
+      height: 780px;
+      width: 400px;
+      float: left;
+    }
+    #editor2 {
+      height: 800px;
+      width: 400px;
+      float: left;
+    }
+    #divider {
+      width: 10px;
+      max-width: 10px;
+      height: 400px;
+      float: left;
+    }
+    #gameboard {
+      float: left;
+    }
+    #textbox {
+      float: left;
+      border: 4px solid black;
+      background-color: #A4A4A4;
+      padding: 6px;
+    }
+    input[type=button] {
+      width: 400px;
+      height: 20px;
+    }
+  </style>
+  </head>
+  <body onload="main(); setTop();">
+    <div id="gameCanvas" style="height:500px; width:1220px;">
+      <table id="">
+        <tr>
+          <td>
+            <div id="editor">for(var i = 0; i < 7; i++) {
+              this.moveRight()
+              if(PLAYER.col==8) {
+                  this.moveLeft();
+              }
+              console.log(PLAYER.col);
+            }</div>
+            <center>
+              <input type="button" value="Run Code" id="button"/>
+            </center>
+          </td>
+          <td style="width:500px;">
+            <div id="menu" style="width: 500px; height: 100px;">
+              <canvas id="topbar" width="500" height="100"></canvas>
+            </div>
+            <div id="gameboard" style="width: 500px; height: 500px;">
+              <canvas id="canvas" width="500" height="500"></canvas>
+            </div>
+            <div id="textbox" style="width: 480px; height: 70px;">
+              <span id="text_target"></span>
+            </div>
+          </td>
+          <td>
+            <div id="editor2">console.log("Nice.");</div>
+          </td>
+        </tr>
+      </table>
+    </div>
+
+    <!-- <div style="max-width:400px; padding-top:10px;">
+      <center>
+        <input type="button" value="Run Code" onclick="runCode();"/>
+      </center>
+    </div> -->
+    <script src="https://www.cs.unc.edu/Courses/comp426-f16/jquery-3.1.0.js" type="text/javascript"></script>
+    <script src="js/libraries/easeljs-0.8.2.combined.js"></script>
+    <script src="js/libraries/preloadjs-0.6.2.combined.js"></script>
+
+    <script src="js/menu/topbar.js"></script>
+    <script src="js/menu/energybar.js"></script>
+
+    <script src="js/setHalfVolume.js"></script>
+    <script src="js/showText.js"></script>
+
+    <script src="js/map.js"></script>
+    <script src="js/queue.js"></script>
+    <script src="js/constants.js"></script>
+    <script src="js/modelviewcontrol/Event.js"></script>
+    <script src="js/gameEntity.js"></script>
+    <script src="js/modelviewcontrol/GameModel.js"></script>
+    <script src="js/modelviewcontrol/GameView.js"></script>
+    <script src="js/GameStart.js"></script>
+    <script src="js/starButton.js"></script>
+
+    <br/>
+    <script src="ace/ace-builds-master/src-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
+    <script>
+      var editor = ace.edit("editor");
+      editor.setTheme("ace/theme/monokai");
+      editor.getSession().setMode("ace/mode/javascript");
+      var enemycode = ace.edit("editor2");
+      enemycode.setReadOnly(true);
+      enemycode.setTheme("ace/theme/monokai");
+      enemycode.getSession().setMode("ace/mode/javascript");
+    </script>
+    <!-- <div style="max-width:400px;">
+      <center>
+        <input type="button" value="Move Up" onclick="player.moveUp();"/>
+        <br/>
+        <input type="button" value="Move Left" onclick="player.moveLeft();"/>
+        <input type="button" value="Move Right" onclick="player.moveRight();"/>
+        <br/>
+        <input type="button" value="Move Down" onclick="player.moveDown();"/>
+      </center>
+    </div> -->
+    <!-- <audio id="bgm" autoplay loop onloadeddata="setVolume()">
+        <source src="21.mp3">>
+    </audio> -->
+
+  </body>
+</html>
