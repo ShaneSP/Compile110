@@ -34,17 +34,23 @@
   </style>
   </head>
   <body onload="main(); setTop();">
-    <div style="height:500px; width:1220px;">
+
+    <div id="menu">
+      <h1>compile(110);</h1>
+      <input id="StartButton" type="button" value="Start"/>
+    </div>
+
+    <div id="gameCanvas" style="height:500px; width:1220px;">
       <table id="">
         <tr>
           <td>
             <div id="editor">for(var i = 0; i < 7; i++) {
-    this.moveRight()
-    if(PLAYER.col==8) {
-        this.moveLeft();
-    }
-    console.log(PLAYER.col);
-}</div>
+              this.moveRight()
+              if(PLAYER.col==8) {
+                  this.moveLeft();
+              }
+              console.log(PLAYER.col);
+            }</div>
             <center>
               <input type="button" value="Run Code" id="button"/>
             </center>
@@ -65,6 +71,7 @@
           </td>
         </tr>
       </table>
+    </div>
 
     <!-- <div style="max-width:400px; padding-top:10px;">
       <center>
@@ -89,6 +96,7 @@
     <script src="js/modelviewcontrol/GameModel.js"></script>
     <script src="js/modelviewcontrol/GameView.js"></script>
     <script src="js/GameStart.js"></script>
+    <script src="js/starButton.js"></script>
 
     <br/>
     <script src="ace/ace-builds-master/src-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
