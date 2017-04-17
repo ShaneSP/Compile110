@@ -140,15 +140,19 @@ function GameEntity(cr, map, type) {
         this.setVisCR([this.viscol,this.visrow+1]);
       } else if(nextEvent == "shRight") {
         this.changePosition("shRight");
+        this.isShielding=true;
         //this.setVisCR([this.viscol,this.visrow]);
       } else if(nextEvent == "shLeft") {
         this.changePosition("shLeft");
+        this.isShielding=true;
         //this.setVisCR([this.viscol,this.visrow]);
       } else if(nextEvent == "shUp") {
         this.changePosition("shUp");
+        this.isShielding=true;
         //this.setVisCR([this.viscol,this.visrow]);
       } else if(nextEvent == "shDown") {
         this.changePosition("shDown");
+        this.isShielding=true;
         //this.setVisCR([this.viscol,this.visrow]);
       }
       //console.log([this.viscol,this.visrow]);
@@ -232,22 +236,22 @@ function GameEntity(cr, map, type) {
       } else if(nextEvent == "shRight") {
           this.setCR([this.col,this.row]);
           this.setCurrent("fcRight");
-          this.isShielding=true;
+          this.isShielding=false;
           return "shRight";
       } else if(nextEvent == "shLeft") {
           this.setCR([this.col,this.row]);
           this.setCurrent("fcLeft");
-          this.isShielding=true;
+          this.isShielding=false;
           return "shLeft";
       }  else if(nextEvent == "shUp") {
           this.setCR([this.col,this.row-1]);
           this.setCurrent("fcUp");
-          this.isShielding=true;
+          this.isShielding=false;
           return "shUp";
       }  else if(nextEvent == "shDown") {
           this.setCR([this.col,this.row+1]);
           this.setCurrent("fcDown");
-          this.isShielding=true;
+          this.isShielding=false;
           return "shDown";
       }
     }
@@ -259,6 +263,7 @@ function GameEntity(cr, map, type) {
 
   function BitEntity(col, row, current) {
     this.health = 1;
+    this.hasAttacked = false;
 
     // Game Logc
     this.col = col;
@@ -309,11 +314,7 @@ function GameEntity(cr, map, type) {
     }
 
     this.updateGraphics = function(name) {
-      if ((PLAYER.col == this.col - 1 && PLAYER.row == this.row - 1)
-      || (PLAYER.col == this.col - 1 && PLAYER.row == this.row + 1)
-      || (PLAYER.col == this.col && PLAYER.row == this.row + 1)
-      || (PLAYER.col == this.col && PLAYER.row == this.row - 1)
-      || (PLAYER.col == this.col - 1 && PLAYER.row == this.row)) {
+      if (this.col == PLAYER.col|| this.row == PLAYER.row) {
         if (this.animation == "idle") {
           this.agrocount = this.agrocount + 1;
           if (this.agrocount > 3) {
@@ -325,6 +326,10 @@ function GameEntity(cr, map, type) {
           if (this.agrocount > 21) {
             this.changePosition("charge");
             //TODO: spawn bit beam
+            if(!this.hasAttacked) {
+              this.bitAttack([this.col,this.row]);
+              that.hasAttacked = true;
+            }
             this.agrocount = 0;
           }
         }
@@ -347,6 +352,22 @@ function GameEntity(cr, map, type) {
 
     this.movementDone = function() {
 
+    }
+//----------BIT_ATTACK------------//
+    function bitAttack(cr) {
+      this.col = cr[0]-1;
+      this.row = cr[1];
+      this.beam = new createjs.Sprite(BEAM_SHEET, "idle");
+      STAGE.addChild(this.beam);
+      this.beam.x = this.col*52.5;
+      this.beam.y = this.row*55-5;
+
+      this.setCR = function(cr) {
+        LEVEL_MAP.unoccupy([this.col, this.row]);
+        this.col = cr[0];
+        this.row = cr[1];
+        LEVEL_MAP.occupy(cr, this.beam);
+      }
     }
 
     this.changePosition = function(pos) {

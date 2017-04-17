@@ -12,6 +12,7 @@ var STAGE = new createjs.Stage(canvas);
 var PLAYER = null;
 var BIT = null;
 var SWORD = null;
+var BEAM = null;
 
 var GAME_ENTITIES = new Array();
 
