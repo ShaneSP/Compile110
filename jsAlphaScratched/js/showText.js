@@ -6,5 +6,5 @@ var showText = function(target, message, index, interval) {
 }
 
 $(function () {
-  showText("#textbox", "Welcome to compile(110);! Hope you enjoy your stay! ;)", 0, 100);
+  showText("#textbox", "Welcome to compile(110);! Hope you enjoy your stay! ;)", 0, 50);
 });
