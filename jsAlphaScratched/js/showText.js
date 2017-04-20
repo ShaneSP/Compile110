@@ -18,7 +18,7 @@ $(function () {
 });
 
 var nextText = (function() {
-  var textArray = [intro, intro2, par1];
+  var textArray = [intro2, par1];
   var count = -1;
   return function() {
     return textArray[++count % textArray.length];
