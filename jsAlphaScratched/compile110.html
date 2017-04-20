@@ -47,6 +47,11 @@
             <div id="textbox" style="width: 480px; height: 100px; font-family: 'Lucida Sans Typewriter', 'Lucida Console', monaco, 'Bitstream Vera Sans Mono', monospace; font-size:16px;">
               <span id="text_target"></span>
             </div>
+
+            <!-- continue text button -->
+            <center>
+              <button onclick="document.getElementById('textbox').innerHTML = nextText();">Continue --></button>
+            </center>
           </td>
 
           <td>
@@ -75,7 +80,7 @@
     <script src="js/modelviewcontrol/GameModel.js"></script>
     <script src="js/modelviewcontrol/GameView.js"></script>
     <script src="js/gameStart.js"></script>
-    <script src="js/starButton.js"></script>
+    <script src="js/startButton.js"></script>
     <script src="ace/ace-builds-master/src-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
     <script src="js/editor.js"></script>
 
