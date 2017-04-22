@@ -28,6 +28,10 @@ function GameView(model, elements) {
       _this.addSword();
     });
 
+    this._model.entityRemoved.attach(function (args) {
+      _this.removeEntity(args);
+    });
+
     //attach listeners to runcode button
     this._elements.button.click(function () {
       _this.runCode.notify();
@@ -58,6 +62,7 @@ GameView.prototype = {
         //TODO: Stage ticker
         for(var i=0; i<GAME_ENTITIES.length; i++) {
     			var gameEntity = GAME_ENTITIES[i];
+          console.log(gameEntity);
     			gameEntity.updateGraphics(a);
         }
     },
@@ -79,6 +84,13 @@ GameView.prototype = {
     addSword : function() {
       SWORD = new GameEntity([6,1], LEVEL_MAP, "sword");
       GAME_ENTITIES[GAME_ENTITIES.length] = SWORD;
+    },
+
+    removeEntity : function (index) {
+      var removed;
+      removed = this._model._entities[index];
+      this._model._entities.splice(index, 1);
+      STAGE.removeChildAt(index);
     }
 
     // processInput : function () {
@@ -161,6 +173,12 @@ GameController.prototype = {
     shieldDown : function() {
       console.log("shieldDown");
       this._model.inputEvent.notify(["player","shDown"]);
+    },
+
+    pickUp : function(name) {
+      if(name=="sword") {
+        this._model.entityRemoved.notify(10);
+      }
     },
 
     addEnemy : function() {

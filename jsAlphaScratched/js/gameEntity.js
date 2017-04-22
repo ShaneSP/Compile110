@@ -264,7 +264,7 @@ function GameEntity(cr, map, type) {
   function BitEntity(col, row, current) {
     this.health = 1;
     this.hasAttacked = false;
-
+    this.beam = null;
     // Game Logc
     this.col = col;
     this.row = row;
@@ -283,6 +283,7 @@ function GameEntity(cr, map, type) {
     this.getHealth = function() {
       return this.health;
     }
+
 
     this.setCR = function(cr) {
       LEVEL_MAP.unoccupy([this.col, this.row]);
@@ -318,22 +319,25 @@ function GameEntity(cr, map, type) {
         if (this.animation == "idle") {
           this.agrocount = this.agrocount + 1;
           if (this.agrocount > 3) {
-            this.changePosition("agro");
+            if(!this.hasAttacked) {
+              this.changePosition("agro");
+            }
           }
-        }
-        else if (this.animation == "agro") {
+        } else if (this.animation == "agro") {
           this.agrocount = this.agrocount + 1;
           if (this.agrocount > 21) {
-            this.changePosition("charge");
+            if(!this.hasAttacked) {
+              this.changePosition("charge");
+            }
             //TODO: spawn bit beam
             if(!this.hasAttacked) {
-              this.bitAttack([this.col,this.row]);
-              that.hasAttacked = true;
+              BEAM = new bitAttack([this.col,this.row]);
+              GAME_ENTITIES[GAME_ENTITIES.length] = BEAM;
+              this.hasAttacked = true;
             }
             this.agrocount = 0;
           }
-        }
-        else if (this.animation == "charge") {
+        } else if (this.animation == "charge") {
           this.agrocount = this.agrocount + 1;
           if (this.agrocount > 6) {
             this.changePosition("idle");
@@ -345,6 +349,32 @@ function GameEntity(cr, map, type) {
       }
     }
 
+      this.changePosition = function(pos) {
+        this.animation = pos;
+        this.bit.gotoAndPlay(pos);
+      }
+
+      //------CRAPPY_BEAM-----------//
+      // if(this.hasAttacked && this.beam!=null) {
+      //   var dX = Math.abs(this.bcol-PLAYER.col);
+      //   var done = false;
+      //   if(dX>0) {
+      //     this.setbCR([this.bcol-1,this.brow]);
+      //     dX--;
+      //   } else if(dX==0 && PLAYER.isShielding) {
+      //     this.setbCR([this.bcol+1,this.brow]);
+      //     if(this.bcol==BIT.col) {
+      //       STAGE.removeChild(BIT);
+      //     }
+      //   } else {
+      //     //TODO: remove beam
+      //       //STAGE.removeChild(this.beam);
+      //       //PLAYER.health--;
+      //     }
+      // }
+
+
+
     // Will also do non-movement animation
     this.animationDone = function() {
       return true;
@@ -354,30 +384,7 @@ function GameEntity(cr, map, type) {
 
     }
 //----------BIT_ATTACK------------//
-    function bitAttack(cr) {
-      this.col = cr[0]-1;
-      this.row = cr[1];
-      this.beam = new createjs.Sprite(BEAM_SHEET, "idle");
-      STAGE.addChild(this.beam);
-      this.beam.x = this.col*52.5;
-      this.beam.y = this.row*55-5;
 
-      this.setCR = function(cr) {
-        LEVEL_MAP.unoccupy([this.col, this.row]);
-        this.col = cr[0];
-        this.row = cr[1];
-        LEVEL_MAP.occupy(cr, this.beam);
-      }
-    }
-
-    this.changePosition = function(pos) {
-      this.animation = pos;
-      this.bit.gotoAndPlay(pos);
-    }
-
-    this.processAnimation = function(e) {
-
-    }
 
     // GAME LOGIC
 
@@ -413,6 +420,93 @@ function GameEntity(cr, map, type) {
 
     this.setCR([this.col,this.row]);
   };
+
+
+  this.bitAttack = function(cr) {
+    this.becol = cr[0]-1;
+    this.berow = cr[1];
+    this.beam = new createjs.Sprite(BEAM_SHEET, "idle");
+    STAGE.addChild(this.beam);
+    this.beam.x = this.becol*51;
+    this.beam.y = this.berow*48;
+    this.bspeed = 5;
+    this.bounced = false;
+    this.hit = false;
+
+    this.setbCR = function(cr) {
+      //LEVEL_MAP.unoccupy([this.col, this.row]);
+      this.becol = cr[0];
+      this.berow = cr[1];
+      LEVEL_MAP.occupy(cr, this.beam);
+    }
+
+  this.changePosition = function(pos) {
+    this.animation = pos;
+    this.beam.gotoAndPlay(pos);
+  }
+
+  this.nextXY = function() {
+    if (this.becol*47 - this.beam.x > 10) {
+      this.beam.x = this.beam.x + this.bspeed;
+    }
+    else if (this.becol*48 - this.beam.x < -10) {
+      this.beam.x = this.beam.x - this.bspeed;
+    }
+    if (this.berow*47 - this.beam.y > 10) {
+      this.beam.y = this.beam.y + this.bspeed;
+    }
+    else if (this.berow*48 - this.beam.y < -10) {
+      this.beam.y = this.beam.y - this.bspeed;
+    }
+
+    if(this.beam.x-PLAYER.player.x < 14 & PLAYER.isShielding){
+      this.bounced = true;
+    }
+    if(!this.hit && !this.bounced && this.beam.x-PLAYER.player.x < 14) {
+      PLAYER.health--;
+      this.hit = true;
+      alert(PLAYER.health);
+    } else if(!this.hit && this.bounced && BIT.bit.x-this.beam.x ==53) {
+      this.hit = true;
+      GAME_ENTITIES.splice(1,2);
+      STAGE.removeChildAt(2);
+      STAGE.removeChildAt(2);
+    }
+  }
+
+  this.processAnimation = function(e) {
+
+  }
+
+  this.animationDone = function() {
+    return true;
+  }
+
+  this.movementDone = function() {
+
+  }
+
+  this.processInput = function(e) {}
+
+  this.updateGraphics = function() {
+      if(BEAM != undefined) {
+        if(!this.bounced && Math.abs(this.becol-PLAYER.col) > 0) {
+            this.setbCR([this.becol-1,this.berow]);
+
+        } else if(this.bounced && Math.abs(BIT.col-this.becol) > 0) {
+          this.setbCR([this.becol+1,this.berow]);
+
+        }
+        this.nextXY();
+        // if(!PLAYER.isShielding && this.becol==PLAYER.col) {
+        //   alert("player destroyed");
+        // } else if(BIT.col==this.becol) {
+        //   alert("bit destroyed");
+        // }
+      }
+  }
+  this.setbCR([this.becol,this.berow]);
+};
 
 //----------------SWORD_ENTITY----------------//
 function SwordEntity(col, row, current) {

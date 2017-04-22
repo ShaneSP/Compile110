@@ -45,6 +45,14 @@ var BIT_SHEET = new createjs.SpriteSheet({
 	}
 });
 
+var BEAM_SHEET = new createjs.SpriteSheet({
+	"images": ["assets/bitbeamanimation_72px.png"],
+	"frames": {"height": 72, "width": 72, "count": 6, "regX": 0, "regY": 0},
+	"animations": {
+		"idle": [0,5]
+	}
+});
+
 var TILE_SHEET = new createjs.SpriteSheet({
 	"images": ["enlargedAssets/lvl0.png"],
 	"frames": {
