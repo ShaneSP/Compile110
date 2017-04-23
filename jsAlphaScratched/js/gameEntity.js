@@ -505,7 +505,7 @@ function GameEntity(cr, map, type) {
     if(!this.hit && !this.bounced && this.beam.x-PLAYER.player.x < 14) {
       PLAYER.health--;
       this.hit = true;
-      alert(PLAYER.health);
+      this.remove();
     } else if(!this.hit && this.bounced && BIT.bit.x-this.beam.x ==53) {
       this.hit = true;
 

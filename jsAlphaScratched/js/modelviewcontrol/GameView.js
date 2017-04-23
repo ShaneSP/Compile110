@@ -123,7 +123,7 @@ GameController.prototype = {
     runCode : function() {
       var code = editor.getValue();
       eval(code);
-      if(BIT!=undefined && BIT.inRange([PLAYER.col,PLAYER.row])) {
+      if(BIT!=undefined && BIT.inRange([PLAYER.viscol,PLAYER.visrow])) {
         this._model.inputEvent.notify(["bit","shoot"]);
       }
     },
