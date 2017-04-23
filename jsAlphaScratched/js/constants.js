@@ -28,10 +28,14 @@ var PLAYER_SHEET = new createjs.SpriteSheet({
 		"fcRight": [9],
 		"fcLeft": [18],
 		"fcUp": [27],
-		"shRight": [36,42],
-		"shLeft": [45,51],
-		"shDown": [54,60],
-		"shUp": [63,69]
+		"shRightAni": [36,42],
+		"shLeftAni": [45,51],
+		"shDownAni": [54,60],
+		"shUpAni": [63,69],
+		"shRightDone": [41,42],
+		"shLeftDone": [50,51],
+		"shDownDone": [59,60],
+		"shUpDone": [68,69]
 		}
 });
 
@@ -39,7 +43,10 @@ var BIT_SHEET = new createjs.SpriteSheet({
 	"images": ["assets/bitSprite36px.png"],
 	"frames": {"height": 36, "width": 36, "count": 15, "regX": 18, "regY": 18},
 	"animations": {
-		"idle": [0, 3],
+		"idle": {
+			frames: [0, 1, 2, 3],
+			speed: 0.8
+		},
 		"agro": [5, 8],
 		"charge": [10, 14]
 	}

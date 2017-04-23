@@ -62,7 +62,7 @@ GameView.prototype = {
         //TODO: Stage ticker
         for(var i=0; i<GAME_ENTITIES.length; i++) {
     			var gameEntity = GAME_ENTITIES[i];
-          console.log(gameEntity);
+          // console.log(gameEntity);
     			gameEntity.updateGraphics(a);
         }
     },

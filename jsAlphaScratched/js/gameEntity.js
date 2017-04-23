@@ -55,8 +55,8 @@ function GameEntity(cr, map, type) {
     this.player = new createjs.Sprite(PLAYER_SHEET, this.current);
     this.player.framerate = .5;
     STAGE.addChild(this.player);
-    this.player.x = this.col*50-1;
-    this.player.y = this.row*50-5;
+    this.player.x = this.col*50+4;
+    this.player.y = this.row*50+2;
 
     this.getHealth = function() {
       return this.health;
@@ -77,16 +77,16 @@ function GameEntity(cr, map, type) {
     // ANIMATION
 
     this.nextXY = function() {
-      if (this.viscol*50-1 - this.player.x > 3) {
+      if (this.viscol*50+4 - this.player.x > 3) {
         this.player.x = this.player.x + 3;
       }
-      else if (this.viscol*50-1 - this.player.x < -3) {
+      else if (this.viscol*50+4 - this.player.x < -3) {
         this.player.x = this.player.x - 3;
       }
-      if (this.visrow*50-5 - this.player.y > 3) {
+      if (this.visrow*50+2 - this.player.y > 3) {
         this.player.y = this.player.y + 3;
       }
-      else if (this.visrow*50-5 - this.player.y < -3) {
+      else if (this.visrow*50+2 - this.player.y < -3) {
         this.player.y = this.player.y - 3;
       }
     }
@@ -96,27 +96,42 @@ function GameEntity(cr, map, type) {
       if(nextAnim != this.player.animation && nextAnim != undefined) {
         this.changePosition(name);
       }
-        this.nextXY();
+      this.nextXY();
     }
 
     // Will also do non-movement animation
     this.animationDone = function() {
-      return this.movementDone();
+      return this.movementDone() && this.shieldDone();
     }
 
     this.movementDone = function() {
-      if (this.player.x == this.viscol*50-1
-        && this.player.y == this.visrow*50-5) {
+      if (this.player.x == this.viscol*50+4
+        && this.player.y == this.visrow*50+2) {
         return true;
       }
-      else if (Math.abs(this.visrow*50-5 - this.player.y) < 4
-      && Math.abs(this.viscol*50-1 - this.player.x) < 4) {
-        this.player.x = this.viscol*50-1;
-        this.player.y = this.visrow*50-5;
+      else if (Math.abs(this.visrow*50+2 - this.player.y) < 4
+      && Math.abs(this.viscol*50+4 - this.player.x) < 4) {
+        this.player.x = this.viscol*50+4;
+        this.player.y = this.visrow*50+2;
         this.changePosition("fc" + this.animation.substring(2, 10));
         return true;
       }
       return false;
+    }
+
+    this.shieldDone = function() {
+      if (this.isShielding) {
+        if (this.animation.substring(this.animation.length-3) == "Ani") {
+          if (this.player.currentAnimationFrame == 6) {
+              this.changePosition(this.animation.substring(0,this.animation.length-3) + "Done");
+              return true;
+            }
+          else {
+            return false;
+          }
+        }
+      }
+      return true;
     }
 
     this.changePosition = function(pos) {
@@ -139,19 +154,19 @@ function GameEntity(cr, map, type) {
         this.changePosition("wkDown");
         this.setVisCR([this.viscol,this.visrow+1]);
       } else if(nextEvent == "shRight") {
-        this.changePosition("shRight");
+        this.changePosition("shRightAni");
         this.isShielding=true;
         //this.setVisCR([this.viscol,this.visrow]);
       } else if(nextEvent == "shLeft") {
-        this.changePosition("shLeft");
+        this.changePosition("shLeftAni");
         this.isShielding=true;
         //this.setVisCR([this.viscol,this.visrow]);
       } else if(nextEvent == "shUp") {
-        this.changePosition("shUp");
+        this.changePosition("shUpAni");
         this.isShielding=true;
         //this.setVisCR([this.viscol,this.visrow]);
       } else if(nextEvent == "shDown") {
-        this.changePosition("shDown");
+        this.changePosition("shDownAni");
         this.isShielding=true;
         //this.setVisCR([this.viscol,this.visrow]);
       }
@@ -278,7 +293,7 @@ function GameEntity(cr, map, type) {
     this.bit = new createjs.Sprite(BIT_SHEET, this.current);
     STAGE.addChild(this.bit);
     this.bit.x = this.col*52.5;
-    this.bit.y = this.row*55-5;
+    this.bit.y = this.row*55+4;
 
     this.getHealth = function() {
       return this.health;
@@ -349,29 +364,29 @@ function GameEntity(cr, map, type) {
       }
     }
 
-      this.changePosition = function(pos) {
-        this.animation = pos;
-        this.bit.gotoAndPlay(pos);
-      }
+    this.changePosition = function(pos) {
+      this.animation = pos;
+      this.bit.gotoAndPlay(pos);
+    }
 
-      //------CRAPPY_BEAM-----------//
-      // if(this.hasAttacked && this.beam!=null) {
-      //   var dX = Math.abs(this.bcol-PLAYER.col);
-      //   var done = false;
-      //   if(dX>0) {
-      //     this.setbCR([this.bcol-1,this.brow]);
-      //     dX--;
-      //   } else if(dX==0 && PLAYER.isShielding) {
-      //     this.setbCR([this.bcol+1,this.brow]);
-      //     if(this.bcol==BIT.col) {
-      //       STAGE.removeChild(BIT);
-      //     }
-      //   } else {
-      //     //TODO: remove beam
-      //       //STAGE.removeChild(this.beam);
-      //       //PLAYER.health--;
-      //     }
-      // }
+    //------CRAPPY_BEAM-----------//
+    // if(this.hasAttacked && this.beam!=null) {
+    //   var dX = Math.abs(this.bcol-PLAYER.col);
+    //   var done = false;
+    //   if(dX>0) {
+    //     this.setbCR([this.bcol-1,this.brow]);
+    //     dX--;
+    //   } else if(dX==0 && PLAYER.isShielding) {
+    //     this.setbCR([this.bcol+1,this.brow]);
+    //     if(this.bcol==BIT.col) {
+    //       STAGE.removeChild(BIT);
+    //     }
+    //   } else {
+    //     //TODO: remove beam
+    //       //STAGE.removeChild(this.beam);
+    //       //PLAYER.health--;
+    //     }
+    // }
 
 
 
@@ -468,9 +483,12 @@ function GameEntity(cr, map, type) {
       alert(PLAYER.health);
     } else if(!this.hit && this.bounced && BIT.bit.x-this.beam.x ==53) {
       this.hit = true;
-      GAME_ENTITIES.splice(1,2);
-      STAGE.removeChildAt(2);
-      STAGE.removeChildAt(2);
+      var loc = GAME_ENTITIES.lastIndexOf(this);
+      GAME_ENTITIES.splice(loc,1);
+      loc = GAME_ENTITIES.lastIndexOf(BIT);
+      GAME_ENTITIES.splice(loc,1);
+      STAGE.removeChild(this.beam);
+      STAGE.removeChild(BIT.bit);
     }
   }
 
