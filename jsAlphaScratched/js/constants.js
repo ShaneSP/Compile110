@@ -13,6 +13,7 @@ var PLAYER = null;
 var BIT = null;
 var SWORD = null;
 var BEAM = null;
+var PORTAL = null;
 
 var GAME_ENTITIES = new Array();
 
@@ -83,6 +84,14 @@ var SWORD_SHEET = new createjs.SpriteSheet({
 	},
 	"animations": {
 		"idle": [0,8]
+	}
+});
+
+var PORTAL_SHEET = new createjs.SpriteSheet({
+	"images": ["assets/portal_40px.png"],
+	"frames": {"height": 40, "width": 40, "regX": 0, "regY": 0, "count":8},
+	"animations": {
+		"idle": [0,7]
 	}
 });
 

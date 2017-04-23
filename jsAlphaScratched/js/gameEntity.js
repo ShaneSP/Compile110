@@ -13,6 +13,9 @@ function GameEntity(cr, map, type) {
 
     case 'sword' : return new SwordEntity(this.cr[0], this.cr[1], "idle");
     break;
+
+    case 'portal' : return new PortalEntity(this.cr[0], this.cr[1], "idle");
+    break;
   }
 
   //TODO: player is the only one processing input?
@@ -659,6 +662,74 @@ function SwordEntity(col, row, current) {
 
   this.processInput = function(e) {
 
+  }
+
+  this.setCR([this.col,this.row]);
+};
+
+//----------------PORTAL_ENTITY----------------//
+function PortalEntity(col, row, current) {
+  // Game Logc
+  this.col = col;
+  this.row = row;
+  this.current = current;
+
+  // Animation
+  this.animation = current;
+  this.portal = new createjs.Sprite(PORTAL_SHEET, this.current);
+  STAGE.addChild(this.portal);
+  this.portal.x = this.col*50.5;
+  this.portal.y = this.row*49;
+
+  this.setCR = function(cr) {
+    //LEVEL_MAP.unoccupy([this.col, this.row]);
+    this.col = cr[0];
+    this.row = cr[1];
+    //LEVEL_MAP.occupy(cr, this.portal);
+  }
+
+  this.remove = function() {
+    //LEVEL_MAP.unoccupy([this.col,this.row]);
+    var loc = GAME_ENTITIES.lastIndexOf(this);
+    GAME_ENTITIES.splice(loc,1);
+    STAGE.removeChild(this.portal);
+  }
+
+  // ANIMATION
+
+  this.updateGraphics = function(name) {
+    if(!name==undefined){
+      this.changePosition(name);
+    }
+  }
+
+  // Will also do non-movement animation
+  this.animationDone = function() {return true;}
+
+  this.changePosition = function(pos) {
+    this.animation = pos;
+    this.portal.gotoAndPlay(pos);
+  }
+
+  this.processAnimation = function(e) {}
+
+  // GAME LOGIC
+
+  this.getXY = function(){return [this.portal.x, this.portal.y];}
+
+  this.getX = function() {return this.portal.x;}
+
+  this.getY = function() {return this.portal.y;}
+
+  this.getPortal = function() {return this.portal;}
+
+  this.processInput = function(e) {
+    if(PLAYER.hasSword && PLAYER.col == this.col && PLAYER.row==this.row) {
+      alert("woop woop wooooosh!");
+      this.remove();
+    } else if(PLAYER.col == this.col && PLAYER.row==this.row) {
+      alert("get the sword dumby");
+    }
   }
 
   this.setCR([this.col,this.row]);
