@@ -45,7 +45,6 @@ function GameEntity(cr, map, type) {
     this.health = 5;
     this.isShielding = false;
     this.hasSword = false;
-    this.cr = [col,row];
 
     // Game Logc
     this.col = col;

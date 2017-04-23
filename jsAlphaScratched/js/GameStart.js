@@ -22,7 +22,7 @@ function createInputQueueGame() {
   GAME_ENTITIES[1] = SWORD;
   GAME_ENTITIES[2] = PORTAL;
 
-  var inputQueue = new Queue(USER_INPUT_BUFFER_CAPACITY);
+  var inputQueue = new Queue(30);
   //var gameLoop = new GameLoop(gameEntities, inputQueue, STAGE);
   //player = new EventListener(inputQueue);
 
