@@ -1,0 +1,8 @@
+#mainMenu {
+  background-image: url('jsAlphaScratched/assets/startscreen.gif');
+  background-size: 100%;
+  background-repeat: repeat-y;
+  background-attachement: fixed;
+  height: 100%;
+  width: 100%;
+}
