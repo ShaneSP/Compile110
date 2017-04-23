@@ -40,7 +40,7 @@ var PLAYER_SHEET = new createjs.SpriteSheet({
 });
 
 var BIT_SHEET = new createjs.SpriteSheet({
-	"images": ["assets/bitSprite36px.png"],
+	"images": ["assets/bit_36px.png"],
 	"frames": {"height": 36, "width": 36, "count": 15, "regX": 18, "regY": 18},
 	"animations": {
 		"idle": {
@@ -48,7 +48,8 @@ var BIT_SHEET = new createjs.SpriteSheet({
 			speed: 0.8
 		},
 		"agro": [5, 8],
-		"charge": [10, 14]
+		"charge": [10, 14],
+		"die": [15,23]
 	}
 });
 
@@ -72,7 +73,7 @@ var TILE_SHEET = new createjs.SpriteSheet({
 });
 
 var SWORD_SHEET = new createjs.SpriteSheet({
-	"images": ["assets/sword_42px.png"],
+	"images": ["assets/Recolorsword_42px.png"],
 	"frames": {
 		"height": 42,
 		"width": 42,
@@ -84,6 +85,7 @@ var SWORD_SHEET = new createjs.SpriteSheet({
 		"idle": [0,8]
 	}
 });
+
 
 var MAP_LAYOUT = [
 	[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],

@@ -7,8 +7,6 @@ function GameModel(entities, inputQueue) {
     this.inputEvent = new Event(this);
     this.entityAdded = new Event(this);
     this.entityRemoved = new Event(this);
-    this.swordAdded = new Event(this);
-
 }
 
 GameModel.prototype = {

@@ -24,10 +24,6 @@ function GameView(model, elements) {
       _this.addBit();
     });
 
-    this._model.swordAdded.attach(function () {
-      _this.addSword();
-    });
-
     this._model.entityRemoved.attach(function (args) {
       _this.removeEntity(args);
     });
@@ -62,7 +58,7 @@ GameView.prototype = {
         //TODO: Stage ticker
         for(var i=0; i<GAME_ENTITIES.length; i++) {
     			var gameEntity = GAME_ENTITIES[i];
-          // console.log(gameEntity);
+           console.log(gameEntity);
     			gameEntity.updateGraphics(a);
         }
     },
@@ -81,16 +77,10 @@ GameView.prototype = {
       GAME_ENTITIES[GAME_ENTITIES.length] = BIT;
     },
 
-    addSword : function() {
-      SWORD = new GameEntity([6,1], LEVEL_MAP, "sword");
-      GAME_ENTITIES[GAME_ENTITIES.length] = SWORD;
-    },
-
-    removeEntity : function (index) {
-      var removed;
-      removed = this._model._entities[index];
-      this._model._entities.splice(index, 1);
-      STAGE.removeChildAt(index);
+    removeEntity : function (name) {
+      // if(name==1) {
+        SWORD.remove();
+      // }
     }
 
     // processInput : function () {
@@ -133,59 +123,85 @@ GameController.prototype = {
     runCode : function() {
       var code = editor.getValue();
       eval(code);
+      if(BIT!=undefined && BIT.inRange(PLAYER.cr)) {
+        this._model.inputEvent.notify(["bit","shoot"]);
+      }
     },
 
     moveRight : function() {
       console.log("moveRight");
       this._model.inputEvent.notify(["player","wkRight"]);
+      //call in range function
+
     },
 
     moveLeft : function() {
       console.log("moveLeft");
       this._model.inputEvent.notify(["player","wkLeft"]);
+      // if(BIT!=undefined && BIT.inRange(PLAYER.cr)) {
+      //   this._model.inputEvent.notify(["bit","shoot"]);
+      // }
     },
 
     moveUp : function() {
       console.log("moveUp");
       this._model.inputEvent.notify(["player","wkUp"]);
+      // if(BIT!=undefined && BIT.inRange(PLAYER.cr)) {
+      //   this._model.inputEvent.notify(["bit","shoot"]);
+      // }
     },
 
     moveDown : function() {
       console.log("moveDown");
       this._model.inputEvent.notify(["player","wkDown"]);
+      // if(BIT!=undefined && BIT.inRange(PLAYER.cr)) {
+      //   this._model.inputEvent.notify(["bit","shoot"]);
+      // }
     },
 
     shieldRight : function() {
       console.log("shieldRight");
       this._model.inputEvent.notify(["player","shRight"]);
+      if(BIT!=undefined && BIT.inRange(PLAYER.cr)) {
+        this._model.inputEvent.notify(["bit","shoot"]);
+      }
     },
 
     shieldLeft : function() {
       console.log("shieldLeft");
       this._model.inputEvent.notify(["player","shLeft"]);
+      // if(BIT!=undefined && BIT.inRange(PLAYER.cr)) {
+      //   this._model.inputEvent.notify(["bit","shoot"]);
+      // }
     },
 
     shieldUp : function() {
       console.log("moveUp");
       this._model.inputEvent.notify(["player","shUp"]);
+      // if(BIT!=undefined && BIT.inRange(PLAYER.cr)) {
+      //   this._model.inputEvent.notify(["bit","shoot"]);
+      // }
     },
 
     shieldDown : function() {
       console.log("shieldDown");
       this._model.inputEvent.notify(["player","shDown"]);
+      // if(BIT!=undefined && BIT.inRange(PLAYER.cr)) {
+      //   this._model.inputEvent.notify(["bit","shoot"]);
+      // }
     },
 
     pickUp : function(name) {
-      if(name=="sword") {
-        this._model.entityRemoved.notify(10);
+      if(name=="sword" && PLAYER.col==SWORD.col && PLAYER.row-SWORD.row==1 && !PLAYER.hasSword) {
+        PLAYER.hasSword=true;
+        this._model.entityRemoved.notify(1);
       }
     },
 
     addEnemy : function() {
       this._model.entityAdded.notify();
-    },
-
-    addSword : function() {
-      this._model.swordAdded.notify();
+      // if(BIT!=undefined && BIT.inRange(PLAYER.cr)) {
+      //   this._model.inputEvent.notify(["bit","shoot"]);
+      // }
     }
 };

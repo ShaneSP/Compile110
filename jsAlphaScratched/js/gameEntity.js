@@ -42,6 +42,7 @@ function GameEntity(cr, map, type) {
     this.health = 5;
     this.isShielding = false;
     this.hasSword = false;
+    this.cr = [col,row];
 
     // Game Logc
     this.col = col;
@@ -345,11 +346,6 @@ function GameEntity(cr, map, type) {
               this.changePosition("charge");
             }
             //TODO: spawn bit beam
-            if(!this.hasAttacked) {
-              BEAM = new bitAttack([this.col,this.row]);
-              GAME_ENTITIES[GAME_ENTITIES.length] = BEAM;
-              this.hasAttacked = true;
-            }
             this.agrocount = 0;
           }
         } else if (this.animation == "charge") {
@@ -364,9 +360,40 @@ function GameEntity(cr, map, type) {
       }
     }
 
+    this.processInput = function(e) {
+      var nextEvent = e;
+      if(nextEvent=="shoot" ) {//&& !this.hasAttacked) {
+          BEAM = new bitAttack([this.col,this.row]);
+          GAME_ENTITIES[GAME_ENTITIES.length] = BEAM;
+          this.hasAttacked = true;
+        }
+      }
+
+
+    this.processAnimation = function(e) {
+
+    }
+
     this.changePosition = function(pos) {
       this.animation = pos;
       this.bit.gotoAndPlay(pos);
+    }
+
+    this.remove = function() {
+      this.changePosition("die");
+        LEVEL_MAP.unoccupy([this.col,this.row]);
+        loc = GAME_ENTITIES.lastIndexOf(BIT);
+        GAME_ENTITIES.splice(loc,1);
+        STAGE.removeChild(BIT.bit);
+    }
+
+    this.inRange = function(cr) {
+      var c = cr[0];
+      var r = cr[1];
+      if(this.row == r || this.col == c) {
+        return true;
+      }
+      return false;
     }
 
     //------CRAPPY_BEAM-----------//
@@ -429,29 +456,25 @@ function GameEntity(cr, map, type) {
       this.current = pos;
     }
 
-    this.processInput = function(e) {
-
-    }
-
     this.setCR([this.col,this.row]);
   };
 
 
   this.bitAttack = function(cr) {
-    this.becol = cr[0]-1;
-    this.berow = cr[1];
+    this.col = cr[0]-1;
+    this.row = cr[1];
     this.beam = new createjs.Sprite(BEAM_SHEET, "idle");
     STAGE.addChild(this.beam);
-    this.beam.x = this.becol*51;
-    this.beam.y = this.berow*48;
+    this.beam.x = this.col*51;
+    this.beam.y = this.row*48;
     this.bspeed = 5;
     this.bounced = false;
     this.hit = false;
 
     this.setbCR = function(cr) {
-      //LEVEL_MAP.unoccupy([this.col, this.row]);
-      this.becol = cr[0];
-      this.berow = cr[1];
+      LEVEL_MAP.unoccupy([this.col, this.row]);
+      this.col = cr[0];
+      this.row = cr[1];
       LEVEL_MAP.occupy(cr, this.beam);
     }
 
@@ -461,16 +484,16 @@ function GameEntity(cr, map, type) {
   }
 
   this.nextXY = function() {
-    if (this.becol*47 - this.beam.x > 10) {
+    if (this.col*47 - this.beam.x > 10) {
       this.beam.x = this.beam.x + this.bspeed;
     }
-    else if (this.becol*48 - this.beam.x < -10) {
+    else if (this.col*48 - this.beam.x < -10) {
       this.beam.x = this.beam.x - this.bspeed;
     }
-    if (this.berow*47 - this.beam.y > 10) {
+    if (this.row*47 - this.beam.y > 10) {
       this.beam.y = this.beam.y + this.bspeed;
     }
-    else if (this.berow*48 - this.beam.y < -10) {
+    else if (this.row*48 - this.beam.y < -10) {
       this.beam.y = this.beam.y - this.bspeed;
     }
 
@@ -483,13 +506,17 @@ function GameEntity(cr, map, type) {
       alert(PLAYER.health);
     } else if(!this.hit && this.bounced && BIT.bit.x-this.beam.x ==53) {
       this.hit = true;
-      var loc = GAME_ENTITIES.lastIndexOf(this);
-      GAME_ENTITIES.splice(loc,1);
-      loc = GAME_ENTITIES.lastIndexOf(BIT);
-      GAME_ENTITIES.splice(loc,1);
-      STAGE.removeChild(this.beam);
-      STAGE.removeChild(BIT.bit);
+
+      this.remove();
+      BIT.remove();
     }
+  }
+
+  this.remove = function() {
+    LEVEL_MAP.unoccupy([this.col,this.row]);
+    var loc = GAME_ENTITIES.lastIndexOf(this);
+    GAME_ENTITIES.splice(loc,1);
+    STAGE.removeChild(this.beam);
   }
 
   this.processAnimation = function(e) {
@@ -508,11 +535,11 @@ function GameEntity(cr, map, type) {
 
   this.updateGraphics = function() {
       if(BEAM != undefined) {
-        if(!this.bounced && Math.abs(this.becol-PLAYER.col) > 0) {
-            this.setbCR([this.becol-1,this.berow]);
+        if(!this.bounced && Math.abs(this.col-PLAYER.col) > 0) {
+            this.setbCR([this.col-1,this.row]);
 
-        } else if(this.bounced && Math.abs(BIT.col-this.becol) > 0) {
-          this.setbCR([this.becol+1,this.berow]);
+        } else if(this.bounced && Math.abs(BIT.col-this.col) > 0) {
+          this.setbCR([this.col+1,this.row]);
 
         }
         this.nextXY();
@@ -523,7 +550,7 @@ function GameEntity(cr, map, type) {
         // }
       }
   }
-  this.setbCR([this.becol,this.berow]);
+  this.setbCR([this.col,this.row]);
 };
 
 //----------------SWORD_ENTITY----------------//
@@ -552,6 +579,13 @@ function SwordEntity(col, row, current) {
   this.setVisCR = function(cr) {
     this.viscol = cr[0];
     this.visrow = cr[1];
+  }
+
+  this.remove = function() {
+    LEVEL_MAP.unoccupy([this.col,this.row]);
+    var loc = GAME_ENTITIES.lastIndexOf(this);
+    GAME_ENTITIES.splice(loc,1);
+    STAGE.removeChild(this.sword);
   }
 
   // ANIMATION
