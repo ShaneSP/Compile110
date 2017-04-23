@@ -1,26 +1,24 @@
-var intro = "Hello student! It seems you have been transported to a strange new world!";
-var intro2 = "In this world, coding is EVERYTHING!"
-var par1 = "This is the first paragraph.";
+var linesoftext = ["Hello student! It seems you have been transported to a strange new world!",
+                    "In this world, coding is EVERYTHING!",
+                    "You will need to code to defend yourself against enemies.",
+                    "Like this one!",
+                    "FIN."];
+var currentline = 0;
+var globalinterval = 40;
 
 var showText = function(target, message, index, interval) {
-  if (index < message.length) {
+  if (index < message.length && linesoftext[currentline] == message) {
     $(target).append(message[index++]);
     setTimeout(function() {showText(target, message, index, interval);}, interval);
   }
 }
 
-// $(function () {
-//  showText("#textbox", "Welcome to compile(110);! Hope you enjoy your stay! ;)", 0, 50);
-// });
-
 $(function () {
-  showText("#textbox", intro, 0, 50);
+  showText("#textbox", linesoftext[0], 0, globalinterval);
 });
 
-var nextText = (function() {
-  var textArray = [intro2, par1];
-  var count = -1;
-  return function() {
-    return textArray[++count % textArray.length];
-  }
-}());
+var nextText = (function(target) {
+  currentline = (currentline + 1) % linesoftext.length;
+  $(target).empty();
+  showText(target, linesoftext[currentline], 0, globalinterval);
+});
