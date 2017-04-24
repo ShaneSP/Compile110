@@ -12,14 +12,13 @@
 <!-- body loads the game's canvas as a table first -->
   <body onload="main(); setTop();">
     <div id="gameCanvas" style="height:500px; width:1220px;">
-      <table id="">
+      <table id="container">
         <tr>
 
           <td>
             <!-- left panel: editor with sample code -->
             <div id="editor">this.shieldRight();
-this.addEnemy();
-            </div>
+this.addEnemy();</div>
 
             <!-- "Run Code" button -->
             <center>
@@ -39,13 +38,22 @@ this.addEnemy();
             </div>
 
             <!-- bottom text box -->
-            <div id="textbox" style="width: 480px; height: 100px; font-family: 'Determination Mono', 'Lucida Sans Typewriter', 'Lucida Console', monaco, 'Bitstream Vera Sans Mono', monospace; font-size:20px;">
-              <span id="text_target"></span>
+            <div id="doubleborder">
+              <table id="textbox">
+                <tr>
+                <td id="talkhead">
+                  <img id="krisimg" src="enlargedAssets/krisBlink_90x104.gif"/>
+                </td>
+                <td id="textdiv">
+                  <span id="text_target"></span>
+                </td>
+                </tr>
+              </table>
             </div>
 
             <!-- continue text button -->
             <center>
-              <button onclick="nextText('#textbox');">Continue --></button>
+              <button onclick="nextText('#text_target');">Continue --></button>
             </center>
           </td>
 
