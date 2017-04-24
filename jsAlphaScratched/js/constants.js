@@ -47,7 +47,7 @@ var PLAYER_SHEET = new createjs.SpriteSheet({
 		"attackD": [240,267],
 		"attackR": [280,305],
 		"attackL": [320,345],
-		"attackU": [360,393]
+		"attackU": [360,383]
 		}
 });
 

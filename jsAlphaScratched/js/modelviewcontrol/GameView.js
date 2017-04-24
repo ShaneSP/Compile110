@@ -76,7 +76,7 @@ GameView.prototype = {
     },
 
     addBit : function() {
-      BIT = new GameEntity([8,5],LEVEL_MAP,"bit");
+      BIT = new GameEntity([7,5],LEVEL_MAP,"bit");
       GAME_ENTITIES[GAME_ENTITIES.length] = BIT;
     },
 

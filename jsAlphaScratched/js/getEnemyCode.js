@@ -1,5 +1,5 @@
 document.getElementById("gameboard").addEventListener("click", getEnemyCode);
 
 function getEnemyCode() {
-  document.getElementById("editor2").innerHTML = "This is supposed to be enemy code.";
+  enemycode.session.setValue("//This is what the nemey code will be.\n//There should be a break.");
 }

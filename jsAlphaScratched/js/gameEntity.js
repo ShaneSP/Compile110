@@ -58,8 +58,8 @@ function GameEntity(cr, map, type) {
     this.player = new createjs.Sprite(PLAYER_SHEET, this.current);
     this.player.framerate = .5;
     STAGE.addChild(this.player);
-    this.player.x = this.col*47;
-    this.player.y = this.row*47;
+    this.player.x = this.col*50-10;
+    this.player.y = this.row*50-15;
 
     this.getHealth = function() {
       return this.health;
@@ -80,16 +80,16 @@ function GameEntity(cr, map, type) {
     // ANIMATION
 
     this.nextXY = function() {
-      if (this.viscol*47 - this.player.x > 3) {
+      if (this.viscol*50-12 - this.player.x > 3) {
         this.player.x = this.player.x + 3;
       }
-      else if (this.viscol*47 - this.player.x < -3) {
+      else if (this.viscol*50-12 - this.player.x < -3) {
         this.player.x = this.player.x - 3;
       }
-      if (this.visrow*47 - this.player.y > 3) {
+      if (this.visrow*50-15 - this.player.y > 3) {
         this.player.y = this.player.y + 3;
       }
-      else if (this.visrow*47 - this.player.y < -3) {
+      else if (this.visrow*50-15 - this.player.y < -3) {
         this.player.y = this.player.y - 3;
       }
     }
@@ -108,14 +108,14 @@ function GameEntity(cr, map, type) {
     }
 
     this.movementDone = function() {
-      if (this.player.x == this.viscol*47
-        && this.player.y == this.visrow*47) {
+      if (this.player.x == this.viscol*50-12
+        && this.player.y == this.visrow*50-15) {
         return true;
       }
-      else if (Math.abs(this.visrow*47 - this.player.y) < 4
-      && Math.abs(this.viscol*47 - this.player.x) < 4) {
-        this.player.x = this.viscol*47;
-        this.player.y = this.visrow*47;
+      else if (Math.abs(this.visrow*50-12 - this.player.y) < 4
+      && Math.abs(this.viscol*50-12 - this.player.x) < 4) {
+        this.player.x = this.viscol*50-12;
+        this.player.y = this.visrow*50-15;
         this.changePosition("fc" + this.animation.substring(2, 10));
         return true;
       }

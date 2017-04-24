@@ -9,7 +9,9 @@ var linesoftext = [["Hello student! It seems you", "have been transported to a",
                     ["Try clicking on the bit", "that just appeared here!"],
                     ["[INSERT TEXT PERTAINING","TO THE BIT HERE]"],
                     ["As you can see, if you are", "going to survive here, you'll", "need to learn enemies' code!"],
-                    ["To see what you can and can't", "do, click on the options", "above to learn about them!"]
+                    ["To see what you can and can't", "do, click on the options", "above to learn about them!"],
+                    ["That's all for now!"],
+                    ["..."]
                   ];
 var currentline = 0;
 var globalinterval = 40;
