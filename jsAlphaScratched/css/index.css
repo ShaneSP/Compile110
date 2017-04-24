@@ -1,8 +1,28 @@
 #mainMenu {
-  background-image: url('jsAlphaScratched/assets/startscreen.gif');
-  background-size: 100%;
-  background-repeat: repeat-y;
-  background-attachement: fixed;
-  height: 100%;
-  width: 100%;
+  background-image: url('../assets/startscreen.gif');
+  height: 600px;
+  width: 800px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  margin-top: -300px;
+  margin-left: -400px;
+}
+
+#startButton {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  margin-top: -20px;
+  margin-left: -40px;
+}
+
+button {
+  height: 30px;
+  width: 80px;
+  font-size: 18px;
+}
+
+body {
+  background-color: black;
 }
