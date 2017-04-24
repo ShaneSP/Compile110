@@ -36,6 +36,9 @@ function GameView(model, elements) {
 
 GameView.prototype = {
     show : function () {
+      if(SPAWN&&!BIT.spawned) {
+        this.addBit();
+      }
       this.update();
       var animationsDone = true;
       for(var i=0; i<GAME_ENTITIES.length; i++) {
@@ -58,7 +61,7 @@ GameView.prototype = {
         //TODO: Stage ticker
         for(var i=0; i<GAME_ENTITIES.length; i++) {
     			var gameEntity = GAME_ENTITIES[i];
-           console.log(gameEntity);
+        //   console.log(gameEntity);
     			gameEntity.updateGraphics(a);
         }
     },
@@ -123,7 +126,7 @@ GameController.prototype = {
     runCode : function() {
       var code = editor.getValue();
       eval(code);
-      if(BIT!=undefined && BIT.inRange([PLAYER.viscol,PLAYER.visrow])) {
+      if(!BIT.removed && BIT.inRange([PLAYER.col,PLAYER.row])) {
         this._model.inputEvent.notify(["bit","shoot"]);
       }
     },

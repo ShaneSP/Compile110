@@ -15,6 +15,11 @@ var currentline = 0;
 var globalinterval = 40;
 
 var showText = function(target, message, line, index, interval) {
+  if(currentline==4) {
+    SPAWN=true;
+  } else {
+    SPAWN=false;
+  }
   if (line < message.length && index < message[line].length && linesoftext[currentline] == message) {
     $(target).append(message[line][index++]);
     setTimeout(function() {showText(target, message, line, index, interval);}, interval);

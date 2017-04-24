@@ -58,8 +58,8 @@ function GameEntity(cr, map, type) {
     this.player = new createjs.Sprite(PLAYER_SHEET, this.current);
     this.player.framerate = .5;
     STAGE.addChild(this.player);
-    this.player.x = this.col*50+4;
-    this.player.y = this.row*50+2;
+    this.player.x = this.col*47;
+    this.player.y = this.row*47;
 
     this.getHealth = function() {
       return this.health;
@@ -80,16 +80,16 @@ function GameEntity(cr, map, type) {
     // ANIMATION
 
     this.nextXY = function() {
-      if (this.viscol*50+4 - this.player.x > 3) {
+      if (this.viscol*47 - this.player.x > 3) {
         this.player.x = this.player.x + 3;
       }
-      else if (this.viscol*50+4 - this.player.x < -3) {
+      else if (this.viscol*47 - this.player.x < -3) {
         this.player.x = this.player.x - 3;
       }
-      if (this.visrow*50+2 - this.player.y > 3) {
+      if (this.visrow*47 - this.player.y > 3) {
         this.player.y = this.player.y + 3;
       }
-      else if (this.visrow*50+2 - this.player.y < -3) {
+      else if (this.visrow*47 - this.player.y < -3) {
         this.player.y = this.player.y - 3;
       }
     }
@@ -108,14 +108,14 @@ function GameEntity(cr, map, type) {
     }
 
     this.movementDone = function() {
-      if (this.player.x == this.viscol*50+4
-        && this.player.y == this.visrow*50+2) {
+      if (this.player.x == this.viscol*47
+        && this.player.y == this.visrow*47) {
         return true;
       }
-      else if (Math.abs(this.visrow*50+2 - this.player.y) < 4
-      && Math.abs(this.viscol*50+4 - this.player.x) < 4) {
-        this.player.x = this.viscol*50+4;
-        this.player.y = this.visrow*50+2;
+      else if (Math.abs(this.visrow*47 - this.player.y) < 4
+      && Math.abs(this.viscol*47 - this.player.x) < 4) {
+        this.player.x = this.viscol*47;
+        this.player.y = this.visrow*47;
         this.changePosition("fc" + this.animation.substring(2, 10));
         return true;
       }
@@ -288,16 +288,22 @@ function GameEntity(cr, map, type) {
     this.row = row;
     this.current = current;
     this.agrocount = 0;
+    this.spawned=false;
+    this.removed=false;
 
-    // Animation
-    this.viscol = col;
-    this.visrow = row;
-    this.animation = current;
-    this.bit = new createjs.Sprite(BIT_SHEET, this.current);
-    STAGE.addChild(this.bit);
-    this.bit.x = this.col*52.5;
-    this.bit.y = this.row*55+4;
-
+    this.spawn = function() {
+      if(!this.spawned) {
+        // Animation
+        this.viscol = col;
+        this.visrow = row;
+        this.animation = current;
+        this.bit = new createjs.Sprite(BIT_SHEET, this.current);
+        STAGE.addChild(this.bit);
+        this.bit.x = this.col*52.5;
+        this.bit.y = this.row*55+4;
+        this.spawned=true;
+      }
+    }
     this.getHealth = function() {
       return this.health;
     }
@@ -333,7 +339,13 @@ function GameEntity(cr, map, type) {
     }
 
     this.updateGraphics = function(name) {
-      if (this.col == PLAYER.col|| this.row == PLAYER.row) {
+      if(!this.spawned) {
+        if(SPAWN) {
+          this.spawn();
+        }
+        return;
+      }
+      if (this.inRange([PLAYER.col,PLAYER.row])) {
         if (this.animation == "idle") {
           this.agrocount = this.agrocount + 1;
           if (this.agrocount > 3) {
@@ -357,17 +369,22 @@ function GameEntity(cr, map, type) {
             this.agrocount = 0;
           }
         }
+      } else if (this.health == 0) {
+        this.changePosition("die");
       } else if (this.animation != "idle") {
         this.changePosition("idle");
       }
+
     }
 
     this.processInput = function(e) {
-      var nextEvent = e;
-      if(nextEvent=="shoot" ) {//&& !this.hasAttacked) {
-          BEAM = new bitAttack([this.col,this.row]);
-          GAME_ENTITIES[GAME_ENTITIES.length] = BEAM;
-          this.hasAttacked = true;
+      if(this.spawned) {
+        var nextEvent = e;
+        if(nextEvent=="shoot" ) {//&& !this.hasAttacked) {
+            BEAM = new bitAttack([this.col,this.row]);
+            GAME_ENTITIES[GAME_ENTITIES.length] = BEAM;
+            this.hasAttacked = true;
+          }
         }
       }
 
@@ -376,13 +393,25 @@ function GameEntity(cr, map, type) {
 
     }
 
+    this.deathDone = function() {
+      if(this.health==0) {
+        this.changePosition("die");
+        if(this.bit.currentAnimationFrame==8){
+          this.remove();
+          return true;
+        }
+        return false;
+      }
+      return true;
+    }
+
     this.changePosition = function(pos) {
       this.animation = pos;
       this.bit.gotoAndPlay(pos);
     }
 
     this.remove = function() {
-      this.changePosition("die");
+        this.removed =true;
         LEVEL_MAP.unoccupy([this.col,this.row]);
         loc = GAME_ENTITIES.lastIndexOf(BIT);
         GAME_ENTITIES.splice(loc,1);
@@ -392,43 +421,17 @@ function GameEntity(cr, map, type) {
     this.inRange = function(cr) {
       var c = cr[0];
       var r = cr[1];
-      if(this.row == r || this.col == c) {
+      var d = Math.abs(this.col-c);
+      if((this.row == r && d<=BIT_RANGE) || (this.col == c && d<=BIT_RANGE)) {
         return true;
       }
       return false;
     }
 
-    //------CRAPPY_BEAM-----------//
-    // if(this.hasAttacked && this.beam!=null) {
-    //   var dX = Math.abs(this.bcol-PLAYER.col);
-    //   var done = false;
-    //   if(dX>0) {
-    //     this.setbCR([this.bcol-1,this.brow]);
-    //     dX--;
-    //   } else if(dX==0 && PLAYER.isShielding) {
-    //     this.setbCR([this.bcol+1,this.brow]);
-    //     if(this.bcol==BIT.col) {
-    //       STAGE.removeChild(BIT);
-    //     }
-    //   } else {
-    //     //TODO: remove beam
-    //       //STAGE.removeChild(this.beam);
-    //       //PLAYER.health--;
-    //     }
-    // }
-
-
-
     // Will also do non-movement animation
     this.animationDone = function() {
-      return true;
+      return this.deathDone();
     }
-
-    this.movementDone = function() {
-
-    }
-//----------BIT_ATTACK------------//
-
 
     // GAME LOGIC
 
@@ -461,6 +464,7 @@ function GameEntity(cr, map, type) {
     this.setCR([this.col,this.row]);
   };
 
+//----------BIT_ATTACK------------//
 
   this.bitAttack = function(cr) {
     this.col = cr[0]-1;
@@ -510,7 +514,7 @@ function GameEntity(cr, map, type) {
       this.hit = true;
 
       this.remove();
-      BIT.remove();
+      BIT.health--;
     }
   }
 

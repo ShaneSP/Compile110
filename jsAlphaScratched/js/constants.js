@@ -15,28 +15,39 @@ var SWORD = null;
 var BEAM = null;
 var PORTAL = null;
 
+var SPAWN = false;
+var BIT_RANGE = 6;
+
 var GAME_ENTITIES = new Array();
 
 var PLAYER_SHEET = new createjs.SpriteSheet({
-	"images": ["assets/spritesheet_2.png"],
-	"frames": {"height": 42, "width": 42, "count": 74, "regX": 0, "regY": 1, "spacing": 1, "margin": 1},
+	"images": ["assets/allProtagSprites_74px.png"],
+	"frames": {"height": 74, "width": 74, "count": 394, "regX": 0, "regY": 0},
 	"animations": {
 		"wkDown": [0, 6],
-		"wkRight": [9, 17],
-		"wkLeft": [18, 26],
-		"wkUp": [27, 33],
+		"wkRight": [20, 28],
+		"wkLeft": [40, 48],
+		"wkUp": [60, 66],
 		"fcDown": [0],
-		"fcRight": [9],
-		"fcLeft": [18],
-		"fcUp": [27],
-		"shRightAni": [36,42],
-		"shLeftAni": [45,51],
-		"shDownAni": [54,60],
-		"shUpAni": [63,69],
-		"shRightDone": [41,42],
-		"shLeftDone": [50,51],
-		"shDownDone": [59,60],
-		"shUpDone": [68,69]
+		"fcRight": [20],
+		"fcLeft": [40],
+		"fcUp": [60],
+		"idleU": [80,86],
+		"idleD": [100,106],
+		"idleR": [120,126],
+		"idleL": [140,146],
+		"shDownAni": [160,166],
+		"shRightAni": [180,186],
+		"shLeftAni": [200,206],
+		"shUpAni": [220,226],
+		"shDownDone": [165,166],
+		"shRightDone": [185,186],
+		"shLeftDone": [205,206],
+		"shUpDone": [225,226],
+		"attackD": [240,267],
+		"attackR": [280,305],
+		"attackL": [320,345],
+		"attackU": [360,393]
 		}
 });
 
