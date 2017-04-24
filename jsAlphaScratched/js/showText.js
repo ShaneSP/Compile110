@@ -14,7 +14,7 @@ var showText = function(target, message, line, index, interval) {
   else if (line < message.length && linesoftext[currentline] == message) {
     line = line + 1;
     $(target).append("<br/>");
-    setTimeout(function() {showText(target, message, line, 0, interval);}, interval);
+    showText(target, message, line, 0, interval);
   }
 }
 
