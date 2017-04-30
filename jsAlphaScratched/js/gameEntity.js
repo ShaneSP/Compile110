@@ -344,43 +344,44 @@ function GameEntity(cr, map, type) {
           this.spawn();
         }
         return;
-      }
-      if (this.inRange([PLAYER.col,PLAYER.row])) {
-        if (this.animation == "idle") {
-          this.agrocount = this.agrocount + 1;
-          if (this.agrocount > 3) {
-            if(!this.hasAttacked) {
-              this.changePosition("agro");
+      } else {
+        if (this.inRange([PLAYER.col,PLAYER.row])) {
+          if (this.animation == "idle") {
+            this.agrocount = this.agrocount + 1;
+            if (this.agrocount > 3) {
+              if(!this.hasAttacked) {
+                this.changePosition("agro");
+              }
+            }
+          } else if (this.animation == "agro") {
+            this.agrocount = this.agrocount + 1;
+            if (this.agrocount > 21) {
+              if(!this.hasAttacked) {
+                this.changePosition("charge");
+                MODEL.inputEvent.notify(["bit","shoot"]);
+              }
+              //TODO: spawn bit beam
+              this.agrocount = 0;
+            }
+          } else if (this.animation == "charge") {
+            this.agrocount = this.agrocount + 1;
+            if (this.agrocount > 6) {
+              this.changePosition("idle");
+              this.agrocount = 0;
             }
           }
-        } else if (this.animation == "agro") {
-          this.agrocount = this.agrocount + 1;
-          if (this.agrocount > 21) {
-            if(!this.hasAttacked) {
-              this.changePosition("charge");
-            }
-            //TODO: spawn bit beam
-            this.agrocount = 0;
-          }
-        } else if (this.animation == "charge") {
-          this.agrocount = this.agrocount + 1;
-          if (this.agrocount > 6) {
-            this.changePosition("idle");
-            this.agrocount = 0;
-          }
+        } else if (this.animation != "idle") {
+          this.changePosition("idle");
         }
-      } else if (this.health == 0) {
-        this.changePosition("die");
-      } else if (this.animation != "idle") {
-        this.changePosition("idle");
-      }
 
-    }
+     }
+
+   };
 
     this.processInput = function(e) {
       if(this.spawned) {
         var nextEvent = e;
-        if(nextEvent=="shoot" ) {//&& !this.hasAttacked) {
+        if(nextEvent=="shoot" && !this.hasAttacked) {
             BEAM = new bitAttack([this.col,this.row]);
             GAME_ENTITIES[GAME_ENTITIES.length] = BEAM;
             this.hasAttacked = true;
@@ -392,12 +393,12 @@ function GameEntity(cr, map, type) {
     this.processAnimation = function(e) {
 
     }
-
+    //TODO: death animation doesn't happen
     this.deathDone = function() {
       if(this.health==0) {
         this.changePosition("die");
         if(this.bit.currentAnimationFrame==8){
-          this.remove();
+          //this.remove();
           return true;
         }
         return false;
@@ -411,13 +412,14 @@ function GameEntity(cr, map, type) {
     }
 
     this.remove = function() {
+        console.log("remove called");
         this.removed =true;
         LEVEL_MAP.unoccupy([this.col,this.row]);
         loc = GAME_ENTITIES.lastIndexOf(BIT);
         GAME_ENTITIES.splice(loc,1);
         STAGE.removeChild(BIT.bit);
     }
-
+    //delete this function and have a set interval that the bit attacks in a certain direction
     this.inRange = function(cr) {
       var c = cr[0];
       var r = cr[1];
@@ -430,7 +432,7 @@ function GameEntity(cr, map, type) {
 
     // Will also do non-movement animation
     this.animationDone = function() {
-      return this.deathDone();
+
     }
 
     // GAME LOGIC
@@ -503,24 +505,27 @@ function GameEntity(cr, map, type) {
       this.beam.y = this.beam.y - this.bspeed;
     }
 
-    if(this.beam.x-PLAYER.player.x < 14 & PLAYER.isShielding){
+    if(this.beam.x-PLAYER.player.x < 20 & PLAYER.isShielding){
       this.bounced = true;
     }
-    if(!this.hit && !this.bounced && this.beam.x-PLAYER.player.x < 14) {
+    if(!this.hit && !this.bounced && this.beam.x-PLAYER.player.x < 20) {
       PLAYER.health--;
       this.hit = true;
+      console.log("hits player");
       this.remove();
-    } else if(!this.hit && this.bounced && BIT.bit.x-this.beam.x ==53) {
+    } else if(!this.hit && this.bounced && BIT.bit.x-this.beam.x < 60) {
       this.hit = true;
-
-      this.remove();
+      console.log("enemy hit");
+      BEAM.remove();
       BIT.health--;
+      BIT.remove();
     }
   }
 
   this.remove = function() {
+    console.log("beam removed?");
     LEVEL_MAP.unoccupy([this.col,this.row]);
-    var loc = GAME_ENTITIES.lastIndexOf(this);
+    var loc = GAME_ENTITIES.lastIndexOf(BEAM);
     GAME_ENTITIES.splice(loc,1);
     STAGE.removeChild(this.beam);
   }
@@ -589,7 +594,7 @@ function SwordEntity(col, row, current) {
 
   this.remove = function() {
     LEVEL_MAP.unoccupy([this.col,this.row]);
-    var loc = GAME_ENTITIES.lastIndexOf(this);
+    var loc = GAME_ENTITIES.lastIndexOf(SWORD);
     GAME_ENTITIES.splice(loc,1);
     STAGE.removeChild(this.sword);
   }

@@ -29,11 +29,11 @@ function createInputQueueGame() {
 
   //gameLoop.start();
 
-  var model = new GameModel(GAME_ENTITIES,inputQueue);
-  view = new GameView(model, {
+  MODEL = new GameModel(GAME_ENTITIES,inputQueue);
+  view = new GameView(MODEL, {
             'button' : $('input[type=button]') //TODO: add Run Code button here
           });
-  var controller = new GameController(model, view);
+  var controller = new GameController(MODEL, view);
 
   createjs.Ticker.addEventListener("tick", handleTick);
   // createjs.Ticker.timingMode = createjs.Ticker.RAF_SYNCHED;

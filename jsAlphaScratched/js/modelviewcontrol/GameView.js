@@ -46,6 +46,7 @@ GameView.prototype = {
         animationsDone = animationsDone && gameEntity.animationDone();
       }
       if (!animationsDone) {
+        console.log(gameEntity.health + " done");
         return;
       }
       if (!this._model._queue.isEmpty()) {
@@ -126,9 +127,9 @@ GameController.prototype = {
     runCode : function() {
       var code = editor.getValue();
       eval(code);
-      if(!BIT.removed && BIT.inRange([PLAYER.col,PLAYER.row])) {
-        this._model.inputEvent.notify(["bit","shoot"]);
-      }
+      // if(!BIT.hasAttacked && !BIT.removed && BIT.inRange([PLAYER.col,PLAYER.row])) {
+      //   this._model.inputEvent.notify(["bit","shoot"]);
+      // }
     },
 
     moveRight : function() {

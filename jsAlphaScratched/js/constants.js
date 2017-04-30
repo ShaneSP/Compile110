@@ -14,9 +14,10 @@ var BIT = null;
 var SWORD = null;
 var BEAM = null;
 var PORTAL = null;
+var MODEL = null;
 
 var SPAWN = false;
-var BIT_RANGE = 6;
+var BIT_RANGE = 5;
 
 var GAME_ENTITIES = new Array();
 
