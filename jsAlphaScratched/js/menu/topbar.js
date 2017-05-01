@@ -1,5 +1,5 @@
 var topcanvas, topstage;
-var background, fborder;
+var fborder;
 var krisheadSheet, krishead;
 
 function setTop() {
@@ -7,12 +7,12 @@ function setTop() {
   topstage = new createjs.Stage(topcanvas);
 
   fboarder = new createjs.Shape();
-  fboarder.graphics.beginFill("#000").drawRect(0, 0, 500, 100);
+  fboarder.graphics.beginFill("#000").drawRect(0, 0, 100, 100);
   topstage.addChild(fboarder);
 
-  background = new createjs.Shape();
-  background.graphics.beginFill("#999").drawRect(4, 4, 492, 92);
-  topstage.addChild(background);
+  // helpbox = new createjs.Shape();
+  // helpbox.graphics.beginFill("#0EF").drawRect(40, 37, 41, 40);
+  // topstage.addChild(helpbox);
 
   krisheadSheet = new createjs.SpriteSheet({
     "images": ["assets/krishead.png"],
@@ -52,11 +52,9 @@ function setTop() {
   });
 
   krishead = new createjs.Sprite(krisheadSheet, "fwdIdle");
-  krishead.x = 15;
-  krishead.y = 25;
+  krishead.x = 5;
+  krishead.y = 0;
   topstage.addChild(krishead);
-
-  energy = new energybar(5, topstage);
 
   createjs.Ticker.timingMode = createjs.Ticker.RAF;
   createjs.Ticker.addEventListener("tick", toptick);

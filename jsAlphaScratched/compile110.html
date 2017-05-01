@@ -10,7 +10,7 @@
 
 <!-- body of the doc -->
 <!-- body loads the game's canvas as a table first -->
-  <body onload="main(); setTop();">
+  <body onload="main(); setTop(); setHearts();">
     <div id="gameCanvas" style="height:500px; width:1220px;">
       <table id="container">
         <tr>
@@ -27,8 +27,37 @@
 
           <td style="width:500px;">
             <!-- top status bar -->
-            <div id="menu" style="width: 500px; height: 100px;">
+            <!-- <div id="menu" style="width: 500px; height: 100px;">
               <canvas id="topbar" width="500" height="100"></canvas>
+            </div> -->
+
+            <div id="menuborder">
+              <table id="menubox">
+                <tr>
+                <td id="clickycanvas">
+                  <table id="clickytable">
+                    <tr>
+                      <td>
+                        <canvas id="hearts" width="130" height="25"></canvas>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <div id="facecontainer">
+                          <canvas id="topbar" width="40" height="50"></canvas>
+                        </div>
+                        <div id="backtomenu" onclick="">
+                          Back to Menu
+                        </div>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+                <td id="clickybuttons">
+                  CODING PHASE
+                </td>
+                </tr>
+              </table>
             </div>
 
             <!-- center gameboard -->

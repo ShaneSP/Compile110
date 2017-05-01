@@ -1,31 +1,26 @@
-var energybar = function(bars, topstage) {
-  this.stage = topstage;
-  this.barnum = bars;
-  this.fullbars = bars;
+var heartcanvas, heartstage;
+var background;
+var hearts;
 
-  this.barsprite = new createjs.SpriteSheet({
-    "images": ["assets/energy2.png"],
-    "frames": {"height": 27, "width": 12, "count": 23},
+var heartbar = function(hearts, topstage) {
+  this.stage = topstage;
+  this.heartnum = hearts;
+  this.fullhearts = hearts;
+
+  this.heartsprite = new createjs.SpriteSheet({
+    "images": ["assets/hearts_28px.png"],
+    "frames": {"height": 28, "width": 28, "count": 5},
     "animations": {
-      "fullEnd": [0], "emptyEnd": [1], "full": [2], "empty": [3],
-      "drainingEnd": {
-        "frames": [15, 16, 17, 18, 19, 20, 21, 22],
-        "speed": 0.5,
-        "next": "emptyEnd"
-      },
+      "full": [0],
+      "empty": [4],
       "draining": {
-        "frames": [4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14],
-        "speed": 0.5,
+        "frames": [1, 2, 3, 4],
+        "speed": 0.4,
         "next": "empty"
       },
-      "increasingEnd": {
-        "frames": [22, 21, 20, 19, 18, 17, 16, 15],
-        "speed": 0.5,
-        "next": "fullEnd"
-      },
       "increasing": {
-        "frames": [14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4],
-        "speed": 0.5,
+        "frames": [3, 2, 1, 0],
+        "speed": 0.4,
         "next": "full"
       }
     }
@@ -33,43 +28,49 @@ var energybar = function(bars, topstage) {
 
   this.bar = [];
 
-  this.start = new createjs.Shape();
-  this.start.graphics.beginFill("#000").drawRect(60, 50, 3, 27);
-  this.stage.addChild(this.start);
-
-  for(var i=0; i<bars-1; i++) {
-    var tempbar = new createjs.Sprite(this.barsprite, "full");
-    tempbar.x = 63 + i*12;
-    tempbar.y = 50;
+  for(var i=0; i<hearts; i++) {
+    var tempbar = new createjs.Sprite(this.heartsprite, "full");
+    tempbar.x = 5 + i*24;
+    tempbar.y = 0;
     this.bar.push(tempbar);
     this.stage.addChild(this.bar[i]);
   }
 
-  tempbar = new createjs.Sprite(this.barsprite, "fullEnd");
-  tempbar.x = 63 + (bars-1)*12;
-  tempbar.y = 50;
-  this.bar.push(tempbar);
-  this.stage.addChild(this.bar[bars-1]);
-
-  this.removeBar = function() {
-    if (this.barnum == this.fullbars) {
-      this.bar[this.barnum-1].gotoAndPlay("drainingEnd");
-      this.fullbars = this.fullbars - 1;
-    }
-    else if (this.fullbars != 0) {
-      this.bar[this.fullbars-1].gotoAndPlay("draining");
-      this.fullbars = this.fullbars - 1;
+  this.removeHeart = function() {
+    if (this.fullhearts != 0) {
+      this.bar[this.fullhearts-1].gotoAndPlay("draining");
+      this.fullhearts = this.fullhearts -1;
     }
   }
 
-  this.addBar = function() {
-    if(this.barnum == this.fullbars + 1) {
-      this.bar[this.fullbars].gotoAndPlay("increasingEnd");
-      this.fullbars = this.fullbars + 1;
-    }
-    else if(this.barnum > this.fullbars) {
-      this.bar[this.fullbars].gotoAndPlay("increasing");
-      this.fullbars = this.fullbars + 1;
+  this.addHeart = function() {
+    if (this.heartnum > this.fullhearts) {
+      this.bar[this.fullhearts].gotoAndPlay("increasing");
+      this.fullhearts = this.fullhearts + 1;
     }
   }
+}
+
+function setHearts() {
+
+  heartcanvas = document.getElementById("hearts");
+  heartstage = new createjs.Stage(heartcanvas);
+
+  background = new createjs.Shape();
+  background.graphics.beginFill("#000").drawRect(0, 0, 100, 200);
+  heartstage.addChild(background);
+
+  hearts = new heartbar(5, heartstage);
+
+  createjs.Ticker.timingMode = createjs.Ticker.RAF;
+  createjs.Ticker.addEventListener("tick", hearttick);
+  createjs.Ticker.setInterval(15);
+  createjs.Ticker.setFPS(15);
+
+  heartstage.update();
+
+}
+
+function hearttick() {
+  heartstage.update();
 }
