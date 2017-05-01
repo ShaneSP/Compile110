@@ -7,7 +7,7 @@ var linesoftext = [["Hello student! It seems you", "have been transported to a",
                     ["Every enemy in this world", "has its own code."],
                     ["In order to see enemy code,", "click on them and it will", "show up on the right pane!"],
                     ["Try clicking on the bit", "that just appeared here!"],
-                    ["[INSERT TEXT PERTAINING","TO THE BIT HERE]"],
+                    ["See how the enemy code", "appeared in the right console?"],
                     ["As you can see, if you are", "going to survive here, you'll", "need to learn enemies' code!"],
                     ["This bit looks like it can", "shoot energy blasts at you!"],
                     ["However, you can perform", "actions too!"],
@@ -24,7 +24,7 @@ var linesoftext = [["Hello student! It seems you", "have been transported to a",
                     ["To defeat the bit, we are", "going to call the", "shieldRight(); function."],
                     ["Your shield should reflect", "the blast back at the bit and", "destroy it!"],
                     ["Use what you have learned", "to defeat the bit and advance", "to the next level!"],
-                    ["Starting now, once you click", "'run code', the enemy will", "start attacking! Good luck!"],
+                    ["Starting now, once you click", "'continue', the enemy will", "start attacking! Good luck!"],
                     ["..."]
                   ];
 var currentline = 0;
@@ -36,7 +36,7 @@ var showText = function(target, message, line, index, interval) {
   } else if(currentline==14){
     RUNCODE=true;
     SPAWN=false;
-  } else if(currentline==26){
+  } else if(currentline==27){
     ATTACK=true;
     SPAWN=false;
   } else {
