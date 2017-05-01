@@ -46,7 +46,7 @@ GameView.prototype = {
         animationsDone = animationsDone && gameEntity.animationDone();
       }
       if (!animationsDone) {
-        console.log(gameEntity.health + " done");
+        console.log(gameEntity.name + " done");
         return;
       }
       if (!this._model._queue.isEmpty()) {
@@ -118,8 +118,10 @@ function GameController(model, view) {
     var _this = this;
 
     this._view.runCode.attach(function () {
-      console.log("attaching runCode");
-      _this.runCode();
+      if(RUNCODE) {
+        console.log("attaching runCode");
+        _this.runCode();
+      }
     })
 }
 

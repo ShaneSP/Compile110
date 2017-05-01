@@ -47,6 +47,7 @@ function GameEntity(cr, map, type) {
     this.hasSword = false;
 
     // Game Logc
+    this.name = "player";
     this.col = col;
     this.row = row;
     this.current = current;
@@ -281,6 +282,7 @@ function GameEntity(cr, map, type) {
 
   function BitEntity(col, row, current) {
     this.health = 1;
+    this.name = "bit";
     this.hasAttacked = false;
     this.beam = null;
     // Game Logc
@@ -469,6 +471,7 @@ function GameEntity(cr, map, type) {
 //----------BIT_ATTACK------------//
 
   this.bitAttack = function(cr) {
+    this.name = "beam";
     this.col = cr[0]-1;
     this.row = cr[1];
     this.beam = new createjs.Sprite(BEAM_SHEET, "idle");
@@ -531,7 +534,7 @@ function GameEntity(cr, map, type) {
   }
 
   this.processAnimation = function(e) {
-
+    return true;
   }
 
   this.animationDone = function() {
@@ -567,6 +570,7 @@ function GameEntity(cr, map, type) {
 //----------------SWORD_ENTITY----------------//
 function SwordEntity(col, row, current) {
   // Game Logc
+  this.name = "sword";
   this.col = col;
   this.row = row;
   this.current = current;
@@ -678,6 +682,7 @@ function SwordEntity(col, row, current) {
 //----------------PORTAL_ENTITY----------------//
 function PortalEntity(col, row, current) {
   // Game Logc
+  this.name = "portal";
   this.col = col;
   this.row = row;
   this.current = current;

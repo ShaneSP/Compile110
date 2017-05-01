@@ -30,6 +30,9 @@ var globalinterval = 40;
 var showText = function(target, message, line, index, interval) {
   if(currentline==4) {
     SPAWN=true;
+  } else if(currentline==14){
+    RUNCODE=true;
+    SPAWN=false;
   } else {
     SPAWN=false;
   }
