@@ -20,8 +20,8 @@ function createInputQueueGame() {
   PORTAL = new GameEntity(bcr, LEVEL_MAP, "portal");
   BIT = new GameEntity(bcr, LEVEL_MAP, "bit");
   GAME_ENTITIES[0] = PLAYER;
-  GAME_ENTITIES[1] = SWORD;
-  GAME_ENTITIES[2] = PORTAL;
+  GAME_ENTITIES[1] = PORTAL;
+  GAME_ENTITIES[2] = SWORD;
 
   var inputQueue = new Queue(30);
   //var gameLoop = new GameLoop(gameEntities, inputQueue, STAGE);

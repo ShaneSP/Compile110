@@ -718,7 +718,6 @@ function PortalEntity(col, row, current) {
 
   // Will also do non-movement animation
   this.animationDone = function() {
-    console.log("it's done");
     return true;
   }
 
@@ -743,7 +742,7 @@ function PortalEntity(col, row, current) {
     if(PLAYER.hasSword && PLAYER.col == this.col && PLAYER.row==this.row) {
       alert("woop woop wooooosh!");
       this.remove();
-    } else if(PLAYER.col == this.col && PLAYER.row==this.row) {
+    } else if(!PLAYER.hasSword && PLAYER.col == this.col && PLAYER.row==this.row) {
       alert("get the sword dumby");
     }
   }

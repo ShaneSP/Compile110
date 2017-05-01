@@ -44,9 +44,9 @@ GameView.prototype = {
       for(var i=0; i<GAME_ENTITIES.length; i++) {
         var gameEntity = GAME_ENTITIES[i];
         animationsDone = animationsDone && gameEntity.animationDone();
+        console.log(gameEntity.name +" is done: " + animationsDone);
       }
       if (!animationsDone) {
-        console.log(gameEntity.name + " done");
         return;
       }
       if (!this._model._queue.isEmpty()) {
