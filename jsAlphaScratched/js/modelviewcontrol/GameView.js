@@ -168,9 +168,9 @@ GameController.prototype = {
     shieldRight : function() {
       console.log("shieldRight");
       this._model.inputEvent.notify(["player","shRight"]);
-      if(BIT!=undefined && BIT.inRange(PLAYER.cr)) {
-        this._model.inputEvent.notify(["bit","shoot"]);
-      }
+      // if(BIT!=undefined && BIT.inRange(PLAYER.cr)) {
+      //   this._model.inputEvent.notify(["bit","shoot"]);
+      // }
     },
 
     shieldLeft : function() {

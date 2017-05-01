@@ -34,6 +34,9 @@ var showText = function(target, message, line, index, interval) {
   } else if(currentline==14){
     RUNCODE=true;
     SPAWN=false;
+  } else if(currentline==25){
+    ATTACK=true;
+    SPAWN=false;
   } else {
     SPAWN=false;
   }

@@ -9,6 +9,7 @@ var USER_INPUT_BUFFER_CAPACITY = 10;
 var CANVAS = document.getElementById("canvas");
 var STAGE = new createjs.Stage(canvas);
 var RUNCODE = false;
+var ATTACK = false;
 
 var PLAYER = null;
 var BIT = null;

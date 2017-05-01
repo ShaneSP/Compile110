@@ -358,7 +358,7 @@ function GameEntity(cr, map, type) {
           } else if (this.animation == "agro") {
             this.agrocount = this.agrocount + 1;
             if (this.agrocount > 21) {
-              if(!this.hasAttacked) {
+              if(!this.hasAttacked && ATTACK) {
                 this.changePosition("charge");
                 MODEL.inputEvent.notify(["bit","shoot"]);
               }
