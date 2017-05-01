@@ -432,7 +432,7 @@ function GameEntity(cr, map, type) {
 
     // Will also do non-movement animation
     this.animationDone = function() {
-
+      return true;
     }
 
     // GAME LOGIC
