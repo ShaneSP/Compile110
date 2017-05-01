@@ -2,14 +2,17 @@ var linesoftext = [["Hello student! It seems you", "have been transported to a",
                     ["In this world, coding is", "EVERYTHING!"],
                     ["You will need to code to", "defend yourself against", "enemies."],
                     ["Like this one!"],
-                    ["[SPAWN BIT HERE]"],
+                    ["..."],
                     ["This is a bit! It may look", "harmless, but it's actually", "quite dangerous!"],
                     ["Every enemy in this world", "has its own code."],
                     ["In order to see enemy code,", "click on them and it will", "show up on the right pane!"],
                     ["Try clicking on the bit", "that just appeared here!"],
                     ["[INSERT TEXT PERTAINING","TO THE BIT HERE]"],
                     ["As you can see, if you are", "going to survive here, you'll", "need to learn enemies' code!"],
+                    ["Be careful, though! This bit", "that appeared is about to", "shoot an energy blast at you!"],
+                    ["Try typing 'this.shieldRight();''", "into the console on the left!", ""] 
                     ["To see what you can and can't", "do, click on the options", "above to learn about them!"],
+                    [""]
                     ["That's all for now!"],
                     ["..."]
                   ];
