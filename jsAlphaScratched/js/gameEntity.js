@@ -530,7 +530,7 @@ function GameEntity(cr, map, type) {
     LEVEL_MAP.unoccupy([this.col,this.row]);
     var loc = GAME_ENTITIES.lastIndexOf(BEAM);
     GAME_ENTITIES.splice(loc,1);
-    STAGE.removeChild(this.beam);
+    STAGE.removeChild(BEAM.beam);
   }
 
   this.processAnimation = function(e) {
@@ -600,7 +600,7 @@ function SwordEntity(col, row, current) {
     LEVEL_MAP.unoccupy([this.col,this.row]);
     var loc = GAME_ENTITIES.lastIndexOf(SWORD);
     GAME_ENTITIES.splice(loc,1);
-    STAGE.removeChild(this.sword);
+    STAGE.removeChild(SWORD.sword);
   }
 
   // ANIMATION
@@ -703,9 +703,9 @@ function PortalEntity(col, row, current) {
 
   this.remove = function() {
     //LEVEL_MAP.unoccupy([this.col,this.row]);
-    var loc = GAME_ENTITIES.lastIndexOf(this);
+    var loc = GAME_ENTITIES.lastIndexOf(PORTAL);
     GAME_ENTITIES.splice(loc,1);
-    STAGE.removeChild(this.portal);
+    STAGE.removeChild(PORTAL.portal);
   }
 
   // ANIMATION
@@ -717,7 +717,10 @@ function PortalEntity(col, row, current) {
   }
 
   // Will also do non-movement animation
-  this.animationDone = function() {return true;}
+  this.animationDone = function() {
+    console.log("it's done");
+    return true;
+  }
 
   this.changePosition = function(pos) {
     this.animation = pos;

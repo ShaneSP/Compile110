@@ -83,7 +83,9 @@ GameView.prototype = {
 
     removeEntity : function (name) {
       // if(name==1) {
+      if(SWORD!=undefined) {
         SWORD.remove();
+      }
       // }
     }
 
