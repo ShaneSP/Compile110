@@ -10,7 +10,9 @@ var linesoftext = [["Hello student! It seems you", "have been transported to a",
                     ["[INSERT TEXT PERTAINING","TO THE BIT HERE]"],
                     ["As you can see, if you are", "going to survive here, you'll", "need to learn enemies' code!"],
                     ["Be careful, though! This bit", "that appeared is about to", "shoot an energy blast at you!"],
-                    ["Try typing 'this.shieldRight();''", "into the console on the left!", ""] 
+                    ["Try typing 'this.shieldRight();''", "into the console on the left!"],
+                    ["Click on the run code button", "to execute the code you have", "just written."],
+                    ["This line of code is called", "a 'function'. All entities in", "this world can perform functions."], 
                     ["To see what you can and can't", "do, click on the options", "above to learn about them!"],
                     [""]
                     ["That's all for now!"],
