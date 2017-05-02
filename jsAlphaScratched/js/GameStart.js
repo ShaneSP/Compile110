@@ -34,7 +34,7 @@ function createInputQueueGame() {
 }
 
 STAGE.on("stagemousedown", function(evt) {
-  if(SPAWN && evt.stageX>=BIT.bit.x-18 && evt.stageX<=BIT.bit.x+18 && evt.stageY>=BIT.bit.y-18 && evt.stageY<=BIT.bit.y+18) {
+  if(BIT.spawned && evt.stageX>=BIT.bit.x-18 && evt.stageX<=BIT.bit.x+18 && evt.stageY>=BIT.bit.y-18 && evt.stageY<=BIT.bit.y+18) {
     alert("bit clicked");
   }
 })
