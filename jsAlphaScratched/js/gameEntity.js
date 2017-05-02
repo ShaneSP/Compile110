@@ -476,8 +476,8 @@ function GameEntity(cr, map, type) {
     this.row = cr[1];
     this.beam = new createjs.Sprite(BEAM_SHEET, "idle");
     STAGE.addChild(this.beam);
-    this.beam.x = this.col*51;
-    this.beam.y = this.row*48;
+    this.beam.x = this.col*50;
+    this.beam.y = this.row*50-10;
     this.bspeed = 5;
     this.bounced = false;
     this.hit = false;
@@ -495,28 +495,28 @@ function GameEntity(cr, map, type) {
   }
 
   this.nextXY = function() {
-    if (this.col*47 - this.beam.x > 10) {
+    if (this.col*50 - this.beam.x > 10) {
       this.beam.x = this.beam.x + this.bspeed;
     }
-    else if (this.col*48 - this.beam.x < -10) {
+    else if (this.col*50 - this.beam.x < -10) {
       this.beam.x = this.beam.x - this.bspeed;
     }
-    if (this.row*47 - this.beam.y > 10) {
+    if (this.row*50-10 - this.beam.y > 10) {
       this.beam.y = this.beam.y + this.bspeed;
     }
-    else if (this.row*48 - this.beam.y < -10) {
+    else if (this.row*50-10 - this.beam.y < -10) {
       this.beam.y = this.beam.y - this.bspeed;
     }
 
-    if(this.beam.x-PLAYER.player.x < 20 & PLAYER.isShielding){
+    if(this.beam.x - PLAYER.player.x < 40 & PLAYER.isShielding){
       this.bounced = true;
     }
-    if(!this.hit && !this.bounced && this.beam.x-PLAYER.player.x < 20) {
+    if(!this.hit && !this.bounced && this.beam.x - PLAYER.player.x < 40) {
       PLAYER.health--;
       this.hit = true;
       console.log("hits player");
       this.remove();
-    } else if(!this.hit && this.bounced && BIT.bit.x-this.beam.x < 60) {
+    } else if(!this.hit && this.bounced && BIT.bit.x - this.beam.x < 60) {
       this.hit = true;
       console.log("enemy hit");
       BEAM.remove();
