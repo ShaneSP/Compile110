@@ -28,7 +28,7 @@ var linesoftext = [["Hello student! It seems you", "have been transported to a",
                     ["Starting now, once you click", "'continue', the enemy will", "start attacking! Good luck!"],
                     ["..."]
                   ];
-var importantlines = [2, 3, 13, 14, 25, 26];
+var importantlines = [2, 3, 13, 14, 26, 27];
 var currentline = 0;
 var globalinterval = 35;
 

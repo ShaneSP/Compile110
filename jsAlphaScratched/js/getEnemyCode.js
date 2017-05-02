@@ -5,5 +5,5 @@ function getEnemyCode() {
 }
 
 function getSwordCode() {
-  enemycode.session.setValue("// You can pick the sword up using the \n// function player.pickUp(\"sword\");");
+  enemycode.session.setValue("// A tip from Kris: \n// You can pick the sword up using the \n// function player.pickUp(\"sword\"); \n// but you have to be next to it!");
 }

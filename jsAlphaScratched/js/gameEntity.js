@@ -105,7 +105,7 @@ function GameEntity(cr, map, type) {
 
     // Will also do non-movement animation
     this.animationDone = function() {
-      return this.movementDone() && this.shieldDone();
+      return this.movementDone() && this.shieldDone() && this.hurtDone();
     }
 
     this.movementDone = function() {
@@ -134,6 +134,27 @@ function GameEntity(cr, map, type) {
             return false;
           }
         }
+      }
+      return true;
+    }
+
+    this.deathDone = function() {
+      if(this.health <=0) {
+        if(this.player.currentAnimationFrame >= 15){
+          return true;
+        }
+        return false;
+      }
+      return true;
+    }
+
+    this.hurtDone = function() {
+      if(this.animation.substring(0, 4) == "hurt") {
+        if(this.player.currentAnimationFrame >= 10){
+          this.changePosition("fc" + this.animation.substring(4));
+          return true;
+        }
+        return false;
       }
       return true;
     }
@@ -429,7 +450,6 @@ function GameEntity(cr, map, type) {
       this.changePosition("die");
     }
 
-    //TODO: death animation doesn't happen
     this.deathDone = function() {
       if(this.health <=0) {
         if(this.bit.currentAnimationFrame >= 8){
