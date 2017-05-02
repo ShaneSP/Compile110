@@ -348,6 +348,7 @@ function GameEntity(cr, map, type) {
         this.animation = current;
         this.bit = new createjs.Sprite(BIT_SHEET, this.current);
         STAGE.addChild(this.bit);
+        //this.bit.addEventListener("click", function(event) { getEnemyCode(); });
         this.bit.x = this.col*52.5;
         this.bit.y = this.row*55+4;
         this.spawned=true;

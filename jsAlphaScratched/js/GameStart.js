@@ -33,6 +33,12 @@ function createInputQueueGame() {
   createjs.Ticker.setFPS(15);
 }
 
+STAGE.on("stagemousedown", function(evt) {
+  if(SPAWN && evt.stageX>=BIT.bit.x-18 && evt.stageX<=BIT.bit.x+18 && evt.stageY>=BIT.bit.y-18 && evt.stageY<=BIT.bit.y+18) {
+    alert("bit clicked");
+  }
+})
+
 function handleTick() {
   if(tick % 4 == 0) {
     view.show();
