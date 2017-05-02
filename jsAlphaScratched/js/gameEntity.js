@@ -81,10 +81,10 @@ function GameEntity(cr, map, type) {
     // ANIMATION
 
     this.nextXY = function() {
-      if (this.viscol*50-12 - this.player.x > 3) {
+      if (this.viscol*50-10 - this.player.x > 3) {
         this.player.x = this.player.x + 3;
       }
-      else if (this.viscol*50-12 - this.player.x < -3) {
+      else if (this.viscol*50-10 - this.player.x < -3) {
         this.player.x = this.player.x - 3;
       }
       if (this.visrow*50-15 - this.player.y > 3) {
@@ -109,13 +109,13 @@ function GameEntity(cr, map, type) {
     }
 
     this.movementDone = function() {
-      if (this.player.x == this.viscol*50-12
+      if (this.player.x == this.viscol*50-10
         && this.player.y == this.visrow*50-15) {
         return true;
       }
-      else if (Math.abs(this.visrow*50-12 - this.player.y) < 4
-      && Math.abs(this.viscol*50-12 - this.player.x) < 4) {
-        this.player.x = this.viscol*50-12;
+      else if (Math.abs(this.visrow*50-15 - this.player.y) < 4
+      && Math.abs(this.viscol*50-10 - this.player.x) < 4) {
+        this.player.x = this.viscol*50-10;
         this.player.y = this.visrow*50-15;
         this.changePosition("fc" + this.animation.substring(2, 10));
         return true;
