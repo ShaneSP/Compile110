@@ -34,8 +34,12 @@ function createInputQueueGame() {
 }
 
 STAGE.on("stagemousedown", function(evt) {
+  console.log("click!");
   if(BIT.spawned && evt.stageX>=BIT.bit.x-18 && evt.stageX<=BIT.bit.x+18 && evt.stageY>=BIT.bit.y-18 && evt.stageY<=BIT.bit.y+18) {
-    alert("bit clicked");
+    getEnemyCode();
+  }
+  if(evt.stageX >= SWORD.sword.x && evt.stageX <= SWORD.sword.x+50 && evt.stageY >= SWORD.sword.y && evt.stageY <= SWORD.sword.y+50) {
+    getSwordCode();
   }
 })
 

@@ -582,7 +582,7 @@ function SwordEntity(col, row, current) {
   this.sword = new createjs.Sprite(SWORD_SHEET, this.current);
   STAGE.addChild(this.sword);
   this.sword.x = this.col*50;
-  this.sword.y = this.row*55-5;
+  this.sword.y = this.row*50;
 
   this.setCR = function(cr) {
     LEVEL_MAP.unoccupy([this.col, this.row]);
