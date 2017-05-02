@@ -27,6 +27,7 @@ var linesoftext = [["Hello student! It seems you", "have been transported to a",
                     ["Starting now, once you click", "'continue', the enemy will", "start attacking! Good luck!"],
                     ["..."]
                   ];
+var importantlines = [3, 13, 26, 39];
 var currentline = 0;
 var globalinterval = 40;
 
@@ -57,8 +58,20 @@ $(function () {
   showText("#text_target", linesoftext[0], 0, 0, globalinterval);
 });
 
+var skipText = function(target) {
+  for (var i in importantlines) {
+    if (currentline < importantlines[i]) {
+      currentline = importantlines[i];
+      nextText(target);
+      return;
+    }
+  }
+}
+
 var nextText = (function(target) {
-  currentline = (currentline + 1) % linesoftext.length;
+  if (currentline < linesoftext.length - 1) {
+    currentline = (currentline + 1);
+  }
   $(target).empty();
   showText(target, linesoftext[currentline], 0, 0, globalinterval);
 });

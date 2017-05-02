@@ -16,6 +16,11 @@
         <tr>
 
           <td>
+            <div id="headerborder">
+              <div id="codeheader">
+                PLAYER CODE
+              </div>
+            </div>
             <!-- left panel: editor with sample code -->
             <div id="editor"></div>
 
@@ -80,13 +85,19 @@
             </div>
 
             <!-- continue text button -->
-            <center>
+            <div style="text-align:right; padding-right: 20px;">
+              <button onclick="skipText('#text_target');">Skip</button>
               <button onclick="nextText('#text_target');">Continue --></button>
-            </center>
+            </div>
           </td>
 
           <td>
             <!-- left panel: enemy code (sample text for now) -->
+            <div id="headerborder">
+              <div id="codeheader">
+                ENEMY CODE
+              </div>
+            </div>
             <div id="editor2">console.log("Nice.");</div>
           </td>
 
