@@ -132,72 +132,66 @@ GameController.prototype = {
       var player = this;
       var code = editor.getValue();
       eval(code);
-      // if(!BIT.hasAttacked && !BIT.removed && BIT.inRange([PLAYER.col,PLAYER.row])) {
-      //   this._model.inputEvent.notify(["bit","shoot"]);
-      // }
     },
 
     moveRight : function() {
       console.log("moveRight");
       this._model.inputEvent.notify(["player","wkRight"]);
-      //call in range function
-
     },
 
     moveLeft : function() {
       console.log("moveLeft");
       this._model.inputEvent.notify(["player","wkLeft"]);
-      // if(BIT!=undefined && BIT.inRange(PLAYER.cr)) {
-      //   this._model.inputEvent.notify(["bit","shoot"]);
-      // }
     },
 
     moveUp : function() {
       console.log("moveUp");
       this._model.inputEvent.notify(["player","wkUp"]);
-      // if(BIT!=undefined && BIT.inRange(PLAYER.cr)) {
-      //   this._model.inputEvent.notify(["bit","shoot"]);
-      // }
     },
 
     moveDown : function() {
       console.log("moveDown");
       this._model.inputEvent.notify(["player","wkDown"]);
-      // if(BIT!=undefined && BIT.inRange(PLAYER.cr)) {
-      //   this._model.inputEvent.notify(["bit","shoot"]);
-      // }
     },
 
     shieldRight : function() {
       console.log("shieldRight");
       this._model.inputEvent.notify(["player","shRight"]);
-      // if(BIT!=undefined && BIT.inRange(PLAYER.cr)) {
-      //   this._model.inputEvent.notify(["bit","shoot"]);
-      // }
     },
 
     shieldLeft : function() {
       console.log("shieldLeft");
       this._model.inputEvent.notify(["player","shLeft"]);
-      // if(BIT!=undefined && BIT.inRange(PLAYER.cr)) {
-      //   this._model.inputEvent.notify(["bit","shoot"]);
-      // }
     },
 
     shieldUp : function() {
       console.log("moveUp");
       this._model.inputEvent.notify(["player","shUp"]);
-      // if(BIT!=undefined && BIT.inRange(PLAYER.cr)) {
-      //   this._model.inputEvent.notify(["bit","shoot"]);
-      // }
     },
 
     shieldDown : function() {
       console.log("shieldDown");
       this._model.inputEvent.notify(["player","shDown"]);
-      // if(BIT!=undefined && BIT.inRange(PLAYER.cr)) {
-      //   this._model.inputEvent.notify(["bit","shoot"]);
-      // }
+    },
+
+    attackDown : function() {
+      console.log("attackDown");
+      this._model.inputEvent.notify(["player","attackDown"]);
+    },
+
+    attackUp : function() {
+      console.log("attackUp");
+      this._model.inputEvent.notify(["player","attackUp"]);
+    },
+
+    attackRight : function() {
+      console.log("attackRight");
+      this._model.inputEvent.notify(["player","attackRight"]);
+    },
+
+    attackLeft : function() {
+      console.log("attackLeft");
+      this._model.inputEvent.notify(["player","attackLeft"]);
     },
 
     pickUp : function(name) {
@@ -209,8 +203,5 @@ GameController.prototype = {
 
     addEnemy : function() {
       this._model.entityAdded.notify();
-      // if(BIT!=undefined && BIT.inRange(PLAYER.cr)) {
-      //   this._model.inputEvent.notify(["bit","shoot"]);
-      // }
     }
 };

@@ -25,7 +25,7 @@ var GAME_ENTITIES = new Array();
 
 var PLAYER_SHEET = new createjs.SpriteSheet({
 	"images": ["assets/allProtagSprites_74px.png"],
-	"frames": {"height": 74, "width": 74, "count": 394, "regX": 0, "regY": 0},
+	"frames": {"height": 74, "width": 74, "count": 556, "regX": 0, "regY": 0},
 	"animations": {
 		"wkDown": [0, 6],
 		"wkRight": [20, 28],
@@ -47,10 +47,18 @@ var PLAYER_SHEET = new createjs.SpriteSheet({
 		"shRightDone": [185,186],
 		"shLeftDone": [205,206],
 		"shUpDone": [225,226],
-		"attackD": [240,267],
-		"attackR": [280,305],
-		"attackL": [320,345],
-		"attackU": [360,383]
+		"attackDown": [240,267],
+		"attackRight": [280,305],
+		"attackLeft": [320,345],
+		"attackUp": [360,383],
+		"hurtDown": [400,410],
+		"hurtRight": [420,431],
+		"hurtLeft": [440,451],
+		"hurtUp": [460,470],
+		"dieDown": [480,495],
+		"dieRight": [500,515],
+		"dieLeft": [520,535],
+		"dieUp": [540,555]
 		}
 });
 
