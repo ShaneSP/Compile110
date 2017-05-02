@@ -61,6 +61,7 @@ function GameEntity(cr, map, type) {
     STAGE.addChild(this.player);
     this.player.x = this.col*50-10;
     this.player.y = this.row*50-15;
+    this.removed = false;
 
     this.getHealth = function() {
       return this.health;
@@ -105,7 +106,7 @@ function GameEntity(cr, map, type) {
 
     // Will also do non-movement animation
     this.animationDone = function() {
-      return this.movementDone() && this.shieldDone() && this.hurtDone();
+      return this.movementDone() && this.shieldDone() && this.hurtDone() && this.deathDone();
     }
 
     this.movementDone = function() {
@@ -139,8 +140,9 @@ function GameEntity(cr, map, type) {
     }
 
     this.deathDone = function() {
-      if(this.health <=0) {
-        if(this.player.currentAnimationFrame >= 15){
+      if(this.health <= 0) {
+        if(this.player.currentAnimationFrame >= 14){
+          this.remove();
           return true;
         }
         return false;
@@ -157,6 +159,14 @@ function GameEntity(cr, map, type) {
         return false;
       }
       return true;
+    }
+
+    this.remove = function() {
+        this.removed =true;
+        LEVEL_MAP.unoccupy([this.col,this.row]);
+        loc = GAME_ENTITIES.lastIndexOf(PLAYER);
+        GAME_ENTITIES.splice(loc, 1);
+        STAGE.removeChild(this.player);
     }
 
     this.changePosition = function(pos) {
@@ -205,6 +215,18 @@ function GameEntity(cr, map, type) {
         this.isShielding=false;
       } else if(nextEvent == "attackUp") {
         this.changePosition("attackUp");
+        this.isShielding=false;
+      } else if(nextEvent == "fcDown") {
+        this.changePosition("fcDown");
+        this.isShielding=false;
+      } else if(nextEvent == "fcRight") {
+        this.changePosition("fcRight");
+        this.isShielding=false;
+      } else if(nextEvent == "fcLeft") {
+        this.changePosition("fcUp");
+        this.isShielding=false;
+      } else if(nextEvent == "fcLeft") {
+        this.changePosition("fcUp");
         this.isShielding=false;
       }
     }
@@ -416,7 +438,10 @@ function GameEntity(cr, map, type) {
         }
       }
       else {
-        if (this.inRange([PLAYER.col,PLAYER.row])) {
+        if (!PLAYER.animationDone()) {
+          this.agrocount = 0;
+        }
+        else if (this.inRange([PLAYER.col,PLAYER.row])) {
           if (this.animation == "idle") {
             this.agrocount = this.agrocount + 1;
             if (this.agrocount > 3) {
@@ -426,7 +451,7 @@ function GameEntity(cr, map, type) {
             }
           } else if (this.animation == "agro") {
             this.agrocount = this.agrocount + 1;
-            if (this.agrocount > 21) {
+            if (this.agrocount > 13) {
               if(!this.hasAttacked && ATTACK) {
                 this.changePosition("charge");
                 MODEL.inputEvent.notify(["bit","shoot"]);
@@ -441,6 +466,7 @@ function GameEntity(cr, map, type) {
             }
           }
         } else if (this.animation != "idle") {
+          this.agrocount = 0;
           this.changePosition("idle");
         }
 
@@ -502,7 +528,10 @@ function GameEntity(cr, map, type) {
 
     // Will also do non-movement animation
     this.animationDone = function() {
-      return true;
+      if(this.animation == "idle") {
+        return true;
+      }
+      return false;
     }
 
     // GAME LOGIC
@@ -574,6 +603,10 @@ this.bitAttack = function(cr) {
       BIT.health--;
       BIT.die();
     }
+  }
+
+  this.animationDone = function() {
+    return false;
   }
 
   this.remove = function() {

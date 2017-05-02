@@ -39,7 +39,6 @@ GameView.prototype = {
       if(SPAWN&&!BIT.spawned) {
         this.addBit();
       }
-      this.update();
       var animationsDone = true;
       for(var i=0; i<GAME_ENTITIES.length; i++) {
         var gameEntity = GAME_ENTITIES[i];
@@ -47,6 +46,7 @@ GameView.prototype = {
         // console.log(gameEntity.name +" is done: " + animationsDone);
       }
       if (!animationsDone) {
+        this.update();
         return;
       }
       if (!this._model._queue.isEmpty()) {
@@ -56,6 +56,7 @@ GameView.prototype = {
           gameEntity.processAnimation(inputEvent[1]);
         }
       }
+      this.update();
     },
 
     update : function (a) {
@@ -113,7 +114,7 @@ GameController.prototype = {
       var player = this;
       var code = editor.getValue();
       eval(code);
-      if(BIT.health>0 && BIT.hasAttacked) BIT.hasAttacked=false;
+      if(BIT.health>0 && BIT.hasAttacked) {BIT.hasAttacked=false};
     },
 
     moveRight : function() {
