@@ -113,6 +113,7 @@ GameController.prototype = {
       var player = this;
       var code = editor.getValue();
       eval(code);
+      if(BIT.health>0 && BIT.hasAttacked) BIT.hasAttacked=false;
     },
 
     moveRight : function() {

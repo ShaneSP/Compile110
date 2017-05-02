@@ -243,6 +243,7 @@ function GameEntity(cr, map, type) {
         }
         else {
           this.setCurrent("fcRight");
+          playBump();
           return "fcRight";
         }
       } else if(nextEvent == "wkLeft") {
@@ -254,6 +255,7 @@ function GameEntity(cr, map, type) {
         }
         else {
           this.setCurrent("fcLeft");
+          playBump();
           return "fcLeft";
         }
       }  else if(nextEvent == "wkUp") {
@@ -265,6 +267,7 @@ function GameEntity(cr, map, type) {
         }
         else {
           this.setCurrent("fcUp");
+          playBump();
           return "fcUp";
         }
       }  else if(nextEvent == "wkDown") {
@@ -276,6 +279,7 @@ function GameEntity(cr, map, type) {
         }
         else {
           this.setCurrent("fcDown");
+          playBump();
           return "fcDown";
         }
 
@@ -414,7 +418,6 @@ function GameEntity(cr, map, type) {
                 this.changePosition("charge");
                 MODEL.inputEvent.notify(["bit","shoot"]);
               }
-              //TODO: spawn bit beam
               this.agrocount = 0;
             }
           } else if (this.animation == "charge") {
