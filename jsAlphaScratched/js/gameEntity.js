@@ -205,6 +205,10 @@ function GameEntity(cr, map, type) {
       this.current = pos;
     }
 
+    this.loseHealth = function () {
+      this.health--;
+    }
+
     this.processInput = function(e) {
       var nextEvent = e;
       if(nextEvent == "wkRight") {
@@ -512,7 +516,7 @@ function GameEntity(cr, map, type) {
       this.bounced = true;
     }
     if(!this.hit && !this.bounced && this.beam.x - PLAYER.player.x < 40) {
-      PLAYER.health--;
+      PLAYER.loseHealth();
       this.hit = true;
       console.log("hits player");
       this.remove();

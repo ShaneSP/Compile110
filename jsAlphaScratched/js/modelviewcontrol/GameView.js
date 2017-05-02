@@ -129,6 +129,7 @@ function GameController(model, view) {
 
 GameController.prototype = {
     runCode : function() {
+      var player = this;
       var code = editor.getValue();
       eval(code);
       // if(!BIT.hasAttacked && !BIT.removed && BIT.inRange([PLAYER.col,PLAYER.row])) {

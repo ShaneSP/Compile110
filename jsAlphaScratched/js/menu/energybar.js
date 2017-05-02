@@ -2,13 +2,13 @@ var heartcanvas, heartstage;
 var background;
 var hearts;
 
-var heartbar = function(hearts, topstage) {
+var heartbar = function(hearts, topstage, player) {
   this.stage = topstage;
   this.heartnum = hearts;
   this.fullhearts = hearts;
 
   this.heartsprite = new createjs.SpriteSheet({
-    "images": ["assets/hearts_28px.png"],
+    "images": ["assets/hearts2_28px.png"],
     "frames": {"height": 28, "width": 28, "count": 5},
     "animations": {
       "full": [0],
@@ -49,6 +49,15 @@ var heartbar = function(hearts, topstage) {
       this.fullhearts = this.fullhearts + 1;
     }
   }
+
+  this.update = function() {
+    if (this.heartsum < player.getHealth()) {
+      this.addHeart();
+    }
+    else if (this.heartsum > player.getHealth()) {
+      this.removeHeart();
+    }
+  }
 }
 
 function setHearts() {
@@ -60,7 +69,7 @@ function setHearts() {
   background.graphics.beginFill("#000").drawRect(0, 0, 100, 200);
   heartstage.addChild(background);
 
-  hearts = new heartbar(5, heartstage);
+  hearts = new heartbar(5, heartstage, PLAYER);
 
   createjs.Ticker.timingMode = createjs.Ticker.RAF;
   createjs.Ticker.addEventListener("tick", hearttick);
@@ -72,5 +81,6 @@ function setHearts() {
 }
 
 function hearttick() {
+  hearts.update();
   heartstage.update();
 }
