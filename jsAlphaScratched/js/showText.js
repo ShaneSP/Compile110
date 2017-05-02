@@ -60,7 +60,6 @@ $(function () {
 
 var skipText = function(target) {
   for (var i in importantlines) {
-    console.log(i);
     if (currentline <= importantlines[i]) {
       currentline = importantlines[i];
       nextText(target);
