@@ -41,6 +41,9 @@ STAGE.on("stagemousedown", function(evt) {
   if(evt.stageX >= SWORD.sword.x && evt.stageX <= SWORD.sword.x+50 && evt.stageY >= SWORD.sword.y && evt.stageY <= SWORD.sword.y+50) {
     getSwordCode();
   }
+  if(evt.stageX >= PORTAL.portal.x && evt.stageX <= PORTAL.portal.x+50 && evt.stageY >= PORTAL.portal.y && evt.stageY <= PORTAL.portal.y+50) {
+    getPortalCode();
+  }
 })
 
 function handleTick() {
