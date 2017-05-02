@@ -32,10 +32,6 @@ function GameView(model, elements) {
     this._elements.button.click(function () {
       _this.runCode.notify();
     });
-    // TODO: ClickEvent
-    // this._model.clickEvent.attach(function () {
-    //   _this.tileClicked(cr);
-    // });
 }
 
 GameView.prototype = {
@@ -92,14 +88,6 @@ GameView.prototype = {
       }
       // }
     }
-    // TODO: Click Event
-    // tileClicked : function(cr) {
-    //   if(LEVEL_MAP.tileOccupied(cr)) {
-    //     if(LEVEL_MAP.getTile(cr).occupied == BIT) {
-    //       getEnemyCode();
-    //     }
-    //   }
-    // }
 };
 
 /**
