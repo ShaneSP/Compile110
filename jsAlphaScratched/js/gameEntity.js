@@ -148,15 +148,19 @@ function GameEntity(cr, map, type) {
       if(nextEvent == "wkRight") {
         this.changePosition("wkRight");
         this.setVisCR([this.viscol+1,this.visrow]);
+        this.isShielding=false;
       } else if(nextEvent == "wkLeft") {
         this.changePosition("wkLeft");
         this.setVisCR([this.viscol-1,this.visrow]);
+        this.isShielding=false;
       } else if(nextEvent == "wkUp") {
         this.changePosition("wkUp");
         this.setVisCR([this.viscol,this.visrow-1]);
+        this.isShielding=false;
       } else if(nextEvent == "wkDown") {
         this.changePosition("wkDown");
         this.setVisCR([this.viscol,this.visrow+1]);
+        this.isShielding=false;
       } else if(nextEvent == "shRight") {
         this.changePosition("shRightAni");
         this.isShielding=true;
@@ -350,7 +354,13 @@ function GameEntity(cr, map, type) {
           this.spawn();
         }
         return;
-      } else {
+      }
+      else if (this.animation == "die") {
+        if(this.deathDone()) {
+          this.remove();
+        }
+      }
+      else {
         if (this.inRange([PLAYER.col,PLAYER.row])) {
           if (this.animation == "idle") {
             this.agrocount = this.agrocount + 1;
@@ -399,17 +409,20 @@ function GameEntity(cr, map, type) {
     this.processAnimation = function(e) {
 
     }
+
+    this.die = function() {
+      this.changePosition("die");
+    }
+
     //TODO: death animation doesn't happen
     this.deathDone = function() {
-      if(this.health==0) {
-        this.changePosition("die");
-        if(this.bit.currentAnimationFrame==8){
-          //this.remove();
+      if(this.health <=0) {
+        if(this.bit.currentAnimationFrame >= 8){
           return true;
         }
         return false;
       }
-      return true;
+      return false;
     }
 
     this.changePosition = function(pos) {
@@ -422,7 +435,7 @@ function GameEntity(cr, map, type) {
         this.removed =true;
         LEVEL_MAP.unoccupy([this.col,this.row]);
         loc = GAME_ENTITIES.lastIndexOf(BIT);
-        GAME_ENTITIES.splice(loc,1);
+        GAME_ENTITIES.splice(loc, 1);
         STAGE.removeChild(BIT.bit);
     }
     //delete this function and have a set interval that the bit attacks in a certain direction
@@ -474,24 +487,24 @@ function GameEntity(cr, map, type) {
 
 //----------BIT_ATTACK------------//
 
-  this.bitAttack = function(cr) {
-    this.name = "beam";
-    this.col = cr[0]-1;
-    this.row = cr[1];
-    this.beam = new createjs.Sprite(BEAM_SHEET, "idle");
-    STAGE.addChild(this.beam);
-    this.beam.x = this.col*50;
-    this.beam.y = this.row*50-10;
-    this.bspeed = 5;
-    this.bounced = false;
-    this.hit = false;
+this.bitAttack = function(cr) {
+  this.name = "beam";
+  this.col = cr[0]-1;
+  this.row = cr[1];
+  this.beam = new createjs.Sprite(BEAM_SHEET, "idle");
+  STAGE.addChild(this.beam);
+  this.beam.x = this.col*50;
+  this.beam.y = this.row*50-10;
+  this.bspeed = 5;
+  this.bounced = false;
+  this.hit = false;
 
-    this.setbCR = function(cr) {
-      LEVEL_MAP.unoccupy([this.col, this.row]);
-      this.col = cr[0];
-      this.row = cr[1];
-      LEVEL_MAP.occupy(cr, this.beam);
-    }
+  this.setbCR = function(cr) {
+    LEVEL_MAP.unoccupy([this.col, this.row]);
+    this.col = cr[0];
+    this.row = cr[1];
+    LEVEL_MAP.occupy(cr, this.beam);
+  }
 
   this.changePosition = function(pos) {
     this.animation = pos;
@@ -525,7 +538,7 @@ function GameEntity(cr, map, type) {
       console.log("enemy hit");
       BEAM.remove();
       BIT.health--;
-      BIT.remove();
+      BIT.die();
     }
   }
 

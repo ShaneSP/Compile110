@@ -6,6 +6,7 @@ var heartbar = function(hearts, topstage, player) {
   this.stage = topstage;
   this.heartnum = hearts;
   this.fullhearts = hearts;
+  this.player = player;
 
   this.heartsprite = new createjs.SpriteSheet({
     "images": ["assets/hearts2_28px.png"],
@@ -37,7 +38,7 @@ var heartbar = function(hearts, topstage, player) {
   }
 
   this.removeHeart = function() {
-    if (this.fullhearts != 0) {
+    if (this.fullhearts > 0) {
       this.bar[this.fullhearts-1].gotoAndPlay("draining");
       this.fullhearts = this.fullhearts -1;
     }
@@ -51,13 +52,18 @@ var heartbar = function(hearts, topstage, player) {
   }
 
   this.update = function() {
-    if (this.heartsum < player.getHealth()) {
+    if (this.fullhearts < this.player.getHealth()) {
       this.addHeart();
     }
-    else if (this.heartsum > player.getHealth()) {
+    else if (this.fullhearts > this.player.getHealth()) {
       this.removeHeart();
     }
   }
+}
+
+function hearttick() {
+  hearts.update();
+  heartstage.update();
 }
 
 function setHearts() {
@@ -78,9 +84,4 @@ function setHearts() {
 
   heartstage.update();
 
-}
-
-function hearttick() {
-  hearts.update();
-  heartstage.update();
 }
