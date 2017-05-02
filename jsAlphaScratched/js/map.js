@@ -30,64 +30,11 @@ var map = function(maplayout, stage, tileSheet) {
     for(col = 0; col < this.mapWidth; col++) {
       tileClone = tiles.clone();
       tileClone.name = "t_" + row + "_" + col;
-      //var tilevalue = Math.floor(Math.random()*6);
       if (maplayout[row][col] == 0) {
-        // if ((col-1 < 0) && !(row-1 < 0)) {
-        //   if (tilevalue == this.mapTiles["t_" + (row-1) + "_" + (col)].tilevalue) {
-        //     tileClone.gotoAndStop((tilevalue+1)%7);
-        //   }
-        //   else {
-        //     tileClone.gotoAndStop(tilevalue);
-        //   }
-        // }
-        // else if (!(col-1 < 0) && (row-1 < 0)) {
-        //   if (tilevalue == this.mapTiles["t_" + (row) + "_" + (col-1)].tilevalue) {
-        //     tileClone.gotoAndStop((tilevalue+1)%7);
-        //   }
-        //   else {
-        //     tileClone.gotoAndStop(tilevalue);
-        //   }
-        // }
-        // else if (!(col-1 < 0) && !(row-1 < 0)) {
-        //   if (tilevalue == this.mapTiles["t_" + (row-1) + "_" + (col)].tilevalue || tilevalue == this.mapTiles["t_" + (row) + "_" + (col-1)].tilevalue) {
-        //     tileClone.gotoAndStop((tilevalue+1)%7);
-        //   }
-        //   else {
-        //     tileClone.gotoAndStop(tilevalue);
-        //   }
-        // }
-        // else {
-        //   tileClone.gotoAndStop(tilevalue);
-        // }
+
       }
       else {
-        // if ((col-1 < 0) && !(row-1 < 0)) {
-        //   if (tilevalue+7 == this.mapTiles["t_" + (row-1) + "_" + (col)].tilevalue) {
-        //     tileClone.gotoAndStop((tilevalue+1)%7+7);
-        //   }
-        //   else {
-        //     tileClone.gotoAndStop(tilevalue+7);
-        //   }
-        // }
-        // else if (!(col-1 < 0) && (row-1 < 0)) {
-        //   if (tilevalue+7 == this.mapTiles["t_" + (row) + "_" + (col-1)].tilevalue) {
-        //     tileClone.gotoAndStop((tilevalue+1)%7+7);
-        //   }
-        //   else {
-        //     tileClone.gotoAndStop(tilevalue+7);
-        //   }
-        // }
-        // else if (!(col-1 < 0) && !(row-1 < 0)) {
-        //   if (tilevalue+7 == this.mapTiles["t_" + (row-1) + "_" + (col)].tilevalue || tilevalue == this.mapTiles["t_" + (row) + "_" + (col-1)].tilevalue) {
-        //     tileClone.gotoAndStop((tilevalue+1)%7+7);
-        //   }
-        //   else {
-        //     tileClone.gotoAndStop(tilevalue+7);
-        //   }
-        // }
-        // else {
-        //   tileClone.gotoAndStop(tilevalue+7);
-        // }
+
       }
       // gotoAndStop/gotoAndPlay changes which tile it is; remember this for animations
       tileClone.x = col * tileSheet._frameWidth;
@@ -96,7 +43,6 @@ var map = function(maplayout, stage, tileSheet) {
         index: tileIndex,
         walkable: defineTile.walkable(row, col),
         occupied: false,
-        //tilevalue: tilevalue,
         tile: tileClone
       };
       tileIndex++;

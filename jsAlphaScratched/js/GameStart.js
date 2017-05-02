@@ -12,9 +12,6 @@ function main() {
 function createInputQueueGame() {
   var cr = [1, 5];
   var bcr = [8,5];
-  //player = new playerclass(cr, levelmap, stage, PLAYER_SHEET);
-  //bit = new monsterclass(bcr, levelmap, stage, BIT_SHEET, player);
-
   PLAYER = new GameEntity(cr, LEVEL_MAP, "player");
   SWORD = new GameEntity([6,1], LEVEL_MAP, "sword");
   PORTAL = new GameEntity(bcr, LEVEL_MAP, "portal");
@@ -24,22 +21,16 @@ function createInputQueueGame() {
   GAME_ENTITIES[2] = SWORD;
 
   var inputQueue = new Queue(30);
-  //var gameLoop = new GameLoop(gameEntities, inputQueue, STAGE);
-  //player = new EventListener(inputQueue);
-
-  //gameLoop.start();
 
   MODEL = new GameModel(GAME_ENTITIES,inputQueue);
   view = new GameView(MODEL, {
-            'button' : $('input[type=button]') //TODO: add Run Code button here
+            'button' : $('input[type=button]')
           });
   var controller = new GameController(MODEL, view);
 
   createjs.Ticker.addEventListener("tick", handleTick);
-  // createjs.Ticker.timingMode = createjs.Ticker.RAF_SYNCHED;
   createjs.Ticker.setInterval(15);
   createjs.Ticker.setFPS(15);
-  //view.show();
 }
 
 function handleTick() {
@@ -49,10 +40,3 @@ function handleTick() {
   }
   tick++;
 }
-
-//need to implement an exception catch
-
-// function runCode() {
-//   var code = editor.getValue();
-//   eval(code);
-// }

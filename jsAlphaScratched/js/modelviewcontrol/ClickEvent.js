@@ -1,11 +1,11 @@
-//TODO: implement Event
-
-function Event(sender) {
+function ClickEvent(sender) {
     this._sender = sender;
     this._listeners = [];
+    this.col = 0;
+    this.row = 0;
 }
 
-Event.prototype = {
+ClickEvent.prototype = {
     attach : function (listener) {
         this._listeners.push(listener);
     },

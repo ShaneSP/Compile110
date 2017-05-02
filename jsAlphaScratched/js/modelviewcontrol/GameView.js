@@ -32,6 +32,10 @@ function GameView(model, elements) {
     this._elements.button.click(function () {
       _this.runCode.notify();
     });
+    // TODO: ClickEvent
+    // this._model.clickEvent.attach(function () {
+    //   _this.tileClicked(cr);
+    // });
 }
 
 GameView.prototype = {
@@ -88,23 +92,12 @@ GameView.prototype = {
       }
       // }
     }
-
-    // processInput : function () {
-    //   var animationsDone = true;
-    //   for(var i=0; i<GAME_ENTITIES.length; i++) {
-    //     var gameEntity = GAME_ENTITIES[i];
-    //     animationsDone = animationsDone && gameEntity.animationDone();
-    //   }
-    //   if (!animationsDone) {
-    //     return;
-    //   }
-    //   if (!this._model._queue.isEmpty()) {
-    //     var inputEvent = this._model._queue.pop();
-    //     for(var i=0; i<GAME_ENTITIES.length; i++) {
-    // 			var gameEntity = GAME_ENTITIES[i];
-    //       gameEntity.processInput(inputEvent); //TODO: change gameEntity's processInput()
+    // TODO: Click Event
+    // tileClicked : function(cr) {
+    //   if(LEVEL_MAP.tileOccupied(cr)) {
+    //     if(LEVEL_MAP.getTile(cr).occupied == BIT) {
+    //       getEnemyCode();
     //     }
-    //     this.update(inputEvent);
     //   }
     // }
 };
