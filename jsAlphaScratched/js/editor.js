@@ -1,10 +1,12 @@
 var editor = ace.edit("editor");
-editor.setTheme("ace/theme/monokai");
+editor.setTheme("ace/theme/tomorrow_night_bright");
 editor.getSession().setMode("ace/mode/javascript");
 editor.setOptions({fontSize: "11pt"});
+editor.setHighlightActiveLine(false);
 var enemycode = ace.edit("editor2");
 enemycode.setReadOnly(true);
-enemycode.setTheme("ace/theme/monokai");
+enemycode.setTheme("ace/theme/tomorrow_night_bright");
 enemycode.getSession().setMode("ace/mode/javascript");
 enemycode.setOptions({fontSize: "11pt"});
+enemycode.setHighlightActiveLine(false);
 enemycode.renderer.$cursorLayer.element.style.display = "none";
