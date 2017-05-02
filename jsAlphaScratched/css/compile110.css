@@ -20,19 +20,24 @@ body {
 
 #facecontainer {
   float: left;
+  padding-left: 2px;
+  padding-top: 4px;
+  padding-right: 0px;
+  padding-bottom: 0px;
 }
 
 #backtomenu {
   float: left;
   font-size: 18px;
   border: 1px solid;
-  width: 65px;
-  height: 38px;
+  width: 120px;
+  height: 35px;
   margin-left: 5px;
+  margin-top: 5px;
   padding: 5px;
   text-align: center;
   vertical-align: middle;
-  line-height: 19px;
+  line-height: 35px;
 }
 
 #clickybuttons {
@@ -106,12 +111,14 @@ body {
   border: 0px;
   padding: 0px;
   margin: 0px;
+  border-spacing: 0px;
+  border-collapse: collapse;
 }
 
 #clickycanvas {
   border: 0px;
   padding: 0px;
-  width: 80px;
+  width: 250px;
   margin: 0px;
 }
 

@@ -53,7 +53,7 @@ function setTop() {
 
   krishead = new createjs.Sprite(krisheadSheet, "fwdIdle");
   krishead.x = 5;
-  krishead.y = 0;
+  krishead.y = 2;
   topstage.addChild(krishead);
 
   createjs.Ticker.timingMode = createjs.Ticker.RAF;
