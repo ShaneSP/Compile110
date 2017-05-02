@@ -27,7 +27,7 @@ var linesoftext = [["Hello student! It seems you", "have been transported to a",
                     ["Starting now, once you click", "'continue', the enemy will", "start attacking! Good luck!"],
                     ["..."]
                   ];
-var importantlines = [3, 13, 26, 39];
+var importantlines = [2, 3, 13, 14, 25, 26];
 var currentline = 0;
 var globalinterval = 40;
 
@@ -60,12 +60,15 @@ $(function () {
 
 var skipText = function(target) {
   for (var i in importantlines) {
-    if (currentline < importantlines[i]) {
+    console.log(i);
+    if (currentline <= importantlines[i]) {
       currentline = importantlines[i];
       nextText(target);
       return;
     }
   }
+  nextText(target);
+  return;
 }
 
 var nextText = (function(target) {
