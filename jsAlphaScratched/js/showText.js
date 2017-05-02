@@ -11,7 +11,7 @@ var linesoftext = [["Hello student! It seems you", "have been transported to a",
                     ["As you can see, if you are", "going to survive here, you'll", "need to learn enemies' code!"],
                     ["This bit looks like it can", "shoot energy blasts at you!"],
                     ["However, you can perform", "actions too!"],
-                    ["Try typing 'this.moveRight();'", "into the console on the left."],
+                    ["Type 'player.moveRight();'", "into the console on the left."],
                     ["Be sure to always remember", "to clear out the player code", "when typing new code in."],
                     ["Now, click the 'run code'", "button to execute the code", "you have just written."],
                     ["See how your character just", "moved one space to the right?"],
@@ -29,7 +29,7 @@ var linesoftext = [["Hello student! It seems you", "have been transported to a",
                   ];
 var importantlines = [2, 3, 13, 14, 25, 26];
 var currentline = 0;
-var globalinterval = 40;
+var globalinterval = 35;
 
 var showText = function(target, message, line, index, interval) {
   if(currentline==4) {

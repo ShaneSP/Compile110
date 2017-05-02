@@ -7,3 +7,4 @@ enemycode.setReadOnly(true);
 enemycode.setTheme("ace/theme/monokai");
 enemycode.getSession().setMode("ace/mode/javascript");
 enemycode.setOptions({fontSize: "11pt"});
+enemycode.renderer.$cursorLayer.element.style.display = "none";
