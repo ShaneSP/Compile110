@@ -220,8 +220,20 @@ function GameEntity(cr, map, type) {
 
     this.setCurrent = function(pos) {this.current = pos;}
 
-    this.hurt = function() {this.changePosition("hurtRight");}
-    this.die = function() {this.changePosition("dieRight");}
+    this.hurt = function() {
+      this.player.x = this.viscol*50-10;
+      this.player.y = this.visrow*50-15;
+      if (this.movementDone()) {
+        this.changePosition("hurtRight");
+      }
+    }
+    this.die = function() {
+      this.player.x = this.viscol*50-10;
+      this.player.y = this.visrow*50-15;
+      if (this.movementDone()) {
+        this.changePosition("dieRight");
+      }
+    }
 
     this.loseHealth = function () {
       this.health--;
@@ -373,8 +385,9 @@ function GameEntity(cr, map, type) {
         this.animation = current;
         this.bit = new createjs.Sprite(BIT_SHEET, this.current);
         STAGE.addChild(this.bit);
-        this.bit.x = this.col*52.5;
-        this.bit.y = this.row*55+4;
+        this.setCR([this.col, this.row]);
+        this.bit.x = this.col*50 + 20;
+        this.bit.y = this.row*50 + 25;
         this.spawned=true;
       }
     }
