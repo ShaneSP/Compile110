@@ -743,7 +743,7 @@ this.bitAttack = function(cr, direction=[-1,0], endloc=cr) {
   this.spawn = function() {
     this.beam = new createjs.Sprite(BEAM_SHEET, "idle");
     STAGE.addChild(this.beam);
-    this.beam.x = this.col*50 - direction[0]*15;
+    this.beam.x = this.col*50-10 - direction[0]*15;
     this.beam.y = this.row*50-10 - direction[1]*15;
     this.spawned = true;
   }
@@ -759,10 +759,10 @@ this.bitAttack = function(cr, direction=[-1,0], endloc=cr) {
   }
 
   this.nextXY = function() {
-    if (this.col*50 - this.beam.x > 10) {
+    if (this.col*50-10 - this.beam.x > 10) {
       this.beam.x = this.beam.x + this.bspeed;
     }
-    else if (this.col*50 - this.beam.x < -10) {
+    else if (this.col*50-10 - this.beam.x < -10) {
       this.beam.x = this.beam.x - this.bspeed;
     }
     if (this.row*50-10 - this.beam.y > 10) {
@@ -771,7 +771,7 @@ this.bitAttack = function(cr, direction=[-1,0], endloc=cr) {
     else if (this.row*50-10 - this.beam.y < -10) {
       this.beam.y = this.beam.y - this.bspeed;
     }
-    if (Math.abs(this.beam.x - this.endloc[0]*50) < 30 && Math.abs(this.beam.y - this.endloc[1]*50-10) < 30) {
+    if (Math.abs(this.beam.x - (this.endloc[0]*50-10)) < 30 && Math.abs(this.beam.y - (this.endloc[1]*50-10) < 30)) {
       if (this.bounce == true) {
         this.bounced = true;
       } else {
