@@ -37,15 +37,10 @@ function GameView(model, elements) {
 GameView.prototype = {
     show : function () {
       if(SPAWN&&!BIT.spawned) {
+        console.log("hey!!!");
         this.addBit();
       }
-      var animationsDone = true;
-      for(var i=0; i<GAME_ENTITIES.length; i++) {
-        var gameEntity = GAME_ENTITIES[i];
-        animationsDone = animationsDone && gameEntity.animationDone();
-        // console.log(gameEntity.name +" is done: " + animationsDone);
-      }
-      if (!animationsDone) {
+      if (!this.animationsDone()) {
         this.update();
         return;
       }
@@ -57,8 +52,19 @@ GameView.prototype = {
             gameEntity.processAnimation(inputEvent[1]);
           }
         }
+      } else if (RUNCODE == true){
+        $("#runcode").prop("disabled", false);
       }
       this.update();
+    },
+
+    animationsDone : function() {
+      var animationsDone = true;
+      for(var i=0; i<GAME_ENTITIES.length; i++) {
+        var gameEntity = GAME_ENTITIES[i];
+        animationsDone = animationsDone && gameEntity.animationDone();
+      }
+      return animationsDone;
     },
 
     update : function (a) {
@@ -71,7 +77,6 @@ GameView.prototype = {
     },
 
     processInput : function(inputEvent) {
-      console.log(inputEvent);
       // var sameEntity = "";
       for(var i=0; i<GAME_ENTITIES.length; i++) {
   			var gameEntity = GAME_ENTITIES[i];
@@ -80,7 +85,6 @@ GameView.prototype = {
         // }
         // sameEntity = GAME_ENTITIES[i];
         var animationaction = gameEntity.processInput(inputEvent[1]);
-        console.log(animationaction);
         if (animationaction instanceof Array) {
           for (var i in animationaction) {
             this._model._queue.push(animationaction[i]);
@@ -88,13 +92,14 @@ GameView.prototype = {
         } else {
           this._model._queue.push([inputEvent[0], animationaction]);
         }
+        // console.log(this._model._queue);
       }
-      console.log("success");
     },
 
     addBit : function() {
       BIT = new GameEntity([7,5],LEVEL_MAP, "bit", "bit");
       GAME_ENTITIES[GAME_ENTITIES.length] = BIT;
+      BIT.spawn();
     },
 
     removeEntity : function (name) {
@@ -126,6 +131,7 @@ function GameController(model, view) {
 
 GameController.prototype = {
     runCode : function() {
+      $("#runcode").prop("disabled", true);
       var player = this;
       var code = editor.getValue();
       eval(code);
@@ -133,24 +139,32 @@ GameController.prototype = {
       BIT.turn();
     },
 
-    moveRight : function() {
+    moveRight : function(num=1) {
       console.log("moveRight");
-      this._model.inputEvent.notify(["player","wkRight"]);
+      for(var i=0; i<num; i++) {
+        this._model.inputEvent.notify(["player","wkRight"]);
+      }
     },
 
-    moveLeft : function() {
+    moveLeft : function(num=1) {
       console.log("moveLeft");
-      this._model.inputEvent.notify(["player","wkLeft"]);
+      for(var i=0; i<num; i++) {
+        this._model.inputEvent.notify(["player","wkLeft"]);
+      }
     },
 
-    moveUp : function() {
+    moveUp : function(num=1) {
       console.log("moveUp");
-      this._model.inputEvent.notify(["player","wkUp"]);
+      for(var i=0; i<num; i++) {
+        this._model.inputEvent.notify(["player","wkUp"]);
+      }
     },
 
-    moveDown : function() {
+    moveDown : function(num=1) {
       console.log("moveDown");
-      this._model.inputEvent.notify(["player","wkDown"]);
+      for(var i=0; i<num; i++) {
+        this._model.inputEvent.notify(["player","wkDown"]);
+      }
     },
 
     shieldRight : function() {
@@ -196,7 +210,7 @@ GameController.prototype = {
     pickUp : function(name) {
       if(name=="sword" && PLAYER.col==SWORD.col && PLAYER.row-SWORD.row==1 && !PLAYER.hasSword) {
         PLAYER.hasSword=true;
-        this._model.entityRemoved.notify(1);
+        this._model.inputEvent.notify(["player","pickUpSword"]);
       }
     },
 

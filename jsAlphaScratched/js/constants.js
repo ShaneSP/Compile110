@@ -19,7 +19,7 @@ var PORTAL = null;
 var MODEL = null;
 
 var SPAWN = false;
-var BIT_RANGE = 5;
+var BIT_RANGE = 4;
 
 var GAME_ENTITIES = new Array();
 

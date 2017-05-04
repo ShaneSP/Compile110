@@ -20,7 +20,7 @@ function createInputQueueGame() {
   GAME_ENTITIES[1] = PORTAL;
   GAME_ENTITIES[2] = SWORD;
 
-  var inputQueue = new Queue(30);
+  var inputQueue = new Queue(200);
 
   MODEL = new GameModel(GAME_ENTITIES,inputQueue);
   view = new GameView(MODEL, {

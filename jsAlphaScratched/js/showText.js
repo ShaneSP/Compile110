@@ -33,10 +33,13 @@ var currentline = 0;
 var globalinterval = 35;
 
 var showText = function(target, message, line, index, interval) {
-  if(currentline==4) {
+  if(currentline==0) {
+    $("#runcode").prop("disabled", true);
+  } else if(currentline==4) {
     SPAWN=true;
-  } else if(currentline==14){
+  } else if(currentline==15){
     RUNCODE=true;
+    $("#runcode").prop("disabled", false);
     SPAWN=false;
   } else if(currentline==28){
     ATTACK=true;

@@ -250,6 +250,8 @@ function GameEntity(cr, map, type, name="") {
         this.hurt();
       } else if(nextEvent == "die") {
         this.die();
+      } else if(nextEvent == "pickUpSword") {
+        MODEL.entityRemoved.notify();
       }
     }
 
@@ -415,6 +417,9 @@ function GameEntity(cr, map, type, name="") {
           this.setCurrent("shDownDone");
           this.isShielding=true;
           return "shDown";
+//----------------PICK UP-------------------//
+      } else if(nextEvent == "pickUpSword") {
+        return "pickUpSword";
       }
     }
 
@@ -434,7 +439,7 @@ function GameEntity(cr, map, type, name="") {
     this.row = row;
     this.current = current;
     this.agrocount = 0;
-    this.spawned = false;
+    // this.spawned = true;
     this.removed = false;
 
     // Animation
