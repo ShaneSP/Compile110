@@ -53,7 +53,9 @@ GameView.prototype = {
         var inputEvent = this._model._queue.pop();
         for(var i=0; i<GAME_ENTITIES.length; i++) {
     			var gameEntity = GAME_ENTITIES[i];
-          gameEntity.processAnimation(inputEvent[1]);
+          if (gameEntity.name = inputEvent[0]) {
+            gameEntity.processAnimation(inputEvent[1]);
+          }
         }
       }
       this.update();
@@ -73,7 +75,13 @@ GameView.prototype = {
       for(var i=0; i<GAME_ENTITIES.length; i++) {
   			var gameEntity = GAME_ENTITIES[i];
         var animationaction = gameEntity.processInput(inputEvent[1]);
-        this._model._queue.push([inputEvent[0], animationaction]);
+        if (animationaction instanceof Array) {
+          for (var i in animationaction) {
+            this._model._queue.push(animationaction[i]);
+          }
+        } else {
+          this._model._queue.push([inputEvent[0], animationaction]);
+        }
       }
     },
 

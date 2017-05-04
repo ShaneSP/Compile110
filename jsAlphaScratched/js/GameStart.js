@@ -15,7 +15,7 @@ function createInputQueueGame() {
   PLAYER = new GameEntity(cr, LEVEL_MAP, "player");
   SWORD = new GameEntity([6,1], LEVEL_MAP, "sword");
   PORTAL = new GameEntity(bcr, LEVEL_MAP, "portal");
-  BIT = new GameEntity(bcr, LEVEL_MAP, "bit");
+  BIT = new GameEntity(bcr, LEVEL_MAP, "bit", "bit");
   GAME_ENTITIES[0] = PLAYER;
   GAME_ENTITIES[1] = PORTAL;
   GAME_ENTITIES[2] = SWORD;
