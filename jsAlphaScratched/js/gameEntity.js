@@ -520,6 +520,7 @@ function GameEntity(cr, map, type, name="") {
       } else if(nextEvent == "idle") {
         this.changeIdle();
       } else if(nextEvent == "die") {
+        this.health--;
         this.die();
       }
     }
@@ -770,8 +771,15 @@ this.bitAttack = function(cr, direction=[-1,0], endloc=cr) {
     else if (this.row*50-10 - this.beam.y < -10) {
       this.beam.y = this.beam.y - this.bspeed;
     }
-    if (Math.abs(this.beam.x - this.endloc[0]*50) < 40 && Math.abs(this.beam.y - this.endloc[1]*50-10) < 40) {
-      this.bounced = true;
+    if (Math.abs(this.beam.x - this.endloc[0]*50) < 30 && Math.abs(this.beam.y - this.endloc[1]*50-10) < 30) {
+      if (this.bounce = true) {
+        this.bounced = true;
+      } else {
+        this.remove();
+      }
+    }
+    else if (Math.abs(BIT.bit.x - this.beam.x) < 50 && Math.abs(BIT.bit.y - this.beam.y) < 50 && this.bounced) {
+      this.remove();
     }
     // if(this.beam.x - PLAYER.player.x < 40 & PLAYER.isShielding){
     //   this.bounced = true;
@@ -814,9 +822,9 @@ this.bitAttack = function(cr, direction=[-1,0], endloc=cr) {
 
   this.updateGraphics = function() {
     if(this.spawned) {
-      if(!this.bounced && [this.col, this.row] != this.endloc) {
+      if(!this.bounced && (this.col != this.endloc[0] || this.row != this.endloc[1])) {
         this.setbCR([this.col+this.direction[0],this.row+this.direction[1]]);
-      } else if(this.bounced && [this.col, this.row] != this.bitloc) {
+      } else if(this.bounced && (this.col != this.bitloc[0] || this.row != this.bitloc[1])) {
           this.setbCR([this.col-this.direction[0],this.row-this.direction[1]]);
       }
       this.nextXY();
