@@ -72,9 +72,15 @@ GameView.prototype = {
 
     processInput : function(inputEvent) {
       console.log(inputEvent);
+      // var sameEntity = "";
       for(var i=0; i<GAME_ENTITIES.length; i++) {
   			var gameEntity = GAME_ENTITIES[i];
+        // if (gameEntity == sameEntity) {
+        //   return;
+        // }
+        // sameEntity = GAME_ENTITIES[i];
         var animationaction = gameEntity.processInput(inputEvent[1]);
+        console.log(animationaction);
         if (animationaction instanceof Array) {
           for (var i in animationaction) {
             this._model._queue.push(animationaction[i]);
@@ -83,10 +89,11 @@ GameView.prototype = {
           this._model._queue.push([inputEvent[0], animationaction]);
         }
       }
+      console.log("success");
     },
 
     addBit : function() {
-      BIT = new GameEntity([7,5],LEVEL_MAP,"bit");
+      BIT = new GameEntity([7,5],LEVEL_MAP, "bit", "bit");
       GAME_ENTITIES[GAME_ENTITIES.length] = BIT;
     },
 
@@ -123,6 +130,7 @@ GameController.prototype = {
       var code = editor.getValue();
       eval(code);
       if(BIT.health>0 && BIT.hasAttacked) {BIT.hasAttacked=false};
+      BIT.turn();
     },
 
     moveRight : function() {
