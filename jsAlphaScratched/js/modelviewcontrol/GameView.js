@@ -53,7 +53,7 @@ GameView.prototype = {
         var inputEvent = this._model._queue.pop();
         for(var i=0; i<GAME_ENTITIES.length; i++) {
     			var gameEntity = GAME_ENTITIES[i];
-          if (gameEntity.name = inputEvent[0]) {
+          if (gameEntity.name == inputEvent[0]) {
             gameEntity.processAnimation(inputEvent[1]);
           }
         }

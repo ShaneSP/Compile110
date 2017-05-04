@@ -142,7 +142,7 @@ function GameEntity(cr, map, type, name="") {
     }
 
     this.deathDone = function() {
-      if(this.health <= 0) {
+      if(this.vishealth <= 0) {
         if(this.player.currentAnimationFrame >= 14){
           this.remove();
           return true;
@@ -248,6 +248,8 @@ function GameEntity(cr, map, type, name="") {
         this.changePosition("fcUp");
       } else if(nextEvent == "hurt") {
         this.hurt();
+      } else if(nextEvent == "die") {
+        this.die();
       }
     }
 
@@ -283,10 +285,8 @@ function GameEntity(cr, map, type, name="") {
     this.loseHealth = function () {
       this.health--;
       if(this.health > 0) {
-        // this.hurt();
         return "hurt";
       } else {
-        // this.die();
         return "die";
       }
     }
@@ -743,8 +743,8 @@ this.bitAttack = function(cr, direction=[-1,0], endloc=cr) {
   this.spawn = function() {
     this.beam = new createjs.Sprite(BEAM_SHEET, "idle");
     STAGE.addChild(this.beam);
-    this.beam.x = this.col*50;
-    this.beam.y = this.row*50-10;
+    this.beam.x = this.col*50 - direction[0]*15;
+    this.beam.y = this.row*50-10 - direction[1]*15;
     this.spawned = true;
   }
 
@@ -772,7 +772,7 @@ this.bitAttack = function(cr, direction=[-1,0], endloc=cr) {
       this.beam.y = this.beam.y - this.bspeed;
     }
     if (Math.abs(this.beam.x - this.endloc[0]*50) < 30 && Math.abs(this.beam.y - this.endloc[1]*50-10) < 30) {
-      if (this.bounce = true) {
+      if (this.bounce == true) {
         this.bounced = true;
       } else {
         this.remove();
@@ -815,6 +815,7 @@ this.bitAttack = function(cr, direction=[-1,0], endloc=cr) {
       this.bounce = true;
     } else if (nextEvent == "hit") {
       this.spawn();
+      this.bounce = false;
     }
   }
 
