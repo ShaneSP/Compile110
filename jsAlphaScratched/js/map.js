@@ -43,7 +43,7 @@ var map = function(maplayout, stage, background, tileSheet) {
       };
       tileIndex++;
       board.addChild(tileClone);
-      if (!defineTile.walkable(row, col)) {
+      if (defineTile.walkable(row, col)) {
         tileClone.gotoAndPlay("wait");
       } else {
         tileClone.gotoAndPlay("noshine");
@@ -64,9 +64,15 @@ var map = function(maplayout, stage, background, tileSheet) {
     return this.mapTiles["t_" + cr[1] + "_" + cr[0]];
   }
   this.tileWalkable = function(cr) {
+    if (this.getTile(cr)==undefined) {
+      return false;
+    }
     return this.getTile(cr).walkable;
   }
   this.tileOccupied = function(cr) {
+    if (this.getTile(cr)==undefined) {
+      return false;
+    }
     return this.getTile(cr).occupied;
   }
 }
