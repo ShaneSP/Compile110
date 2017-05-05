@@ -34,7 +34,6 @@ function createInputQueueGame() {
 }
 
 STAGE.on("stagemousedown", function(evt) {
-  console.log("click!");
   if(BIT.spawned && evt.stageX>=BIT.bit.x-18 && evt.stageX<=BIT.bit.x+18 && evt.stageY>=BIT.bit.y-18 && evt.stageY<=BIT.bit.y+18) {
     getEnemyCode();
   }

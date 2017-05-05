@@ -1,7 +1,8 @@
-var map = function(maplayout, stage, tileSheet) {
+var map = function(maplayout, stage, background, tileSheet) {
   this.mapTiles = {};
   this.stage = stage;
-  tiles = new createjs.Sprite(tileSheet);
+  background = new createjs.Sprite(background);
+  tiles = new createjs.Sprite(tileSheet, "shine");
 
   // Initialization
   var row, col, tileClone, tileIndex, definTile;
@@ -9,6 +10,7 @@ var map = function(maplayout, stage, tileSheet) {
   var board = new createjs.Container;
   board.x = 0;
   board.y = 0;
+  this.stage.addChild(background);
   this.stage.addChild(board);
 
   this.mapWidth = maplayout[0].length;
@@ -30,15 +32,9 @@ var map = function(maplayout, stage, tileSheet) {
     for(col = 0; col < this.mapWidth; col++) {
       tileClone = tiles.clone();
       tileClone.name = "t_" + row + "_" + col;
-      if (maplayout[row][col] == 0) {
-
-      }
-      else {
-
-      }
       // gotoAndStop/gotoAndPlay changes which tile it is; remember this for animations
-      tileClone.x = col * tileSheet._frameWidth;
-      tileClone.y = row * tileSheet._frameWidth;
+      tileClone.x = col * 50;
+      tileClone.y = row * 50;
       this.mapTiles["t_" + row + "_" + col] = {
         index: tileIndex,
         walkable: defineTile.walkable(row, col),
@@ -47,6 +43,11 @@ var map = function(maplayout, stage, tileSheet) {
       };
       tileIndex++;
       board.addChild(tileClone);
+      if (!defineTile.walkable(row, col)) {
+        tileClone.gotoAndPlay("wait");
+      } else {
+        tileClone.gotoAndPlay("noshine");
+      }
     }
   }
 

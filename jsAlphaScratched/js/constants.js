@@ -120,6 +120,23 @@ var PORTAL_SHEET = new createjs.SpriteSheet({
 	}
 });
 
+var WALKABLE_SHEET = new createjs.SpriteSheet({
+	"images": ["assets/shine.png"],
+	"frames": {"height": 50, "width": 50, "regX": 0, "regY": 0, "count": 10},
+	"animations": {
+		"noshine": [0],
+		"shine": {
+			"frames": [0, 0, 0, 0, 1, 2, 3, 4, 5, 6, 6, 6, 5, 4, 3, 2, 1, 0, 0, 0, 0, 0, 0],
+			"speed": 1,
+			"next": "wait"
+		},
+		"wait": {
+			"frames": [0, 0, 0, 0, 0],
+			"speed": 0.1,
+			"next": "shine"
+		}
+	}
+});
 
 var MAP_LAYOUT = [
 	[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -160,7 +177,7 @@ var MAP_LAYOUT2 = [
 	[1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
 ];
 
-var LEVEL_MAP = new map(MAP_LAYOUT, STAGE, TILE_SHEET);
+var LEVEL_MAP = new map(MAP_LAYOUT, STAGE, TILE_SHEET, WALKABLE_SHEET);
 
 function resetUPS(ups) {
 	FIXED_UPDATES_IN_A_SECOND = ups;

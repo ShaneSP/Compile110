@@ -10,3 +10,4 @@ enemycode.getSession().setMode("ace/mode/javascript");
 enemycode.setOptions({fontSize: "11pt"});
 enemycode.setHighlightActiveLine(false);
 enemycode.renderer.$cursorLayer.element.style.display = "none";
+enemycode.$blockScrolling = Infinity;
