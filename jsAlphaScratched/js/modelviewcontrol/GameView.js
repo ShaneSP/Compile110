@@ -54,6 +54,7 @@ GameView.prototype = {
         }
       } else if (RUNCODE == true){
         $("#runcode").prop("disabled", false);
+        $("#clickybuttons").html("CODING PHASE");
       }
       this.update();
     },
@@ -132,6 +133,7 @@ function GameController(model, view) {
 GameController.prototype = {
     runCode : function() {
       $("#runcode").prop("disabled", true);
+      $("#clickybuttons").html("COMBAT PHASE");
       var player = this;
       var code = editor.getValue();
       eval(code);
