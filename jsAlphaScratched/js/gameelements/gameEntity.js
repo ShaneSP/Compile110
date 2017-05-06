@@ -369,13 +369,10 @@ function GameEntity(cr, map, type, name="") {
           this.setCurrent("fcUp");
           this.isShielding = false;
           if (CURRENT_MAP.tileOccupied([this.col, this.row-1])) {
-            if (CURRENT_MAP.tileOccupied([this.col, this.row-1]).health-1 > 0) {
-              CURRENT_MAP.tileOccupied([this.col, this.row-1]).health--;
-              return [[this.name, "attackUp"], [CURRENT_MAP.tileOccupied([this.col, this.row-1]).name, "hurt"]];
-            }
-            else if (CURRENT_MAP.tileOccupied([this.col, this.row-1]).health){
-              CURRENT_MAP.tileOccupied([this.col, this.row-1]).health--;
-              return [[this.name, "attackUp"], [CURRENT_MAP.tileOccupied([this.col, this.row-1]).name, "die"]];
+            if (CURRENT_MAP.tileOccupied([this.col, this.row-1]).health){
+              var name = CURRENT_MAP.tileOccupied([this.col, this.row-1]).name;
+              var ani = CURRENT_MAP.tileOccupied([this.col, this.row-1]).hurt();
+              return [[this.name, "attackUp"], [name, ani]];
             }
             else {
               return "attackUp";
@@ -396,13 +393,10 @@ function GameEntity(cr, map, type, name="") {
           this.setCurrent("fcDown");
           this.isShielding = false;
           if (CURRENT_MAP.tileOccupied([this.col, this.row+1])) {
-            if (CURRENT_MAP.tileOccupied([this.col, this.row+1]).health-1 > 0) {
-              CURRENT_MAP.tileOccupied([this.col, this.row+1]).health--;
-              return [[this.name, "attackDown"], [CURRENT_MAP.tileOccupied([this.col, this.row+1]).name, "hurt"]];
-            }
-            else if (CURRENT_MAP.tileOccupied([this.col, this.row+1]).health){
-              CURRENT_MAP.tileOccupied([this.col, this.row+1]).health--;
-              return [[this.name, "attackDown"], [CURRENT_MAP.tileOccupied([this.col, this.row+1]).name, "die"]];
+            if (CURRENT_MAP.tileOccupied([this.col, this.row+1]).health){
+              var name = CURRENT_MAP.tileOccupied([this.col, this.row+1]).name;
+              var ani = CURRENT_MAP.tileOccupied([this.col, this.row+1]).hurt();
+              return [[this.name, "attackDown"], [name, ani]];
             }
             else {
               return "attackDown";
@@ -423,13 +417,10 @@ function GameEntity(cr, map, type, name="") {
           this.setCurrent("fcLeft");
           this.isShielding = false;
           if (CURRENT_MAP.tileOccupied([this.col-1, this.row])) {
-            if (CURRENT_MAP.tileOccupied([this.col-1, this.row]).health-1 > 0) {
-              CURRENT_MAP.tileOccupied([this.col-1, this.row]).health--;
-              return [[this.name, "attackLeft"], [CURRENT_MAP.tileOccupied([this.col-1, this.row]).name, "hurt"]];
-            }
-            else if (CURRENT_MAP.tileOccupied([this.col-1, this.row]).health){
-              CURRENT_MAP.tileOccupied([this.col-1, this.row]).health--;
-              return [[this.name, "attackLeft"], [CURRENT_MAP.tileOccupied([this.col-1, this.row]).name, "die"]];
+            if (CURRENT_MAP.tileOccupied([this.col-1, this.row]).health){
+              var name = CURRENT_MAP.tileOccupied([this.col-1, this.row]).name;
+              var ani = CURRENT_MAP.tileOccupied([this.col-1, this.row]).hurt();
+              return [[this.name, "attackLeft"], [name, ani]];
             }
             else {
               return "attackLeft";
@@ -450,13 +441,10 @@ function GameEntity(cr, map, type, name="") {
           this.setCurrent("fcRight");
           this.isShielding = false;
           if (CURRENT_MAP.tileOccupied([this.col+1, this.row])) {
-            if (CURRENT_MAP.tileOccupied([this.col+1, this.row]).health-1 > 0) {
-              CURRENT_MAP.tileOccupied([this.col+1, this.row]).health--;
-              return [[this.name, "attackRight"], [CURRENT_MAP.tileOccupied([this.col+1, this.row]).name, "hurt"]];
-            }
-            else if (CURRENT_MAP.tileOccupied([this.col+1, this.row]).health){
-              CURRENT_MAP.tileOccupied([this.col+1, this.row]).health--;
-              return [[this.name, "attackRight"], [CURRENT_MAP.tileOccupied([this.col+1, this.row]).name, "die"]];
+            if (CURRENT_MAP.tileOccupied([this.col+1, this.row]).health){
+              var name = CURRENT_MAP.tileOccupied([this.col+1, this.row]).name;
+              var ani = CURRENT_MAP.tileOccupied([this.col+1, this.row]).hurt();
+              return [[this.name, "attackRight"], [name, ani]];
             }
             else {
               return "attackRight";
@@ -564,7 +552,6 @@ function GameEntity(cr, map, type, name="") {
         this.changeIdle();
       } else if(nextEvent == "die") {
         this.deathflag = true;
-        this.deoccupy();
         this.die();
       }
     }
@@ -587,7 +574,7 @@ function GameEntity(cr, map, type, name="") {
     }
 
     this.remove = function() {
-      this.removed =true;
+      this.removed = true;
       loc = GAME_ENTITIES.lastIndexOf(BIT);
       GAME_ENTITIES.splice(loc, 1);
       CURRENT_STAGE.removeChild(BIT.bit);
@@ -644,6 +631,16 @@ function GameEntity(cr, map, type, name="") {
     this.getBit = function() {return this.bit;}
 
     this.setCurrent = function(pos) {this.current = pos;}
+
+    this.hurt = function() {
+      this.health--;
+      if (this.health > 0) {
+        return "hurt";
+      } else {
+        this.deoccupy();
+        return "die";
+      }
+    }
 
     this.turn = function() {
       if(this.inRange([PLAYER.col, PLAYER.row]) && ATTACK && this.health > 0) {

@@ -87,10 +87,14 @@ GameView.prototype = {
         var animationaction = gameEntity.processInput(inputEvent[1]);
         if (animationaction instanceof Array) {
           for (var i in animationaction) {
-            this._model._queue.push(animationaction[i]);
+            if (animationaction[i][0]!=undefined&&animationaction[i][1]!=undefined) {
+              this._model._queue.push(animationaction[i]);
+              console.log(animationaction[i]);
+            }
           }
-        } else {
+        } else  if (inputEvent[0]!=undefined&&animationaction!=undefined){
           this._model._queue.push([inputEvent[0], animationaction]);
+          console.log([inputEvent[0], animationaction]);
         }
         // console.log(this._model._queue);
       }
