@@ -169,6 +169,9 @@ function GameEntity(cr, map, type, name="") {
           this.changePosition("fc" + this.facing);
           return true;
         }
+        else if(this.animation == "attackUp" && this.player.currentAnimationFrame >= 23) {
+          return true;
+        }
         return false;
       }
       return true;
