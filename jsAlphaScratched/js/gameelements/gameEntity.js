@@ -155,7 +155,7 @@ function GameEntity(cr, map, type, name="") {
     this.hurtDone = function() {
       if(this.animation.substring(0, 4) == "hurt") {
         if(this.player.currentAnimationFrame >= 10){
-          this.changePosition("fc" + this.animation.substring(4));
+          this.changePosition("fc" + this.facing);
           return true;
         }
         return false;
@@ -166,7 +166,7 @@ function GameEntity(cr, map, type, name="") {
     this.attackDone = function() {
       if(this.animation.substring(0,6) == "attack") {
         if(this.player.currentAnimationFrame >= 25){
-          this.changePosition("fc" + this.animation.substring(4));
+          this.changePosition("fc" + this.facing);
           return true;
         }
         return false;
