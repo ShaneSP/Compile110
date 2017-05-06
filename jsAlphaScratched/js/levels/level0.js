@@ -43,6 +43,11 @@ STAGE.on("stagemousedown", function(evt) {
   if(evt.stageX >= PORTAL.portal.x && evt.stageX <= PORTAL.portal.x+50 && evt.stageY >= PORTAL.portal.y && evt.stageY <= PORTAL.portal.y+50) {
     getPortalCode();
   }
+  if(evt.stageX >= PLAYER.player.x && evt.stageX <= PLAYER.player.x+50 && evt.stageY >= PLAYER.player.y && evt.stageY <= PLAYER.player.y+50) {
+    getPlayerCode();
+  }
+
+
 })
 
 function handleTick() {

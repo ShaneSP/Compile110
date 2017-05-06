@@ -30,7 +30,7 @@ var linesoftext = [["Hello student! It seems you", "have been transported to a",
                   ];
 var importantlines = [2, 3, 13, 14, 26, 27];
 var currentline = 0;
-var globalinterval = 35;
+var globalinterval = 25;
 
 var showText = function(target, message, line, index, interval) {
   if(currentline==0) {
