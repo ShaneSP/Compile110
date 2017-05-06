@@ -108,7 +108,7 @@ function GameEntity(cr, map, type, name="") {
 
     // Will also do non-movement animation
     this.animationDone = function() {
-      return this.movementDone() && this.shieldDone() && this.hurtDone() && this.deathDone();
+      return this.movementDone() && this.shieldDone() && this.hurtDone() && this.deathDone() && this.attackDone();
     }
 
     this.movementDone = function() {
@@ -155,6 +155,17 @@ function GameEntity(cr, map, type, name="") {
     this.hurtDone = function() {
       if(this.animation.substring(0, 4) == "hurt") {
         if(this.player.currentAnimationFrame >= 10){
+          this.changePosition("fc" + this.animation.substring(4));
+          return true;
+        }
+        return false;
+      }
+      return true;
+    }
+
+    this.attackDone = function() {
+      if(this.animation.substring(0,6) == "attack") {
+        if(this.player.currentAnimationFrame >= 25){
           this.changePosition("fc" + this.animation.substring(4));
           return true;
         }
