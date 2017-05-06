@@ -8,6 +8,7 @@ var USER_INPUT_BUFFER_CAPACITY = 10;
 
 var CANVAS = document.getElementById("canvas");
 var STAGE = new createjs.Stage(canvas);
+//var STAGE1 = new createjs.Stage1(canvas);
 var RUNCODE = false;
 var ATTACK = false;
 
@@ -189,7 +190,7 @@ var MAP_LAYOUT2 = [
 ];
 
 var LEVEL_MAP = new map(MAP_LAYOUT, STAGE, TILE_SHEET, WALKABLE_SHEET);
-var LEVEL_MAP1 = new map(MAP_LAYOUT1, STAGE, TILE_SHEET1, WALKABLE_SHEET);
+//var LEVEL_MAP1 = new map(MAP_LAYOUT1, STAGE1, TILE_SHEET1, WALKABLE_SHEET);
 
 function resetUPS(ups) {
 	FIXED_UPDATES_IN_A_SECOND = ups;

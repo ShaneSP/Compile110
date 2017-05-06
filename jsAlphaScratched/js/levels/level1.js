@@ -5,11 +5,11 @@ var gameEntity;
 var view;
 var tick =0;
 
-function main() {
-  createInputQueueGame();
+function main1() {
+  createInputQueueGame1();
 }
 
-function createInputQueueGame() {
+function createInputQueueGame1() {
   var cr = [1, 5];
   var bcr = [8,5];
   PLAYER = new GameEntity(cr, LEVEL_MAP1, "player");
