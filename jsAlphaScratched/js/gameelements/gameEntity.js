@@ -174,6 +174,10 @@ function GameEntity(cr, map, type, name="") {
       return true;
     }
 
+    this.deoccupy = function() {
+      CURRENT_MAP.unoccupy([this.col,this.row]);
+    }
+
     this.remove = function() {
         this.removed =true;
         CURRENT_MAP.unoccupy([this.col,this.row]);
@@ -560,6 +564,7 @@ function GameEntity(cr, map, type, name="") {
         this.changeIdle();
       } else if(nextEvent == "die") {
         this.deathflag = true;
+        this.deoccupy();
         this.die();
       }
     }
@@ -577,10 +582,12 @@ function GameEntity(cr, map, type, name="") {
       this.bit.gotoAndPlay(pos);
     }
 
-    this.remove = function() {
-      console.log("remove called");
-      this.removed =true;
+    this.deoccupy = function() {
       CURRENT_MAP.unoccupy([this.col,this.row]);
+    }
+
+    this.remove = function() {
+      this.removed =true;
       loc = GAME_ENTITIES.lastIndexOf(BIT);
       GAME_ENTITIES.splice(loc, 1);
       CURRENT_STAGE.removeChild(BIT.bit);
