@@ -15,12 +15,10 @@ function createInputQueueGame1() {
   CURRENT_STAGE = STAGE1;
   CURRENT_MAP = LEVEL_MAP1;
   PLAYER = new GameEntity(cr, LEVEL_MAP1, "player");
-  SWORD = new GameEntity([6,1], LEVEL_MAP1, "sword");
   PORTAL = new GameEntity(bcr, LEVEL_MAP1, "portal");
   BIT = new GameEntity(bcr, LEVEL_MAP1, "bit", "bit");
   GAME_ENTITIES[0] = PLAYER;
   GAME_ENTITIES[1] = PORTAL;
-  GAME_ENTITIES[2] = SWORD;
 
   var inputQueue = new Queue(200);
 
@@ -35,7 +33,7 @@ function createInputQueueGame1() {
   createjs.Ticker.setFPS(15);
 }
 
-STAGE.on("stagemousedown", function(evt) {
+CURRENT_STAGE.on("stagemousedown", function(evt) {
   if(BIT.spawned && evt.stageX>=BIT.bit.x-18 && evt.stageX<=BIT.bit.x+18 && evt.stageY>=BIT.bit.y-18 && evt.stageY<=BIT.bit.y+18) {
     getEnemyCode();
   }
@@ -55,7 +53,7 @@ STAGE.on("stagemousedown", function(evt) {
 function handleTick() {
   if(tick % 4 == 0) {
     view.show();
-    STAGE.update();
+    CURRENT_STAGE.update();
   }
   tick++;
 }

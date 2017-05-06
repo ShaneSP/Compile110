@@ -35,7 +35,7 @@ function createInputQueueGame() {
   createjs.Ticker.setFPS(15);
 }
 
-STAGE.on("stagemousedown", function(evt) {
+CURRENT_STAGE.on("stagemousedown", function(evt) {
   if(BIT.spawned && evt.stageX>=BIT.bit.x-18 && evt.stageX<=BIT.bit.x+18 && evt.stageY>=BIT.bit.y-18 && evt.stageY<=BIT.bit.y+18) {
     getEnemyCode();
   }
@@ -55,7 +55,7 @@ STAGE.on("stagemousedown", function(evt) {
 function handleTick() {
   if(tick % 4 == 0) {
     view.show();
-    STAGE.update();
+    CURRENT_STAGE.update();
   }
   tick++;
 }
