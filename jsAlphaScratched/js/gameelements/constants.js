@@ -98,6 +98,17 @@ var TILE_SHEET = new createjs.SpriteSheet({
 	}
 });
 
+var TILE_SHEET1 = new createjs.SpriteSheet({
+	"images": ["enlargedAssets/lvl1.png"],
+	"frames": {
+		"height": 500,
+		"width": 500,
+		"regX": 0,
+		"regY": 0,
+		"count": 1
+	}
+})
+
 var SWORD_SHEET = new createjs.SpriteSheet({
 	"images": ["assets/Recolorsword_42px.png"],
 	"frames": {
@@ -178,6 +189,7 @@ var MAP_LAYOUT2 = [
 ];
 
 var LEVEL_MAP = new map(MAP_LAYOUT, STAGE, TILE_SHEET, WALKABLE_SHEET);
+var LEVEL_MAP1 = new map(MAP_LAYOUT1, STAGE, TILE_SHEET1, WALKABLE_SHEET);
 
 function resetUPS(ups) {
 	FIXED_UPDATES_IN_A_SECOND = ups;

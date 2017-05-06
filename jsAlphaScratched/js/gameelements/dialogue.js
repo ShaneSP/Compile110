@@ -81,3 +81,13 @@ var nextText = (function(target) {
   $(target).empty();
   showText(target, linesoftext[currentline], 0, 0, globalinterval);
 });
+
+//var textdiv = document.getElementById("textdiv")
+//window.addEventListener("keypress", nextText, false);
+
+//function doKeyDown(e) {
+//  alert(e.keyCode);
+//  if (e.keyCode == 39) {
+//    nextText(target);
+//  }
+//}
