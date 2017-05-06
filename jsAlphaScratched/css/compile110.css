@@ -48,9 +48,10 @@ body {
 }
 
 #editor {
-  height: 708px;
+  height: 676px;
   width: 400px;
   float: left;
+  margin-bottom: 2px;
 }
 
 #editor2 {
@@ -142,5 +143,15 @@ body {
 
 input[type=button] {
   width: 400px;
-  height: 20px;
+  height: 50px;
+  font-size: 36px;
+  color: #00eeff;
+  border-color: #00eeff;
+  background-color: black;
+  font-family: 'Determination Mono', 'Lucida Sans Typewriter', 'Lucida Console', monaco, 'Bitstream Vera Sans Mono', monospace;
+}
+
+input[type=button]:disabled {
+  color: gray;
+  border-color: gray;
 }
