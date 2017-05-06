@@ -477,45 +477,6 @@ function GameEntity(cr, map, type, name="") {
         }
         return;
       }
-      // else if (this.animation == "die") {
-      //   if(this.deathDone()) {
-      //     this.remove();
-      //   }
-      // }
-      // else {
-      //   if (!PLAYER.animationDone()) {
-      //     this.agrocount = 0;
-      //   }
-      //   else if (this.inRange([PLAYER.col,PLAYER.row])) {
-      //     if (this.animation == "idle") {
-      //       this.agrocount = this.agrocount + 1;
-      //       if (this.agrocount > 3) {
-      //         if(!this.hasAttacked) {
-      //           this.changePosition("agro");
-      //         }
-      //       }
-      //     } else if (this.animation == "agro") {
-      //       this.agrocount = this.agrocount + 1;
-      //       if (this.agrocount > 13) {
-      //         if(!this.hasAttacked && ATTACK) {
-      //           this.changePosition("charge");
-      //           MODEL.inputEvent.notify(["bit","shoot"]);
-      //           // MODEL.inputEvent.notify(["bit",this.inRange([PLAYER.col,PLAYER.row])]);
-      //         }
-      //         this.agrocount = 0;
-      //       }
-      //     } else if (this.animation == "charge") {
-      //       this.agrocount = this.agrocount + 1;
-      //       if (this.agrocount > 6) {
-      //         this.changePosition("idle");
-      //         this.agrocount = 0;
-      //       }
-      //     }
-      //   } else if (this.animation != "idle") {
-      //     this.agrocount = 0;
-      //     this.changePosition("idle");
-      //   }
-      // }
     };
 
     this.processAnimation = function(e) {
@@ -641,12 +602,6 @@ function GameEntity(cr, map, type, name="") {
     this.processInput = function(e) {
       if(this.spawned) {
         var nextEvent = e;
-        // if(nextEvent == "shoot" && !this.hasAttacked) {
-        //   BEAM = new bitAttack([this.col,this.row]);
-        //   GAME_ENTITIES[GAME_ENTITIES.length] = BEAM;
-        //   BEAM.spawn();
-        //   this.hasAttacked = true;
-        // }
         if (!this.hasAttacked) {
           if (nextEvent == "shootLeft") {
             this.hasAttacked = true;
@@ -719,6 +674,26 @@ function GameEntity(cr, map, type, name="") {
                 return [[this.name, "shootDown"], ["beam", "hit"], ["player", playeranimation]];
               }
             }
+          }
+        }
+        else if (nextEvent == "attackRight") {
+          if(PLAYER.col==this.col-1 && PLAYER.row==this.row) {
+            return "die";
+          }
+        }
+        else if (nextEvent == "attackLeft") {
+          if(PLAYER.col==this.col+1 && PLAYER.row==this.row) {
+            return "die";
+          }
+        }
+        else if (nextEvent == "attackDown") {
+          if(PLAYER.col==this.col && PLAYER.row==this.row-1) {
+            return "die";
+          }
+        }
+        else if (nextEvent == "attackUp") {
+          if(PLAYER.col==this.col && PLAYER.row==this.row+1) {
+            return "die";
           }
         }
         else if (nextEvent == "idle") {
@@ -962,7 +937,7 @@ function PortalEntity(col, row, current) {
     if(PLAYER.hasSword && PLAYER.col == this.col && PLAYER.row==this.row) {
 
     } else if(!PLAYER.hasSword && PLAYER.col == this.col && PLAYER.row==this.row) {
-      
+
     }
   }
 

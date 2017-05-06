@@ -37,7 +37,6 @@ function GameView(model, elements) {
 GameView.prototype = {
     show : function () {
       if(SPAWN&&!BIT.spawned) {
-        console.log("hey!!!");
         this.addBit();
       }
       if (!this.animationsDone()) {
@@ -202,6 +201,7 @@ GameController.prototype = {
     attackRight : function() {
       console.log("attackRight");
       this._model.inputEvent.notify(["player","attackRight"]);
+      this._model.inputEvent.notify(["bit","attackRight"]);
     },
 
     attackLeft : function() {
