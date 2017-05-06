@@ -684,6 +684,7 @@ function GameEntity(cr, map, type, name="") {
               if (PLAYER.current == "shRightDone") {
                 BEAM = new bitAttack([this.col, this.row], direction, endloc);
                 GAME_ENTITIES[GAME_ENTITIES.length] = BEAM;
+                this.health--;
                 return [[this.name, "shootLeft"], ["beam", "bounce"], [this.name, "die"]];
               }
               else {
@@ -702,6 +703,7 @@ function GameEntity(cr, map, type, name="") {
               if (PLAYER.current == "shLeftDone") {
                 BEAM = new bitAttack([this.col, this.row], direction, endloc);
                 GAME_ENTITIES[GAME_ENTITIES.length] = BEAM;
+                this.health--;
                 return [[this.name, "shootRight"], ["beam", "bounce"], [this.name, "die"]];
               }
               else {
@@ -720,6 +722,7 @@ function GameEntity(cr, map, type, name="") {
               if (PLAYER.current == "shDownDone") {
                 BEAM = new bitAttack([this.col, this.row], direction, endloc);
                 GAME_ENTITIES[GAME_ENTITIES.length] = BEAM;
+                this.health--;
                 return [[this.name, "shootUp"], ["beam", "bounce"], [this.name, "die"]];
               }
               else {
@@ -738,6 +741,7 @@ function GameEntity(cr, map, type, name="") {
               if (PLAYER.current == "shUpDone") {
                 BEAM = new bitAttack([this.col, this.row], direction, endloc);
                 GAME_ENTITIES[GAME_ENTITIES.length] = BEAM;
+                this.health--;
                 return [[this.name, "shootDown"], ["beam", "bounce"], [this.name, "die"]];
               }
               else {
@@ -749,26 +753,26 @@ function GameEntity(cr, map, type, name="") {
             }
           }
         }
-        else if (nextEvent == "attackRight") {
-          if(PLAYER.col==this.col-1 && PLAYER.row==this.row) {
-            return "die";
-          }
-        }
-        else if (nextEvent == "attackLeft") {
-          if(PLAYER.col==this.col+1 && PLAYER.row==this.row) {
-            return "die";
-          }
-        }
-        else if (nextEvent == "attackDown") {
-          if(PLAYER.col==this.col && PLAYER.row==this.row-1) {
-            return "die";
-          }
-        }
-        else if (nextEvent == "attackUp") {
-          if(PLAYER.col==this.col && PLAYER.row==this.row+1) {
-            return "die";
-          }
-        }
+        // else if (nextEvent == "attackRight") {
+        //   if(PLAYER.col==this.col-1 && PLAYER.row==this.row) {
+        //     return "die";
+        //   }
+        // }
+        // else if (nextEvent == "attackLeft") {
+        //   if(PLAYER.col==this.col+1 && PLAYER.row==this.row) {
+        //     return "die";
+        //   }
+        // }
+        // else if (nextEvent == "attackDown") {
+        //   if(PLAYER.col==this.col && PLAYER.row==this.row-1) {
+        //     return "die";
+        //   }
+        // }
+        // else if (nextEvent == "attackUp") {
+        //   if(PLAYER.col==this.col && PLAYER.row==this.row+1) {
+        //     return "die";
+        //   }
+        // }
         else if (nextEvent == "idle") {
           return [this.name, "idle"];
         }
