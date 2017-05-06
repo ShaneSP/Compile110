@@ -60,7 +60,7 @@ function GameEntity(cr, map, type, name="") {
     this.facing = "Right";
     this.player = new createjs.Sprite(PLAYER_SHEET, this.current);
     this.player.framerate = .5;
-    STAGE.addChild(this.player);
+    CURRENT_STAGE.addChild(this.player);
     this.player.x = this.col*50-12;
     this.player.y = this.row*50-15;
     this.removed = false;
@@ -70,10 +70,10 @@ function GameEntity(cr, map, type, name="") {
     }
 
     this.setCR = function(cr) {
-      LEVEL_MAP.unoccupy([this.col, this.row]);
+      CURRENT_MAP.unoccupy([this.col, this.row]);
       this.col = cr[0];
       this.row = cr[1];
-      LEVEL_MAP.occupy(cr, this.player);
+      CURRENT_MAP.occupy(cr, this.player);
     }
 
     this.setVisCR = function(cr) {
@@ -176,10 +176,10 @@ function GameEntity(cr, map, type, name="") {
 
     this.remove = function() {
         this.removed =true;
-        LEVEL_MAP.unoccupy([this.col,this.row]);
+        CURRENT_MAP.unoccupy([this.col,this.row]);
         loc = GAME_ENTITIES.lastIndexOf(PLAYER);
         GAME_ENTITIES.splice(loc, 1);
-        STAGE.removeChild(this.player);
+        CURRENT_STAGE.removeChild(this.player);
     }
 
     this.changePosition = function(pos) {
@@ -307,8 +307,8 @@ function GameEntity(cr, map, type, name="") {
     this.processInput = function(e) {
       var nextEvent = e;
       if(nextEvent == "wkRight") {
-        if(!LEVEL_MAP.tileOccupied([this.col+1,this.row])
-          && LEVEL_MAP.tileWalkable([this.col+1,this.row])) {
+        if(!CURRENT_MAP.tileOccupied([this.col+1,this.row])
+          && CURRENT_MAP.tileWalkable([this.col+1,this.row])) {
           this.setCR([this.col+1,this.row]);
           this.setCurrent("fcRight");
           this.isShielding = false;
@@ -320,8 +320,8 @@ function GameEntity(cr, map, type, name="") {
           return "bumpRight";
         }
       } else if(nextEvent == "wkLeft") {
-        if(!LEVEL_MAP.tileOccupied([this.col-1,this.row])
-          && LEVEL_MAP.tileWalkable([this.col-1,this.row])) {
+        if(!CURRENT_MAP.tileOccupied([this.col-1,this.row])
+          && CURRENT_MAP.tileWalkable([this.col-1,this.row])) {
           this.setCR([this.col-1,this.row]);
           this.setCurrent("fcLeft");
           this.isShielding = false;
@@ -333,8 +333,8 @@ function GameEntity(cr, map, type, name="") {
           return "bumpLeft";
         }
       } else if(nextEvent == "wkUp") {
-        if(!LEVEL_MAP.tileOccupied([this.col,this.row-1])
-          && LEVEL_MAP.tileWalkable([this.col,this.row-1])) {
+        if(!CURRENT_MAP.tileOccupied([this.col,this.row-1])
+          && CURRENT_MAP.tileWalkable([this.col,this.row-1])) {
           this.setCR([this.col,this.row-1]);
           this.setCurrent("fcUp");
           this.isShielding = false;
@@ -346,8 +346,8 @@ function GameEntity(cr, map, type, name="") {
           return "bumpUp";
         }
       } else if(nextEvent == "wkDown") {
-        if(!LEVEL_MAP.tileOccupied([this.col,this.row+1])
-          && LEVEL_MAP.tileWalkable([this.col,this.row+1])) {
+        if(!CURRENT_MAP.tileOccupied([this.col,this.row+1])
+          && CURRENT_MAP.tileWalkable([this.col,this.row+1])) {
           this.setCR([this.col,this.row+1]);
           this.setCurrent("fcDown");
           this.isShielding = false;
@@ -460,7 +460,7 @@ function GameEntity(cr, map, type, name="") {
         this.visrow = row;
         this.animation = current;
         this.bit = new createjs.Sprite(BIT_SHEET, this.current);
-        STAGE.addChild(this.bit);
+        CURRENT_STAGE.addChild(this.bit);
         this.setCR([this.col, this.row]);
         this.bit.x = this.col*50 + 20;
         this.bit.y = this.row*50 + 25;
@@ -473,10 +473,10 @@ function GameEntity(cr, map, type, name="") {
     }
 
     this.setCR = function(cr) {
-      LEVEL_MAP.unoccupy([this.col, this.row]);
+      CURRENT_MAP.unoccupy([this.col, this.row]);
       this.col = cr[0];
       this.row = cr[1];
-      LEVEL_MAP.occupy(cr, this.bit);
+      CURRENT_MAP.occupy(cr, this.bit);
     }
 
     // ANIMATION
@@ -518,10 +518,10 @@ function GameEntity(cr, map, type, name="") {
     this.remove = function() {
       console.log("remove called");
       this.removed =true;
-      LEVEL_MAP.unoccupy([this.col,this.row]);
+      CURRENT_MAP.unoccupy([this.col,this.row]);
       loc = GAME_ENTITIES.lastIndexOf(BIT);
       GAME_ENTITIES.splice(loc, 1);
-      STAGE.removeChild(BIT.bit);
+      CURRENT_STAGE.removeChild(BIT.bit);
     }
 
     this.changeIdle = function() {
@@ -733,7 +733,7 @@ this.bitAttack = function(cr, direction=[-1,0], endloc=cr) {
 
   this.spawn = function() {
     this.beam = new createjs.Sprite(BEAM_SHEET, "idle");
-    STAGE.addChild(this.beam);
+    CURRENT_STAGE.addChild(this.beam);
     this.beam.x = this.col*50-10 - direction[0]*15;
     this.beam.y = this.row*50-10 - direction[1]*15;
     this.spawned = true;
@@ -795,7 +795,7 @@ this.bitAttack = function(cr, direction=[-1,0], endloc=cr) {
     console.log("beam removed?");
     var loc = GAME_ENTITIES.lastIndexOf(BEAM);
     GAME_ENTITIES.splice(loc,1);
-    STAGE.removeChild(BEAM.beam);
+    CURRENT_STAGE.removeChild(BEAM.beam);
     this.removed = true;
   }
 
@@ -836,22 +836,22 @@ function SwordEntity(col, row, current) {
   // Animation
   this.animation = current;
   this.sword = new createjs.Sprite(SWORD_SHEET, this.current);
-  STAGE.addChild(this.sword);
+  CURRENT_STAGE.addChild(this.sword);
   this.sword.x = this.col*50;
   this.sword.y = this.row*50;
 
   this.setCR = function(cr) {
-    LEVEL_MAP.unoccupy([this.col, this.row]);
+    CURRENT_MAP.unoccupy([this.col, this.row]);
     this.col = cr[0];
     this.row = cr[1];
-    LEVEL_MAP.occupy(cr, this.sword);
+    CURRENT_MAP.occupy(cr, this.sword);
   }
 
   this.remove = function() {
-    LEVEL_MAP.unoccupy([this.col,this.row]);
+    CURRENT_MAP.unoccupy([this.col,this.row]);
     var loc = GAME_ENTITIES.lastIndexOf(SWORD);
     GAME_ENTITIES.splice(loc,1);
-    STAGE.removeChild(SWORD.sword);
+    CURRENT_STAGE.removeChild(SWORD.sword);
   }
 
   // ANIMATION
@@ -899,22 +899,22 @@ function PortalEntity(col, row, current) {
   // Animation
   this.animation = current;
   this.portal = new createjs.Sprite(PORTAL_SHEET, this.current);
-  STAGE.addChild(this.portal);
+  CURRENT_STAGE.addChild(this.portal);
   this.portal.x = this.col*50.5;
   this.portal.y = this.row*49;
 
   this.setCR = function(cr) {
-    //LEVEL_MAP.unoccupy([this.col, this.row]);
+    //CURRENT_MAP.unoccupy([this.col, this.row]);
     this.col = cr[0];
     this.row = cr[1];
-    //LEVEL_MAP.occupy(cr, this.portal);
+    //CURRENT_MAP.occupy(cr, this.portal);
   }
 
   this.remove = function() {
-    //LEVEL_MAP.unoccupy([this.col,this.row]);
+    //CURRENT_MAP.unoccupy([this.col,this.row]);
     var loc = GAME_ENTITIES.lastIndexOf(PORTAL);
     GAME_ENTITIES.splice(loc,1);
-    STAGE.removeChild(PORTAL.portal);
+    CURRENT_STAGE.removeChild(PORTAL.portal);
   }
 
   // ANIMATION

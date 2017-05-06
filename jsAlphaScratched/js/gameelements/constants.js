@@ -11,6 +11,8 @@ var STAGE = new createjs.Stage(canvas);
 var STAGE1 = new createjs.Stage(canvas);
 var RUNCODE = false;
 var ATTACK = false;
+var CURRENT_MAP = null;
+var CURRENT_STAGE = null;
 
 var PLAYER = null;
 var BIT = null;
