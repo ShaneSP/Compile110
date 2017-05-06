@@ -960,10 +960,9 @@ function PortalEntity(col, row, current) {
 
   this.processInput = function(e) {
     if(PLAYER.hasSword && PLAYER.col == this.col && PLAYER.row==this.row) {
-      alert("woop woop wooooosh!");
-      this.remove();
+
     } else if(!PLAYER.hasSword && PLAYER.col == this.col && PLAYER.row==this.row) {
-      alert("get the sword dumby");
+      
     }
   }
 
