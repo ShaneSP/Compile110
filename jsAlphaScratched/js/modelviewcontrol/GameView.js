@@ -71,7 +71,6 @@ GameView.prototype = {
         //TODO: Stage ticker
         for(var i=0; i<GAME_ENTITIES.length; i++) {
     			var gameEntity = GAME_ENTITIES[i];
-        //   console.log(gameEntity);
     			gameEntity.updateGraphics(a);
         }
     },
@@ -96,7 +95,6 @@ GameView.prototype = {
           this._model._queue.push([inputEvent[0], animationaction]);
           console.log([inputEvent[0], animationaction]);
         }
-        // console.log(this._model._queue);
       }
     },
 
@@ -127,7 +125,6 @@ function GameController(model, view) {
 
     this._view.runCode.attach(function () {
       if(RUNCODE) {
-        console.log("attaching runCode");
         _this.runCode();
       }
     })
@@ -145,70 +142,58 @@ GameController.prototype = {
     },
 
     moveRight : function(num=1) {
-      console.log("moveRight");
       for(var i=0; i<num; i++) {
         this._model.inputEvent.notify(["player","wkRight"]);
       }
     },
 
     moveLeft : function(num=1) {
-      console.log("moveLeft");
       for(var i=0; i<num; i++) {
         this._model.inputEvent.notify(["player","wkLeft"]);
       }
     },
 
     moveUp : function(num=1) {
-      console.log("moveUp");
       for(var i=0; i<num; i++) {
         this._model.inputEvent.notify(["player","wkUp"]);
       }
     },
 
     moveDown : function(num=1) {
-      console.log("moveDown");
       for(var i=0; i<num; i++) {
         this._model.inputEvent.notify(["player","wkDown"]);
       }
     },
 
     shieldRight : function() {
-      console.log("shieldRight");
       this._model.inputEvent.notify(["player","shRight"]);
     },
 
     shieldLeft : function() {
-      console.log("shieldLeft");
       this._model.inputEvent.notify(["player","shLeft"]);
     },
 
     shieldUp : function() {
-      console.log("moveUp");
       this._model.inputEvent.notify(["player","shUp"]);
     },
 
     shieldDown : function() {
-      console.log("shieldDown");
       this._model.inputEvent.notify(["player","shDown"]);
     },
 
     attackDown : function() {
-      console.log("attackDown");
       this._model.inputEvent.notify(["player","attackDown"]);
     },
 
     attackUp : function() {
-      console.log("attackUp");
       this._model.inputEvent.notify(["player","attackUp"]);
     },
 
     attackRight : function() {
-      console.log("attackRight");
       this._model.inputEvent.notify(["player","attackRight"]);
     },
 
     attackLeft : function() {
-      console.log("attackLeft");
       this._model.inputEvent.notify(["player","attackLeft"]);
     },
 

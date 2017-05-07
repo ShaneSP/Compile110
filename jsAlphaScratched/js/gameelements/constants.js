@@ -20,6 +20,9 @@ var SWORD = null;
 var BEAM = null;
 var PORTAL = null;
 var MODEL = null;
+var GATE0 = null;
+var GATE1 = null;
+var GATE2 = null;
 
 var SPAWN = false;
 var BIT_RANGE = 4;
@@ -131,6 +134,15 @@ var PORTAL_SHEET = new createjs.SpriteSheet({
 	"frames": {"height": 40, "width": 40, "regX": 0, "regY": 0, "count":8},
 	"animations": {
 		"idle": [0,7]
+	}
+});
+
+var GATE_SHEET = new createjs.SpriteSheet({
+	"images": ["assets/gate_50px.png"],
+	"frames": {"height": 50, "width": 50, "regX": 0, "regY": 0, "count":6},
+	"animations": {
+		"open": [0,5],
+		"closed": [0]
 	}
 });
 

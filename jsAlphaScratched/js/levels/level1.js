@@ -14,11 +14,15 @@ function createInputQueueGame1() {
   var bcr = [8,5];
   CURRENT_STAGE = STAGE1;
   CURRENT_MAP = LEVEL_MAP1;
-  PLAYER = new GameEntity(cr, LEVEL_MAP1, "player");
   PORTAL = new GameEntity(bcr, LEVEL_MAP1, "portal");
-  BIT = new GameEntity(bcr, LEVEL_MAP1, "bit", "bit");
+  PLAYER = new GameEntity(cr, LEVEL_MAP1, "player");
+  GATE0 = new GameEntity([0,6], LEVEL_MAP1, "gate");
+  BIT = new GameEntity([5,9], LEVEL_MAP1, "bit", "bit");
   GAME_ENTITIES[0] = PLAYER;
   GAME_ENTITIES[1] = PORTAL;
+  GAME_ENTITIES[2] = GATE0;
+  GAME_ENTITIES[3] = BIT;
+  SPAWN = true;
 
   var inputQueue = new Queue(200);
 
@@ -35,9 +39,6 @@ function createInputQueueGame1() {
   CURRENT_STAGE.on("stagemousedown", function(evt) {
     if(BIT.spawned && evt.stageX>=BIT.bit.x-18 && evt.stageX<=BIT.bit.x+18 && evt.stageY>=BIT.bit.y-18 && evt.stageY<=BIT.bit.y+18) {
       getEnemyCode();
-    }
-    if(evt.stageX >= SWORD.sword.x && evt.stageX <= SWORD.sword.x+50 && evt.stageY >= SWORD.sword.y && evt.stageY <= SWORD.sword.y+50) {
-      getSwordCode();
     }
     if(evt.stageX >= PORTAL.portal.x && evt.stageX <= PORTAL.portal.x+50 && evt.stageY >= PORTAL.portal.y && evt.stageY <= PORTAL.portal.y+50) {
       getPortalCode();

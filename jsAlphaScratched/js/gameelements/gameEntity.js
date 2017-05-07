@@ -16,6 +16,9 @@ function GameEntity(cr, map, type, name="") {
 
     case 'portal' : return new PortalEntity(this.cr[0], this.cr[1], "idle");
     break;
+
+    case 'gate' : return new GateEntity(this.cr[0], this.cr[1], "closed");
+    break;
   }
 
   //TODO: player is the only one processing input?
@@ -760,26 +763,6 @@ function GameEntity(cr, map, type, name="") {
             }
           }
         }
-        // else if (nextEvent == "attackRight") {
-        //   if(PLAYER.col==this.col-1 && PLAYER.row==this.row) {
-        //     return "die";
-        //   }
-        // }
-        // else if (nextEvent == "attackLeft") {
-        //   if(PLAYER.col==this.col+1 && PLAYER.row==this.row) {
-        //     return "die";
-        //   }
-        // }
-        // else if (nextEvent == "attackDown") {
-        //   if(PLAYER.col==this.col && PLAYER.row==this.row-1) {
-        //     return "die";
-        //   }
-        // }
-        // else if (nextEvent == "attackUp") {
-        //   if(PLAYER.col==this.col && PLAYER.row==this.row+1) {
-        //     return "die";
-        //   }
-        // }
         else if (nextEvent == "idle") {
           return [this.name, "idle"];
         }
@@ -845,14 +828,6 @@ this.bitAttack = function(cr, direction=[-1,0], endloc=cr) {
     else if (Math.abs(BIT.bit.x - this.beam.x) < 50 && Math.abs(BIT.bit.y - this.beam.y) < 50 && this.bounced) {
       this.remove();
     }
-    // if(this.beam.x - PLAYER.player.x < 40 & PLAYER.isShielding){
-    //   this.bounced = true;
-    // }
-    // if(!this.hit && !this.bounced && this.beam.x - PLAYER.player.x < 40) {
-    //   this.remove();
-    // } else if(!this.hit && this.bounced && BIT.bit.x - this.beam.x < 60) {
-    //   this.remove();
-    // }
   }
 
   this.animationDone = function() {
@@ -865,7 +840,6 @@ this.bitAttack = function(cr, direction=[-1,0], endloc=cr) {
   }
 
   this.remove = function() {
-    console.log("beam removed?");
     var loc = GAME_ENTITIES.lastIndexOf(BEAM);
     GAME_ENTITIES.splice(loc,1);
     CURRENT_STAGE.removeChild(BEAM.beam);
@@ -1024,6 +998,81 @@ function PortalEntity(col, row, current) {
     } else if(!PLAYER.hasSword && PLAYER.col == this.col && PLAYER.row==this.row) {
 
     }
+  }
+
+  this.setCR([this.col,this.row]);
+};
+
+//----------------DOOR_ENTITY----------------//
+function GateEntity(col, row, current) {
+  // Game Logc
+  this.name = "gate";
+  this.col = col;
+  this.row = row;
+  this.current = current;
+
+  // Animation
+  this.animation = current;
+  this.door = new createjs.Sprite(GATE_SHEET, this.current);
+  CURRENT_STAGE.addChild(this.door);
+  this.door.x = this.col*50.5;
+  this.door.y = this.row*49.5;
+
+  this.setCR = function(cr) {
+    //CURRENT_MAP.unoccupy([this.col, this.row]);
+    this.col = cr[0];
+    this.row = cr[1];
+    CURRENT_MAP.occupy(cr, this.door);
+  }
+
+  this.remove = function() {
+    //CURRENT_MAP.unoccupy([this.col,this.row]);
+    var loc = GAME_ENTITIES.lastIndexOf(this);
+    GAME_ENTITIES.splice(loc,1);
+    CURRENT_STAGE.removeChild(this.door);
+  }
+
+  // ANIMATION
+  this.updateGraphics = function(name) {
+    if(!name==undefined){
+      this.changePosition(name);
+    }
+  }
+
+  // Will also do non-movement animation
+  this.animationDone = function() {return this.openDone();}
+
+  this.changePosition = function(pos) {
+    this.animation = pos;
+    this.door.gotoAndPlay(pos);
+  }
+
+  this.openDone = function() {
+    if(this.door.currentAnimation == "open") {
+      if(this.bit.currentAnimationFrame >= 5){
+        this.remove();
+        return true;
+      }
+      return false;
+    }
+    return true;
+  }
+
+  this.processAnimation = function(e) {}
+
+  // GAME LOGIC
+
+  this.getXY = function(){return [this.door.x, this.door.y];}
+
+  this.getX = function() {return this.door.x;}
+
+  this.getY = function() {return this.door.y;}
+
+  this.getPortal = function() {return this.door;}
+
+  this.processInput = function(e) {
+    //conditional for openning doors
+
   }
 
   this.setCR([this.col,this.row]);
