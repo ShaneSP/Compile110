@@ -49,6 +49,10 @@ function GameEntity(cr, map, type, name="") {
     this.isShielding = false;
     this.hasSword = false;
 
+    if(CURRENT_LEVEL!=0) {
+      this.hasSword = true;
+    }
+
     // Game Logc
     this.col = col;
     this.row = row;
@@ -514,7 +518,7 @@ function GameEntity(cr, map, type, name="") {
 
     // Animation
     this.spawn = function() {
-      if(!this.spawned) {
+      if(!this.spawned || CURRENT_LEVEL!=0) {
         this.viscol = col;
         this.visrow = row;
         this.animation = current;
@@ -542,7 +546,7 @@ function GameEntity(cr, map, type, name="") {
     // ANIMATION
 
     this.updateGraphics = function(name) {
-      if(!this.spawned) {
+      if(!this.spawned && CURRENT_LEVEL==0) {
         if(SPAWN) {
           this.spawn();
         }
@@ -770,6 +774,7 @@ function GameEntity(cr, map, type, name="") {
     }
 
     this.setCR([this.col,this.row]);
+    this.spawn();
   };
 
 //----------BIT_ATTACK------------//
@@ -1010,13 +1015,22 @@ function GateEntity(col, row, current) {
   this.col = col;
   this.row = row;
   this.current = current;
+  this.code = 0000;
 
   // Animation
   this.animation = current;
   this.door = new createjs.Sprite(GATE_SHEET, this.current);
   CURRENT_STAGE.addChild(this.door);
-  this.door.x = this.col*50.5;
+  this.door.x = this.col*50.2;
   this.door.y = this.row*49.5;
+
+  this.setCode = function(c) {
+    this.code = c;
+  }
+
+  this.unlock = function() {
+      this.changePosition("open");
+  }
 
   this.setCR = function(cr) {
     //CURRENT_MAP.unoccupy([this.col, this.row]);
@@ -1026,7 +1040,7 @@ function GateEntity(col, row, current) {
   }
 
   this.remove = function() {
-    //CURRENT_MAP.unoccupy([this.col,this.row]);
+    CURRENT_MAP.unoccupy([this.col,this.row]);
     var loc = GAME_ENTITIES.lastIndexOf(this);
     GAME_ENTITIES.splice(loc,1);
     CURRENT_STAGE.removeChild(this.door);
@@ -1049,7 +1063,7 @@ function GateEntity(col, row, current) {
 
   this.openDone = function() {
     if(this.door.currentAnimation == "open") {
-      if(this.bit.currentAnimationFrame >= 5){
+      if(this.door.currentAnimationFrame >= 4){
         this.remove();
         return true;
       }
@@ -1072,7 +1086,12 @@ function GateEntity(col, row, current) {
 
   this.processInput = function(e) {
     //conditional for openning doors
+    var nextEvent = e;
 
+    if((PLAYER.col==this.col && PLAYER.row==this.row-1
+      || PLAYER.col==this.col && PLAYER.row==this.row+1) && nextEvent == "unlock") {
+        this.unlock();
+      }
   }
 
   this.setCR([this.col,this.row]);

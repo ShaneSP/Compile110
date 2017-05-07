@@ -206,5 +206,11 @@ GameController.prototype = {
 
     addEnemy : function() {
       this._model.entityAdded.notify();
+    },
+
+    unlock : function(code) {
+      if(code==1234 || code==5565 || code==1290) {
+        this._model.inputEvent.notify(["gate","unlock"]);
+      }
     }
 };

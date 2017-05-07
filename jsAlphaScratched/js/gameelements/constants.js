@@ -13,9 +13,11 @@ var RUNCODE = false;
 var ATTACK = false;
 var CURRENT_MAP = null;
 var CURRENT_STAGE = null;
+var CURRENT_LEVEL = null;
 
 var PLAYER = null;
 var BIT = null;
+var BIT1 = null;
 var SWORD = null;
 var BEAM = null;
 var PORTAL = null;

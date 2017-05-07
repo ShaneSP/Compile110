@@ -14,6 +14,7 @@ function createInputQueueGame() {
   var bcr = [8,5];
   CURRENT_STAGE = STAGE;
   CURRENT_MAP = LEVEL_MAP;
+  CURRENT_LEVEL = 0;
   PLAYER = new GameEntity(cr, LEVEL_MAP, "player");
   SWORD = new GameEntity([6,1], LEVEL_MAP, "sword");
   PORTAL = new GameEntity(bcr, LEVEL_MAP, "portal");

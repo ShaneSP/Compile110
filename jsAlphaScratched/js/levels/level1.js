@@ -11,18 +11,30 @@ function main1() {
 
 function createInputQueueGame1() {
   var cr = [1, 5];
-  var bcr = [8,5];
+  var bcr = [9,9];
+  var code0 = 1234;
+  var code1 = 5565;
+  var code2 = 1290;
   CURRENT_STAGE = STAGE1;
   CURRENT_MAP = LEVEL_MAP1;
+  CURRENT_LEVEL = 1;
   PORTAL = new GameEntity(bcr, LEVEL_MAP1, "portal");
   PLAYER = new GameEntity(cr, LEVEL_MAP1, "player");
   GATE0 = new GameEntity([0,6], LEVEL_MAP1, "gate");
+  GATE1 = new GameEntity([5,8], LEVEL_MAP1, "gate");
+  GATE2 = new GameEntity([9,2], LEVEL_MAP1, "gate");
   BIT = new GameEntity([5,9], LEVEL_MAP1, "bit", "bit");
+  BIT1 = new GameEntity([9,7], LEVEL_MAP1, "bit", "bit");
+  GATE0.setCode(code0);
+  GATE1.setCode(code1);
+  GATE2.setCode(code2);
   GAME_ENTITIES[0] = PLAYER;
   GAME_ENTITIES[1] = PORTAL;
   GAME_ENTITIES[2] = GATE0;
-  GAME_ENTITIES[3] = BIT;
-  SPAWN = true;
+  GAME_ENTITIES[3] = GATE1;
+  GAME_ENTITIES[4] = GATE2;
+  GAME_ENTITIES[5] = BIT;
+  //SPAWN = true;
 
   var inputQueue = new Queue(200);
 
