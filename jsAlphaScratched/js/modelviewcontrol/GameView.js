@@ -88,19 +88,19 @@ GameView.prototype = {
           for (var i in animationaction) {
             if (animationaction[i][0]!=undefined&&animationaction[i][1]!=undefined) {
               this._model._queue.push(animationaction[i]);
-              console.log(animationaction[i]);
             }
           }
+        } else if (animationaction == "leave" && portaling == false) {
+          this._model._queue.push(["portal", "leave"]);
         } else  if (inputEvent[0]!=undefined&&animationaction!=undefined){
           this._model._queue.push([inputEvent[0], animationaction]);
-          console.log([inputEvent[0], animationaction]);
         }
       }
     },
 
     addBit : function() {
-      BIT = new GameEntity([7,5],LEVEL_MAP, "bit", "bit");
-      GAME_ENTITIES[GAME_ENTITIES.length] = BIT;
+      // BIT = new GameEntity([7,5],LEVEL_MAP, "bit", "bit");
+      // GAME_ENTITIES[GAME_ENTITIES.length] = BIT;
       BIT.spawn();
     },
 

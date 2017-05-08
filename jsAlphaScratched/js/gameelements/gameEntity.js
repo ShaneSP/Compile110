@@ -774,7 +774,9 @@ function GameEntity(cr, map, type, name="") {
     }
 
     this.setCR([this.col,this.row]);
-    this.spawn();
+    if (CURRENT_LEVEL != 0) {
+      this.spawn();
+    }
   };
 
 //----------BIT_ATTACK------------//
@@ -978,14 +980,32 @@ function PortalEntity(col, row, current) {
   }
 
   // Will also do non-movement animation
-  this.animationDone = function() {return true;}
+  this.animationDone = function() {
+    return this.transportDone();
+  }
 
   this.changePosition = function(pos) {
     this.animation = pos;
     this.portal.gotoAndPlay(pos);
   }
 
-  this.processAnimation = function(e) {}
+  this.processAnimation = function(e) {
+    var nextEvent = e;
+    if (nextEvent == "leave") {
+      overlay.appendTo(document.body);
+      portaling = true;
+    }
+  }
+
+  this.transportDone = function() {
+    if (portaling == false) {
+      return true;
+    }
+    if (overlayval > 120) {
+      location.href='comingsoon.html';
+    }
+    return false;
+  }
 
   // GAME LOGIC
 
@@ -998,11 +1018,13 @@ function PortalEntity(col, row, current) {
   this.getPortal = function() {return this.portal;}
 
   this.processInput = function(e) {
+    var nextEvent = e;
     if(PLAYER.hasSword && PLAYER.col == this.col && PLAYER.row==this.row) {
-
-    } else if(!PLAYER.hasSword && PLAYER.col == this.col && PLAYER.row==this.row) {
-
+      return "leave";
     }
+    // } else if(!PLAYER.hasSword && PLAYER.col == this.col && PLAYER.row==this.row) {
+    //   return "error";
+    // }
   }
 
   this.setCR([this.col,this.row]);

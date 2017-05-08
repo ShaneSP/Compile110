@@ -1,0 +1,23 @@
+#centered {
+  text-align: center;
+  font-family: 'Determination Mono', 'Lucida Sans Typewriter', 'Lucida Console', monaco, 'Bitstream Vera Sans Mono', monospace;
+  color: #00eeff;
+}
+
+#backtomenu {
+  font-size: 18px;
+  border: 1px solid;
+  width: 120px;
+  height: 35px;
+  margin-left: 5px;
+  margin-top: 5px;
+  padding: 5px;
+  text-align: center;
+  vertical-align: middle;
+  line-height: 35px;
+  display: inline-block;
+}
+
+body {
+  background-color: black;
+}
