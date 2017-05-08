@@ -24,7 +24,7 @@ function createInputQueueGame1() {
   GATE1 = new GameEntity([5,8], LEVEL_MAP1, "gate");
   GATE2 = new GameEntity([9,2], LEVEL_MAP1, "gate");
   BIT = new GameEntity([5,9], LEVEL_MAP1, "bit", "bit");
-  BIT1 = new GameEntity([9,7], LEVEL_MAP1, "bit", "bit");
+  BIT1 = new GameEntity([9,7], LEVEL_MAP1, "bit", "bit1");
   GATE0.setCode(code0);
   GATE1.setCode(code1);
   GATE2.setCode(code2);
