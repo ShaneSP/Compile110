@@ -1,1 +1,2 @@
-compile(110);
+#compile(110);
+is a serious game, created with the goal of providing an engaging experience to teach basic programming concepts. compile(110); is coded primarily in JavaScript (specifically using the CreateJS framework) and HTML/CSS. This project was done over the course of a semester, during which we discussed aspects of game-design. We worked with a client (with a vision for a project) and met weekly to discuss developments/progress.
